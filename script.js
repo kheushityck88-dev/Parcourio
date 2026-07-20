@@ -1068,12 +1068,18 @@ if (ecoleModal) {
 const contactForm = document.getElementById('contactForm');
 const contactStatus = document.getElementById('contactStatus');
 
+function echapperTexte(texte) {
+  const div = document.createElement('div');
+  div.textContent = texte;
+  return div.innerHTML;
+}
+
 if (contactForm) {
   contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
 
     if (contactForm.action.includes('VOTRE_ID_FORMSPREE')) {
-      contactStatus.textContent = "Le formulaire n'est pas encore configuré (il manque l'identifiant Formspree). Écris-nous directement à contact0parcourio@gmail.com en attendant.";
+      contactStatus.innerHTML = "Le formulaire n'est pas encore configuré (il manque l'identifiant Formspree). Écris-nous directement à contact0parcourio@gmail.com en attendant.";
       contactStatus.classList.remove('is-success');
       contactStatus.classList.add('is-error');
       return;
@@ -1081,9 +1087,10 @@ if (contactForm) {
 
     const submitBtn = contactForm.querySelector('button[type="submit"]');
     const texteOriginal = submitBtn.textContent;
+    const prenomBrut = (contactForm.querySelector('[name="nom"]').value || '').trim().split(' ')[0];
     submitBtn.disabled = true;
     submitBtn.textContent = "Envoi…";
-    contactStatus.textContent = '';
+    contactStatus.innerHTML = '';
     contactStatus.classList.remove('is-success', 'is-error');
 
     try {
@@ -1095,14 +1102,27 @@ if (contactForm) {
 
       if (response.ok) {
         contactForm.reset();
-        contactStatus.textContent = "Message envoyé ! On te répond au plus vite.";
+        const salutation = prenomBrut ? `Merci ${echapperTexte(prenomBrut)}, c'est envoyé !` : "C'est envoyé, merci !";
+        contactStatus.innerHTML = `
+          <span class="form-status-icon">✓</span>
+          <span class="form-status-text">
+            <strong>${salutation}</strong>
+            Ton message est bien arrivé jusqu'à nous. On le lit personnellement et on te répond par email, en général sous 24 à 48h.
+          </span>
+        `;
         contactStatus.classList.add('is-success');
       } else {
         throw new Error('Réponse HTTP ' + response.status);
       }
     } catch (err) {
       console.error('Erreur envoi formulaire de contact', err);
-      contactStatus.textContent = "L'envoi a échoué. Vérifie ta connexion et réessaie, ou écris-nous directement à contact0parcourio@gmail.com.";
+      contactStatus.innerHTML = `
+        <span class="form-status-icon">!</span>
+        <span class="form-status-text">
+          <strong>Ton message n'est pas parti.</strong>
+          Vérifie ta connexion et réessaie — ou écris-nous directement à <a href="mailto:contact0parcourio@gmail.com">contact0parcourio@gmail.com</a>, on te lira quand même.
+        </span>
+      `;
       contactStatus.classList.add('is-error');
     } finally {
       submitBtn.disabled = false;
