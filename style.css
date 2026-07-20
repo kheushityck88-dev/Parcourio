@@ -437,6 +437,18 @@ a { color: inherit; }
   .hero-pin { animation: none; }
 }
 
+/* ---------- Result actions (refaire le test) ---------- */
+.result-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.result-actions .btn-secondary {
+  cursor: pointer;
+  font-family: inherit;
+}
+
 /* ---------- Buttons ---------- */
 .btn-primary,
 .btn-secondary {
@@ -1401,7 +1413,24 @@ a { color: inherit; }
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--ink-500);
+  margin-bottom: 12px;
+}
+
+.directory-masquer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
   margin-bottom: 20px;
+}
+
+.directory-masquer::before {
+  content: "▲";
+  font-size: 0.65rem;
 }
 
 .favoris-toggle {
@@ -2080,10 +2109,31 @@ body.modal-open {
 }
 
 .directory-empty {
+  grid-column: 1 / -1;
   color: var(--ink-500);
   padding: 30px 0;
   font-size: 0.95rem;
 }
+
+.directory-invite {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.directory-invite p {
+  max-width: 420px;
+}
+
+.directory-invite .btn-secondary {
+  cursor: pointer;
+  font-family: inherit;
+}
+
 /* ---------- Footer ---------- */
 .footer {
   text-align: center;
@@ -2108,6 +2158,126 @@ body.modal-open {
 
 .footer p {
   font-size: 0.85rem;
+}
+
+.footer-links {
+  margin-top: 10px;
+}
+
+.footer-links a {
+  color: var(--ink-500);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-links a:hover {
+  color: var(--gold-400);
+}
+
+/* ---------- Page Mentions légales ---------- */
+.legal-header-simple {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legal-back-link {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-300);
+  text-decoration: none;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: 0.2s;
+}
+
+.legal-back-link:hover {
+  border-color: var(--gold-400);
+  color: var(--gold-400);
+}
+
+.legal-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 150px 6% 100px;
+}
+
+.legal-page .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.legal-page h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 8px;
+}
+
+.legal-page .legal-updated {
+  color: var(--ink-500);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  margin-bottom: 8px;
+}
+
+.legal-page h2 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--ink-100);
+  margin: 42px 0 14px;
+  padding-top: 6px;
+  border-top: 1px solid var(--line);
+}
+
+.legal-page h2:first-of-type {
+  border-top: none;
+  margin-top: 0;
+}
+
+.legal-page p,
+.legal-page li {
+  color: var(--ink-300);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.legal-page ul {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.legal-page strong {
+  color: var(--ink-100);
+}
+
+.legal-page a {
+  color: var(--blue-400);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-page a:hover {
+  color: var(--gold-400);
+}
+
+.legal-note {
+  margin-top: 50px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.legal-note p {
+  color: var(--ink-500);
+  font-size: 0.82rem;
+  margin-bottom: 0;
 }
 
 /* ---------- Responsive ---------- */

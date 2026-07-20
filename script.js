@@ -362,6 +362,9 @@ function afficherCarteResultat(d) {
         </div>
       </div>
       ${d.radar ? '<canvas id="profilRadar"></canvas>' : ''}
+      <div class="result-actions">
+        <button type="button" class="btn-secondary" id="refaireLeTest">↺ Refaire le test</button>
+      </div>
     </div>
   `;
 
@@ -375,6 +378,19 @@ function afficherCarteResultat(d) {
     const lien = item.querySelector('.ecole-reco-lien');
     if (lien) lien.addEventListener('click', () => ouvrirModaleEcole(ecole));
   });
+
+  const boutonRefaire = resultSection.querySelector('#refaireLeTest');
+  if (boutonRefaire) {
+    boutonRefaire.addEventListener('click', () => {
+      resultSection.remove();
+      if (window._parcourioChart) {
+        window._parcourioChart.destroy();
+        window._parcourioChart = null;
+      }
+      revenirAuChoixParcours();
+      document.getElementById('test').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 
   const cards = resultSection.querySelectorAll('.card');
   cards.forEach(card => card.classList.remove('visible'));
@@ -776,6 +792,7 @@ rawEcolesPromise.then(liste => {
   const typeChips = document.querySelectorAll('.type-chip');
   const niveauChips = document.querySelectorAll('.niveau-chip');
   const favorisToggle = document.getElementById('favorisToggle');
+  const masquerBtn = document.getElementById('ecolesMasquerBtn');
 
   if (!grid || !countEl || !searchInput || !villeSelect) return;
 
@@ -815,10 +832,68 @@ rawEcolesPromise.then(liste => {
     });
   }
 
-  const etat = { recherche: '', ville: '', region: '', domaine: '', type: '', niveau: '', favorisSeuls: false };
+  const etat = { recherche: '', ville: '', region: '', domaine: '', type: '', niveau: '', favorisSeuls: false, aAfficheTout: false };
   etatDirectoire = etat;
 
+  function filtresActifs() {
+    return !!(etat.recherche || etat.ville || etat.region || etat.domaine || etat.type || etat.niveau || etat.favorisSeuls);
+  }
+
+  function reinitialiserEtMasquer() {
+    etat.recherche = '';
+    etat.ville = '';
+    etat.region = '';
+    etat.domaine = '';
+    etat.type = '';
+    etat.niveau = '';
+    etat.favorisSeuls = false;
+    etat.aAfficheTout = false;
+
+    searchInput.value = '';
+    villeSelect.value = '';
+    if (regionSelect) regionSelect.value = '';
+    chips.forEach(c => c.classList.toggle('is-active', c.dataset.domaine === ''));
+    typeChips.forEach(c => c.classList.toggle('is-active', c.dataset.type === ''));
+    niveauChips.forEach(c => c.classList.toggle('is-active', c.dataset.niveau === ''));
+    if (favorisToggle) {
+      favorisToggle.setAttribute('aria-pressed', 'false');
+      favorisToggle.querySelector('.favoris-toggle-icon').textContent = '☆';
+    }
+
+    rendreEcoles();
+    document.getElementById('ecoles').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  if (masquerBtn) {
+    masquerBtn.addEventListener('click', reinitialiserEtMasquer);
+  }
+
   function rendreEcoles() {
+    // Tant qu'aucun filtre/recherche n'est actif et que la personne n'a pas
+    // explicitement demandé à tout voir, on évite d'étaler la base entière
+    // (encombrant) : on affiche une invitation à filtrer, avec un bouton
+    // pour tout afficher quand même si elle le souhaite.
+    if (!filtresActifs() && !etat.aAfficheTout) {
+      if (masquerBtn) masquerBtn.hidden = true;
+      countEl.textContent = `${ecoles.length} école${ecoles.length > 1 ? 's' : ''} au total`;
+      grid.innerHTML = `
+        <div class="directory-empty directory-invite">
+          <p>Utilise la recherche ou les filtres ci-dessus pour trouver rapidement une école.</p>
+          <button type="button" class="btn-secondary" id="voirToutesLesEcoles">Voir les ${ecoles.length} écoles de la base</button>
+        </div>
+      `;
+      const voirToutBtn = document.getElementById('voirToutesLesEcoles');
+      if (voirToutBtn) {
+        voirToutBtn.addEventListener('click', () => {
+          etat.aAfficheTout = true;
+          rendreEcoles();
+        });
+      }
+      return;
+    }
+
+    if (masquerBtn) masquerBtn.hidden = false;
+
     const rechercheNorm = normaliser(etat.recherche);
     const favoris = lireFavoris();
     const resultats = ecoles.filter(e => {
@@ -998,7 +1073,7 @@ if (contactForm) {
     e.preventDefault();
 
     if (contactForm.action.includes('VOTRE_ID_FORMSPREE')) {
-      contactStatus.textContent = "Le formulaire n'est pas encore configuré (il manque l'identifiant Formspree). Écris-nous directement à contact@parcourio.sn en attendant.";
+      contactStatus.textContent = "Le formulaire n'est pas encore configuré (il manque l'identifiant Formspree). Écris-nous directement à contact0parcourio@gmail.com en attendant.";
       contactStatus.classList.remove('is-success');
       contactStatus.classList.add('is-error');
       return;
@@ -1027,7 +1102,7 @@ if (contactForm) {
       }
     } catch (err) {
       console.error('Erreur envoi formulaire de contact', err);
-      contactStatus.textContent = "L'envoi a échoué. Vérifie ta connexion et réessaie, ou écris-nous directement à contact@parcourio.sn.";
+      contactStatus.textContent = "L'envoi a échoué. Vérifie ta connexion et réessaie, ou écris-nous directement à contact0parcourio@gmail.com.";
       contactStatus.classList.add('is-error');
     } finally {
       submitBtn.disabled = false;

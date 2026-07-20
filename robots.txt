@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://parcourio.sn/sitemap.xml
+Sitemap: https://parcourio.vercel.app/sitemap.xml
