@@ -1,1132 +1,652 @@
-/* ---------- Menu mobile ---------- */
-const navToggle = document.querySelector('.nav-toggle');
-const nav = document.querySelector('.header nav');
-navToggle.addEventListener('click', () => {
-  const isOpen = nav.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', String(isOpen));
-});
-nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  nav.classList.remove('open');
-  navToggle.setAttribute('aria-expanded', 'false');
-}));
+/* =====================================================================
+   ORIENTATION ENGINE — Parcourio
+   ---------------------------------------------------------------------
+   Moteur générique, indépendant du contenu des questions (voir
+   assets/data/orientation-data.js). Il sait :
+   1. Générer le HTML d'un questionnaire à partir d'une liste de
+      questions typées (single / multi / scale / rank / select / text).
+   2. Collecter les réponses saisies dans le formulaire.
+   3. Calculer un score par profil de filière, normalisé en pourcentage,
+      avec le détail des réponses qui ont le plus pesé (pour expliquer
+      "pourquoi" une recommandation est faite).
+   4. Sélectionner et classer les écoles les plus pertinentes.
 
-/* ---------- Révélation des cartes au scroll ---------- */
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      const siblings = Array.from(entry.target.parentElement.children);
-      const index = siblings.indexOf(entry.target);
-      setTimeout(() => entry.target.classList.add('visible'), index * 120);
-      revealObserver.unobserve(entry.target);
+   Ajouter un nouveau type de question, un nouveau profil ou une
+   nouvelle règle de recommandation ne nécessite pas de réécrire ce
+   fichier : il suffit d'enrichir orientation-data.js. Ce fichier ne
+   contient aucune donnée métier (aucun texte de question, aucun score
+   codé en dur).
+   ===================================================================== */
+
+(function (global) {
+  "use strict";
+
+  const RANK_WEIGHTS = [3, 2, 1, 1, 1]; // poids du 1er, 2e, 3e choix, etc.
+
+  /* ---------------------------------------------------------------
+     RENDU DU FORMULAIRE
+     --------------------------------------------------------------- */
+
+  function idPourMeta(formId, questionId) {
+    return `${formId}_${questionId}`;
+  }
+
+  function echapper(texte) {
+    const div = document.createElement("div");
+    div.textContent = texte == null ? "" : String(texte);
+    return div.innerHTML;
+  }
+
+  function rendreOptionSimple(question, opt, type) {
+    const champType = type === "multi" ? "checkbox" : "radio";
+    const nomChamp = type === "multi" ? `${question.id}[]` : question.id;
+    const classeExtra = type === "multi" ? " quiz-option--checkbox" : "";
+    const requis = (type === "single" && question.required) ? " required" : "";
+    return `<label class="quiz-option${classeExtra}">
+      <input type="${champType}" name="${nomChamp}" value="${echapper(opt.value)}"${requis} />
+      ${echapper(opt.label)}
+    </label>`;
+  }
+
+  function rendreEchelle(question) {
+    const ech = question.echelle;
+    const points = ech.positions.map(pos => `
+      <label class="quiz-scale-point">
+        <input type="radio" name="${question.id}" value="${echapper(pos.value)}" ${question.required ? "required" : ""} />
+        <span></span>
+      </label>
+    `).join("");
+    return `
+      <div class="quiz-scale">
+        <span class="quiz-scale-pole">${echapper(ech.poleGauche)}</span>
+        <div class="quiz-scale-track">${points}</div>
+        <span class="quiz-scale-pole">${echapper(ech.poleDroite)}</span>
+      </div>
+    `;
+  }
+
+  function rendreRank(question) {
+    const nb = question.max || 3;
+    const optionsHTML = question.options.map(o => `<option value="${echapper(o.value)}">${echapper(o.label)}</option>`).join("");
+    let html = '<div class="quiz-rank">';
+    for (let i = 1; i <= nb; i++) {
+      html += `
+        <label class="quiz-rank-row">
+          <span class="quiz-rank-num">${i}${i === 1 ? "er" : "e"} choix</span>
+          <select name="rank_${i}_${question.id}" class="quiz-rank-select" data-rank-group="${question.id}" ${i === 1 && question.required ? "required" : ""}>
+            <option value="">Choisir…</option>
+            ${optionsHTML}
+          </select>
+        </label>
+      `;
     }
-  });
-}, { threshold: 0.15 });
-
-function observeCards(root = document) {
-  root.querySelectorAll('.card:not(.visible)').forEach(card => revealObserver.observe(card));
-}
-observeCards();
-
-/* ---------- Parcours d'orientation dynamique ----------
-   Le contenu (assets/data/orientation-data.js) et le moteur de rendu/
-   scoring (assets/js/orientation-engine.js) sont totalement séparés de
-   ce fichier. Deux parcours possibles :
-   - "apres_diplome" : diplôme (BAC/BTS/DUT/Licence/Master/Doctorat/
-     Autre) puis objectif, chacun changeant le questionnaire généré par
-     construireQuestionnaireApresDiplome().
-   - "apprendre_metier" : questionnaire unique et compact, généré par
-     construireQuestionnaireMetier(), qui recommande des métiers et des
-     centres de formation professionnelle plutôt que des filières
-     longues. */
-const { PROFILS, METIERS, PARCOURS, DIPLOMES, OBJECTIFS_PAR_DIPLOME, BANQUE_PROJET_APRES,
-        construireQuestionnaireApresDiplome, construireQuestionnaireMetier } = window.OrientationData;
-const Moteur = window.OrientationEngine;
-
-const parcoursPicker = document.getElementById('parcoursPicker');
-const etapeDiplome = document.getElementById('etapeDiplome');
-const etapeMetierIntro = document.getElementById('etapeMetierIntro');
-const diplomeChipsEl = document.getElementById('diplomeChips');
-const objectifDiplomeWrap = document.getElementById('objectifDiplomeWrap');
-const objectifChipsEl = document.getElementById('objectifChips');
-const formDynamique = document.getElementById('formDynamique');
-
-let etatParcours = { parcours: null, diplome: null, objectif: null, questions: null };
-
-/* --- Rendu des deux grandes cartes de parcours --- */
-parcoursPicker.innerHTML = PARCOURS.map(p => `
-  <button type="button" class="parcours-card" data-parcours="${p.id}">
-    <span class="parcours-icon">${p.icone}</span>
-    <h3>${p.titre}</h3>
-    <p>${p.description}</p>
-  </button>
-`).join('');
-
-function masquerToutesLesEtapes() {
-  etapeDiplome.hidden = true;
-  etapeMetierIntro.hidden = true;
-  const barreProgression = formDynamique.previousElementSibling;
-  if (barreProgression && barreProgression.classList.contains('quiz-progress')) {
-    barreProgression.remove();
+    html += "</div>";
+    return html;
   }
-  formDynamique.hidden = true;
-  formDynamique.innerHTML = '';
-  objectifDiplomeWrap.hidden = true;
-  objectifChipsEl.innerHTML = '';
-}
 
-function revenirAuChoixParcours() {
-  etatParcours = { parcours: null, diplome: null, objectif: null, questions: null };
-  masquerToutesLesEtapes();
-  parcoursPicker.hidden = false;
-  document.querySelectorAll('.parcours-card').forEach(c => c.classList.remove('is-active'));
-}
-
-function construireEtLancerFormulaire() {
-  let questions, boutonLabel, formId;
-  if (etatParcours.parcours === 'apres_diplome') {
-    questions = construireQuestionnaireApresDiplome(etatParcours.diplome, etatParcours.objectif);
-    boutonLabel = 'Voir mon orientation';
-    formId = 'apres_diplome';
-  } else {
-    questions = construireQuestionnaireMetier();
-    boutonLabel = 'Voir mes recommandations';
-    formId = 'apprendre_metier';
+  function rendreQuestionNotee(question) {
+    let corpsHTML = "";
+    if (question.type === "single") {
+      corpsHTML = `<div class="quiz-options">${question.options.map(o => rendreOptionSimple(question, o, "single")).join("")}</div>`;
+    } else if (question.type === "multi") {
+      corpsHTML = `<div class="quiz-options">${question.options.map(o => rendreOptionSimple(question, o, "multi")).join("")}</div>`;
+    } else if (question.type === "scale") {
+      corpsHTML = rendreEchelle(question);
+    } else if (question.type === "rank") {
+      corpsHTML = rendreRank(question);
+    }
+    const aideHTML = question.aide ? `<p class="quiz-aide">${echapper(question.aide)}</p>` : "";
+    const compteurHTML = (question.type === "multi" && question.max) ? `<span class="quiz-compteur" data-compteur-pour="${question.id}">0 / ${question.max} sélectionnés</span>` : "";
+    return `
+      <div class="quiz-q" data-question-id="${question.id}">
+        <span class="q-label">${echapper(question.label)}</span>
+        ${aideHTML}
+        ${corpsHTML}
+        ${compteurHTML}
+      </div>
+    `;
   }
-  etatParcours.questions = questions;
-  formDynamique.dataset.formId = formId;
-  Moteur.rendreFormulaire(formDynamique, questions, { formId, boutonLabel, onRetour: revenirAuChoixParcours });
-  formDynamique.hidden = false;
-  const barreProgression = formDynamique.previousElementSibling;
-  const cibleScroll = (barreProgression && barreProgression.classList.contains('quiz-progress'))
-    ? barreProgression
-    : formDynamique;
-  cibleScroll.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 
-function choisirParcours(parcoursId) {
-  etatParcours = { parcours: parcoursId, diplome: null, objectif: null, questions: null };
-  masquerToutesLesEtapes();
-  parcoursPicker.hidden = true;
-  document.querySelectorAll('.parcours-card').forEach(c => c.classList.toggle('is-active', c.dataset.parcours === parcoursId));
-
-  if (parcoursId === 'apres_diplome') {
-    diplomeChipsEl.innerHTML = DIPLOMES.map(d => `<button type="button" class="diplome-chip" data-diplome="${d.value}">${d.label}</button>`).join('');
-    etapeDiplome.hidden = false;
-    etapeDiplome.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  } else {
-    etapeMetierIntro.hidden = false;
-    construireEtLancerFormulaire();
+  function rendreQuestionMeta(question, formId) {
+    const id = idPourMeta(formId, question.id);
+    const dependAttr = question.dependsOn ? ` data-depends-on="${idPourMeta(formId, question.dependsOn.id)}" data-depends-value="${echapper(question.dependsOn.value)}"` : "";
+    const styleInit = question.dependsOn ? ' style="display:none"' : "";
+    let champHTML = "";
+    if (question.type === "select") {
+      const opts = question.options.map(o => `<option value="${echapper(o.value)}">${echapper(o.label)}</option>`).join("");
+      champHTML = `<select id="${id}" name="${question.id}" ${question.required ? "required" : ""}><option value="">Choisir…</option>${opts}</select>`;
+    } else if (question.type === "text") {
+      champHTML = `<input id="${id}" name="${question.id}" type="text" placeholder="${echapper(question.placeholder || "")}" ${question.required ? "required" : ""} />`;
+    }
+    return `<label class="meta-field" id="${id}_wrap"${dependAttr}${styleInit}>${echapper(question.label)}${champHTML}</label>`;
   }
-}
 
-parcoursPicker.addEventListener('click', (e) => {
-  const carte = e.target.closest('.parcours-card');
-  if (carte) choisirParcours(carte.dataset.parcours);
-});
+  /* Regroupe les questions par catégorie, en conservant l'ordre
+     d'apparition de chaque catégorie. */
+  function grouperParCategorie(questions) {
+    const ordre = [];
+    const groupes = {};
+    questions.forEach(q => {
+      const cat = q.categorie || "Questions";
+      if (!groupes[cat]) { groupes[cat] = []; ordre.push(cat); }
+      groupes[cat].push(q);
+    });
+    return ordre.map(cat => ({ categorie: cat, questions: groupes[cat] }));
+  }
 
-document.getElementById('retourParcours1').addEventListener('click', revenirAuChoixParcours);
-document.getElementById('retourParcours2').addEventListener('click', revenirAuChoixParcours);
+  /* Compte le nombre de questions "répondues" parmi la liste fournie,
+     avec la même logique (souple) que collecterReponses : une question
+     est considérée répondue dès qu'elle a au moins une valeur saisie. */
+  function compterReponses(formEl, questions, formId) {
+    let repondues = 0;
+    questions.forEach(q => {
+      if (q.meta) {
+        const el = document.getElementById(idPourMeta(formId, q.id));
+        if (el && el.value) repondues++;
+        return;
+      }
+      if (q.type === "single" || q.type === "scale") {
+        if (formEl.querySelector(`input[name="${q.id}"]:checked`)) repondues++;
+      } else if (q.type === "multi") {
+        if (formEl.querySelector(`input[name="${q.id}[]"]:checked`)) repondues++;
+      } else if (q.type === "rank") {
+        if (formEl.querySelector(`select[name="rank_1_${q.id}"]`)?.value) repondues++;
+      }
+    });
+    return repondues;
+  }
 
-diplomeChipsEl.addEventListener('click', (e) => {
-  const chip = e.target.closest('.diplome-chip');
-  if (!chip) return;
-  etatParcours.diplome = chip.dataset.diplome;
-  etatParcours.objectif = null;
-  document.querySelectorAll('.diplome-chip').forEach(c => c.classList.toggle('is-active', c === chip));
+  /* Construit la barre de progression collante (compteur + bouton retour)
+     et retourne un objet avec une méthode maj() à appeler à chaque
+     changement de réponse. */
+  function rendreProgression(formEl, questions, formId, onRetour) {
+    const total = questions.length;
+    const barre = document.createElement("div");
+    barre.className = "quiz-progress";
+    barre.innerHTML = `
+      <button type="button" class="quiz-progress-retour">← Changer de parcours</button>
+      <div class="quiz-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="0">
+        <div class="quiz-progress-fill"></div>
+      </div>
+      <span class="quiz-progress-label">0 / ${total} répondues</span>
+    `;
+    const ancienneBarre = formEl.previousElementSibling;
+    if (ancienneBarre && ancienneBarre.classList.contains("quiz-progress")) {
+      ancienneBarre.remove();
+    }
+    formEl.parentNode.insertBefore(barre, formEl);
 
-  const objectifs = OBJECTIFS_PAR_DIPLOME[etatParcours.diplome] || [];
-  objectifChipsEl.innerHTML = objectifs.map(o => `<button type="button" class="objectif-chip" data-objectif="${o.value}">${o.label}</button>`).join('');
-  objectifDiplomeWrap.hidden = false;
-  objectifDiplomeWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-});
+    const track = barre.querySelector(".quiz-progress-track");
+    const fill = barre.querySelector(".quiz-progress-fill");
+    const label = barre.querySelector(".quiz-progress-label");
+    const retourBtn = barre.querySelector(".quiz-progress-retour");
+    if (typeof onRetour === "function") retourBtn.addEventListener("click", onRetour);
 
-objectifChipsEl.addEventListener('click', (e) => {
-  const chip = e.target.closest('.objectif-chip');
-  if (!chip) return;
-  etatParcours.objectif = chip.dataset.objectif;
-  document.querySelectorAll('.objectif-chip').forEach(c => c.classList.toggle('is-active', c === chip));
-  construireEtLancerFormulaire();
-});
+    const maj = () => {
+      const repondues = compterReponses(formEl, questions, formId);
+      const pct = total ? Math.round((repondues / total) * 100) : 0;
+      fill.style.width = `${pct}%`;
+      track.setAttribute("aria-valuenow", String(repondues));
+      label.textContent = `${repondues} / ${total} répondues`;
+    };
+    formEl.addEventListener("input", maj);
+    formEl.addEventListener("change", maj);
+    maj();
+  }
 
-/* Boutons du hero : présélectionnent un parcours et font défiler jusqu'à
-   la section, sans attendre un clic supplémentaire sur la carte. */
-document.querySelectorAll('[data-preselect-parcours]').forEach(a => {
-  a.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('test').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    choisirParcours(a.dataset.preselectParcours);
-  });
-});
+  /* Construit le HTML complet du questionnaire dans formEl et branche
+     les interactions (dépendances, compteurs, exclusivité du rank). */
+  function rendreFormulaire(formEl, questions, opts) {
+    const formId = opts.formId;
+    const boutonLabel = opts.boutonLabel || "Voir mon orientation";
+    const groupes = grouperParCategorie(questions);
 
-/* ---------- Base d'écoles sénégalaises ----------
-   Les écoles sont chargées depuis assets/data/ecoles.json (une école = une ligne).
-   Pour ajouter une école : ouvrir ce fichier JSON et ajouter une entrée
-   { "ville": "...", "domaine": "technologie|gestion|social|creatif", "nom": "..." }
-   Aucune autre modification du code n'est nécessaire. */
-const rawEcolesPromise = (window.ECOLES_DATA && window.ECOLES_DATA.length)
-  // Chemin principal : les données sont déjà en mémoire grâce à
-  // assets/data/ecoles-data.js (chargé en <script> classique dans index.html).
-  // Ça fonctionne même en ouvrant le fichier en double-clic (file://), car il
-  // n'y a plus de requête réseau/fetch impliquée.
-  ? Promise.resolve(window.ECOLES_DATA)
-  // Filet de sécurité : si jamais ecoles-data.js n'est pas chargé, on retente
-  // via fetch (fonctionne seulement derrière un vrai serveur http/https).
-  : fetch('assets/data/ecoles.json')
-      .then(r => {
-        if (!r.ok) throw new Error('Réponse HTTP ' + r.status);
-        return r.json();
-      })
-      .catch(err => {
-        console.error(
-          "Impossible de charger la base d'écoles. Vérifie que assets/data/ecoles-data.js " +
-          "est bien présent et chargé avant script.js dans index.html.",
-          err
-        );
-        return [];
+    let html = "";
+    groupes.forEach(groupe => {
+      html += `<h3 class="quiz-categorie">${echapper(groupe.categorie)}</h3>`;
+      groupe.questions.forEach(q => {
+        html += q.meta ? rendreQuestionMeta(q, formId) : rendreQuestionNotee(q);
       });
+    });
+    html += `<button type="submit">${echapper(boutonLabel)}</button>`;
+    formEl.innerHTML = html;
+    rendreProgression(formEl, questions, formId, opts.onRetour);
 
-/* --- Résultats du parcours "Je souhaite m'orienter après un diplôme" ---
-   Réutilise le registre PROFILS (les 4 grands domaines x 2 filières)
-   déjà connecté à assets/data/ecoles.json. Le domaine actuel choisi par
-   les diplômés BTS/Licence/Master/Doctorat/Autre (question
-   "domaine_filiere_actuelle") reçoit un bonus de score supplémentaire
-   quand leur objectif est de rester ou se spécialiser dans ce domaine
-   (voir BANQUE_PROJET_APRES), pour que "rester dans mon domaine" ait un
-   vrai poids dans le résultat final. */
-function afficherResultatsApresDiplome(ecoles) {
-  const { reponses, contexte } = Moteur.collecterReponses(formDynamique, etatParcours.questions, formDynamique.dataset.formId);
-  const { scores, contributions, pourcentages } = Moteur.calculerScores(etatParcours.questions, reponses, PROFILS);
+    /* Dépendances d'affichage (ex : n'afficher "objectif" que si
+       niveau === "Études supérieures") */
+    formEl.querySelectorAll("[data-depends-on]").forEach(wrap => {
+      const sourceId = wrap.dataset.dependsOn;
+      const valeurAttendue = wrap.dataset.dependsValue;
+      const source = document.getElementById(sourceId);
+      if (!source) return;
+      const majAffichage = () => {
+        const visible = source.value === valeurAttendue;
+        wrap.style.display = visible ? "flex" : "none";
+        const champ = wrap.querySelector("select, input");
+        if (champ) champ.disabled = !visible;
+      };
+      source.addEventListener("change", majAffichage);
+      majAffichage();
+    });
 
-  // Bonus "je veux rester/me spécialiser dans mon domaine actuel"
-  const domaineActuel = reponses.domaine_filiere_actuelle;
-  const objectifInfo = etatParcours.objectif ? BANQUE_PROJET_APRES[etatParcours.objectif] : null;
-  if (domaineActuel && domaineActuel !== 'autre_domaine' && objectifInfo && objectifInfo.biaisMemeDomaine) {
-    Object.values(PROFILS).filter(p => p.macro === domaineActuel).forEach(p => {
-      pourcentages[p.id] = Math.max(0, Math.min(100, pourcentages[p.id] + objectifInfo.biaisMemeDomaine * 4));
+    /* Compteur + verrouillage des cases à cocher au-delà du maximum */
+    questions.filter(q => q.type === "multi" && q.max).forEach(q => {
+      const cases = Array.from(formEl.querySelectorAll(`input[name="${q.id}[]"]`));
+      const compteurEl = formEl.querySelector(`[data-compteur-pour="${q.id}"]`);
+      const majEtat = () => {
+        const coches = cases.filter(c => c.checked);
+        if (compteurEl) compteurEl.textContent = `${coches.length} / ${q.max} sélectionnés`;
+        const limiteAtteinte = coches.length >= q.max;
+        cases.forEach(c => { if (!c.checked) c.disabled = limiteAtteinte; });
+      };
+      cases.forEach(c => c.addEventListener("change", majEtat));
+      majEtat();
+    });
+
+    /* Un même choix ne peut pas être sélectionné à deux rangs
+       différents dans une question de type "rank" */
+    questions.filter(q => q.type === "rank").forEach(q => {
+      const selects = Array.from(formEl.querySelectorAll(`select[data-rank-group="${q.id}"]`));
+      const majOptions = () => {
+        const valeursChoisies = selects.map(s => s.value).filter(Boolean);
+        selects.forEach(s => {
+          Array.from(s.options).forEach(o => {
+            if (!o.value) return;
+            o.disabled = valeursChoisies.includes(o.value) && s.value !== o.value;
+          });
+        });
+      };
+      selects.forEach(s => s.addEventListener("change", majOptions));
     });
   }
 
-  const classement = Moteur.classerProfils(pourcentages);
-  const principal = classement[0];
-  const secondaire = classement[1] && classement[1].pct >= 40 ? classement[1] : null;
+  /* ---------------------------------------------------------------
+     COLLECTE DES RÉPONSES
+     --------------------------------------------------------------- */
 
-  const profilPrincipal = PROFILS[principal.id];
-  const profilSecondaire = secondaire ? PROFILS[secondaire.id] : null;
-
-  const ville = contexte.ville || '';
-  const explication = Moteur.genererExplication(principal.id, contributions, 4);
-
-  // Le conseil est indexé par les anciennes clés Collège/Lycée/Bac/Études
-  // supérieures : un diplôme autre que "bac" correspond toujours à
-  // "Études supérieures" (déjà au-delà du bac).
-  const niveauConseil = etatParcours.diplome === 'bac' ? 'Bac' : 'Études supérieures';
-  let conseil = profilPrincipal.conseil[niveauConseil] || profilPrincipal.conseil['Bac'];
-
-  const objectifLabel = objectifInfo ? objectifInfo.label : '';
-  if (objectifLabel) conseil += ` Objectif choisi : "${objectifLabel.toLowerCase()}".`;
-  if (contexte.filiere_actuelle) conseil += ` Filière actuelle : ${contexte.filiere_actuelle}.`;
-
-  let parcoursTexte = profilPrincipal.description;
-  if (profilSecondaire) {
-    parcoursTexte += ` Tu montres aussi une vraie affinité pour le profil ${profilSecondaire.nom} : garde cette double casquette en tête au moment de choisir tes options ou une spécialisation complémentaire.`;
-  }
-
-  const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcoles(ecoles, profilPrincipal, contexte, 4);
-
-  const diplomeLabel = (DIPLOMES.find(d => d.value === etatParcours.diplome) || {}).label || '';
-  const enteteExtra = diplomeLabel ? `<p><strong>Diplôme actuel :</strong> ${diplomeLabel}</p>` : '';
-
-  afficherCarteResultat({
-    parcoursClasse: `result-${profilPrincipal.macro}`,
-    icone: profilPrincipal.icone,
-    couleur: profilPrincipal.couleur,
-    titre: profilPrincipal.nom,
-    correspondance: `${principal.pct}% aligné avec ce profil${profilSecondaire ? `, ${secondaire.pct}% avec ${profilSecondaire.nom}` : ''}`,
-    enteteExtra,
-    ville,
-    description: parcoursTexte,
-    conseil,
-    metiers: profilPrincipal.metiers,
-    explication,
-    ecolesRecommandees,
-    fallbackUtilise,
-    titreEcoles: `Écoles recommandées${ville ? ` à ${ville}` : ''}`,
-    radar: { registre: PROFILS, pourcentages, couleur: profilPrincipal.couleur }
-  });
-}
-
-/* --- Résultats du parcours "Je souhaite apprendre un métier" ---
-   Même mécanique de scoring générique (Moteur.calculerScores accepte
-   n'importe quel registre de profils), mais avec le registre METIERS et
-   la sélection d'écoles orientée insertion rapide/accessibilité. */
-function afficherResultatsMetier(ecoles) {
-  const questions = etatParcours.questions;
-  const { reponses, contexte } = Moteur.collecterReponses(formDynamique, questions, formDynamique.dataset.formId);
-  const { contributions, pourcentages } = Moteur.calculerScores(questions, reponses, METIERS);
-  const classement = Moteur.classerProfils(pourcentages);
-
-  const principal = classement[0];
-  const metierPrincipal = METIERS[principal.id];
-  const ville = contexte.ville || '';
-  const explication = Moteur.genererExplication(principal.id, contributions, 4);
-
-  let conseil = metierPrincipal.conseil;
-  const objectifLabels = {
-    emploi_rapide: "trouver un emploi salarié rapidement",
-    independant: "créer ta propre activité",
-    certification: "obtenir une certification reconnue"
-  };
-  if (contexte.objectif_pro_metier && objectifLabels[contexte.objectif_pro_metier]) {
-    conseil += ` Ton objectif — ${objectifLabels[contexte.objectif_pro_metier]} — est tout à fait accessible avec ce métier au Sénégal.`;
-  }
-  if (contexte.experience_metier) {
-    conseil += ` Expérience mentionnée : ${contexte.experience_metier}.`;
-  }
-
-  const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcolesMetier(ecoles, metierPrincipal, contexte, 4);
-
-  afficherCarteResultat({
-    parcoursClasse: `result-${metierPrincipal.macro}`,
-    icone: metierPrincipal.icone,
-    couleur: metierPrincipal.couleur,
-    titre: metierPrincipal.nom,
-    correspondance: `${principal.pct}% aligné avec ce métier`,
-    enteteExtra: '',
-    ville,
-    description: metierPrincipal.description,
-    conseil,
-    metiers: metierPrincipal.metiers,
-    explication,
-    ecolesRecommandees,
-    fallbackUtilise,
-    titreEcoles: `Centres de formation recommandés${ville ? ` à ${ville}` : ''}`,
-    radar: null
-  });
-}
-
-/* --- Rendu commun de la carte de résultat (partagé par les deux parcours) --- */
-function afficherCarteResultat(d) {
-  let ecolesHTML;
-  if (d.ecolesRecommandees.length > 0) {
-    ecolesHTML = '<div class="ecoles-reco-liste">' + d.ecolesRecommandees.map(e => `
-      <div class="ecole-reco-item" data-id="${e.id || ''}">
-        <div class="ecole-reco-entete">
-          <span class="ecole-reco-nom">${e.nom}${e.ville ? ` <span class="note">(${e.ville})</span>` : ''}</span>
-          <span class="ecole-reco-score">${e.compatibilite}% compatible</span>
-        </div>
-        <div class="ecole-reco-barre"><div class="ecole-reco-barre-remplie" style="width:${e.compatibilite}%"></div></div>
-        ${e.raisonsCompatibilite && e.raisonsCompatibilite.length ? `<ul class="ecole-reco-raisons">${e.raisonsCompatibilite.map(r => `<li>✓ ${r}</li>`).join('')}</ul>` : ''}
-        ${e.reconnuEtat === true ? `<span class="reconnu-badge" title="Établissement reconnu par l'État du Sénégal">✔️ Reconnu par l'État</span>` : ''}
-        ${e.id ? `<button type="button" class="ecole-reco-lien">Voir les filières et infos complètes →</button>` : ''}
-      </div>
-    `).join('') + '</div>';
-    if (d.fallbackUtilise) {
-      ecolesHTML = `<p class="note">Aucun établissement encore référencé près de ${d.ville || 'ta ville'} pour ce profil : voici des options nationales de référence.</p>` + ecolesHTML;
-    }
-  } else {
-    ecolesHTML = '<p class="note">Base en cours d\'enrichissement — reviens bientôt pour ce profil.</p>';
-  }
-
-  const metiersHTML = d.metiers && d.metiers.length
-    ? `<h4 class="ecole-modal-subtitle">Exemples de métiers</h4><p>${d.metiers.join(' · ')}</p>`
-    : '';
-  const explicationHTML = d.explication.length
-    ? `<h4 class="ecole-modal-subtitle">Pourquoi cette recommandation ?</h4><ul>${d.explication.map(e => `<li>${e}</li>`).join('')}</ul>`
-    : '';
-
-  const resultSection = document.querySelector('.result-section') || document.createElement('section');
-  resultSection.className = `section result-section waypoint destination ${d.parcoursClasse}`;
-  resultSection.innerHTML = `
-    <div class="waypoint-marker">
-      <span class="waypoint-num">★</span>
-      <span class="waypoint-line short"></span>
-    </div>
-    <div class="waypoint-body">
-      <p class="eyebrow">Arrivée</p>
-      <h2>Ton orientation personnalisée</h2>
-      <div class="cards">
-        <div class="card result-profile-card" style="--profile-color:${d.couleur}; border-color:${d.couleur}66;">
-          <span class="result-profile-icon">${d.icone}</span>
-          <h3>${d.titre}</h3>
-          <p><strong>Correspondance :</strong> ${d.correspondance}</p>
-          ${d.enteteExtra}
-          ${d.ville ? `<p><strong>Ville :</strong> ${d.ville}</p>` : ''}
-          <p>${d.description}</p>
-          <p><strong>Pourquoi c'est la bonne décision :</strong> ${d.conseil}</p>
-          ${metiersHTML}
-          ${explicationHTML}
-        </div>
-        <div class="card">
-          <h3>${d.titreEcoles}</h3>
-          ${ecolesHTML}
-        </div>
-      </div>
-      ${d.radar ? '<canvas id="profilRadar"></canvas>' : ''}
-      <div class="result-actions">
-        <button type="button" class="btn-secondary" id="refaireLeTest">↺ Refaire le test</button>
-      </div>
-    </div>
-  `;
-
-  if (!document.body.contains(resultSection)) {
-    document.body.insertBefore(resultSection, document.querySelector('.footer'));
-  }
-
-  resultSection.querySelectorAll('.ecole-reco-item').forEach(item => {
-    const ecole = d.ecolesRecommandees.find(r => r.id === item.dataset.id);
-    if (!ecole) return;
-    const lien = item.querySelector('.ecole-reco-lien');
-    if (lien) lien.addEventListener('click', () => ouvrirModaleEcole(ecole));
-  });
-
-  const boutonRefaire = resultSection.querySelector('#refaireLeTest');
-  if (boutonRefaire) {
-    boutonRefaire.addEventListener('click', () => {
-      resultSection.remove();
-      if (window._parcourioChart) {
-        window._parcourioChart.destroy();
-        window._parcourioChart = null;
+  function collecterReponses(formEl, questions, formId) {
+    const reponses = {};
+    const contexte = {};
+    questions.forEach(q => {
+      if (q.meta) {
+        const el = document.getElementById(idPourMeta(formId, q.id));
+        contexte[q.id] = el ? el.value : "";
+        return;
       }
-      revenirAuChoixParcours();
-      document.getElementById('test').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
-
-  const cards = resultSection.querySelectorAll('.card');
-  cards.forEach(card => card.classList.remove('visible'));
-  observeCards(resultSection);
-
-  resultSection.scrollIntoView({ behavior: 'smooth' });
-
-  if (d.radar && window.Chart) {
-    const macros = ["technologie", "creatif", "social", "gestion"];
-    const macroScores = {};
-    macros.forEach(m => {
-      const profilsDuMacro = Object.values(d.radar.registre).filter(p => p.macro === m).map(p => d.radar.pourcentages[p.id]);
-      macroScores[m] = profilsDuMacro.length ? Math.round(profilsDuMacro.reduce((a, b) => a + b, 0) / profilsDuMacro.length) : 0;
-    });
-    const ctx = document.getElementById('profilRadar').getContext('2d');
-    if (window._parcourioChart) window._parcourioChart.destroy();
-    window._parcourioChart = new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: ["Technologie", "Créatif", "Social", "Gestion"],
-        datasets: [{
-          label: "Ton profil",
-          data: macros.map(m => macroScores[m]),
-          backgroundColor: d.radar.couleur + '40',
-          borderColor: d.radar.couleur,
-          pointBackgroundColor: '#FDD400',
-          borderWidth: 2
-        }]
-      },
-      options: {
-        scales: {
-          r: {
-            min: 0, max: 100,
-            ticks: { stepSize: 25, color: '#8a93b3', backdropColor: 'transparent' },
-            grid: { color: 'rgba(255,255,255,0.08)' },
-            angleLines: { color: 'rgba(255,255,255,0.08)' },
-            pointLabels: { color: '#eef1f8' }
-          }
-        },
-        plugins: { legend: { display: false } }
+      if (q.type === "single" || q.type === "scale") {
+        const coche = formEl.querySelector(`input[name="${q.id}"]:checked`);
+        reponses[q.id] = coche ? coche.value : null;
+      } else if (q.type === "multi") {
+        reponses[q.id] = Array.from(formEl.querySelectorAll(`input[name="${q.id}[]"]:checked`)).map(c => c.value);
+      } else if (q.type === "rank") {
+        const nb = q.max || 3;
+        const valeurs = [];
+        for (let i = 1; i <= nb; i++) {
+          const sel = formEl.querySelector(`select[name="rank_${i}_${q.id}"]`);
+          if (sel && sel.value) valeurs.push(sel.value);
+        }
+        reponses[q.id] = valeurs;
       }
     });
+    return { reponses, contexte };
   }
-}
 
-formDynamique.addEventListener('submit', async function (e) {
-  e.preventDefault();
-  const submitBtn = formDynamique.querySelector('button[type="submit"]');
-  const texteOriginal = submitBtn.textContent;
-  submitBtn.disabled = true;
-  submitBtn.textContent = "Chargement…";
-  const ecoles = await rawEcolesPromise;
-  submitBtn.disabled = false;
-  submitBtn.textContent = texteOriginal;
+  /* ---------------------------------------------------------------
+     CALCUL DES SCORES
+     --------------------------------------------------------------- */
 
-  if (etatParcours.parcours === 'apres_diplome') {
-    afficherResultatsApresDiplome(ecoles);
-  } else {
-    afficherResultatsMetier(ecoles);
+  function idsProfils(registre) {
+    return Object.keys(registre || global.OrientationData.PROFILS);
   }
-});
 
-/* ---------- Annuaire des écoles (filtrable) ----------
-   Chaque école du JSON peut porter des champs enrichis optionnels :
-   region, adresse, description, siteOfficiel, telephone, email, reseaux,
-   secteurs (tags de filière fine), diplomes, niveauAccepte, admission.
-   Tous ces champs sont facultatifs : une école sans ces infos s'affiche
-   quand même, simplement avec une fiche plus courte. */
-const domaineLabels = {
-  technologie: "Technologie",
-  creatif: "Créatif",
-  social: "Social",
-  gestion: "Gestion"
-};
-
-const typeLabels = {
-  public: "Publique",
-  "privé": "Privée"
-};
-
-function normaliser(texte) {
-  return texte
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-}
-
-/* ---------- Favoris (localStorage) ----------
-   Liste des identifiants d'écoles mises en favori par la personne,
-   conservée d'une visite à l'autre sur cet appareil. */
-const FAVORIS_KEY = 'parcourio_favoris_ecoles';
-const HISTORIQUE_KEY = 'parcourio_historique_recherche';
-const HISTORIQUE_MAX = 6;
-
-function lireFavoris() {
-  try {
-    const brut = localStorage.getItem(FAVORIS_KEY);
-    const liste = brut ? JSON.parse(brut) : [];
-    return Array.isArray(liste) ? liste : [];
-  } catch (err) {
-    console.warn('Favoris illisibles, réinitialisation.', err);
-    return [];
+  function trouverOption(question, valeur) {
+    return question.options.find(o => o.value === valeur);
   }
-}
 
-function ecrireFavoris(liste) {
-  try {
-    localStorage.setItem(FAVORIS_KEY, JSON.stringify(liste));
-  } catch (err) {
-    console.warn("Impossible d'enregistrer les favoris (stockage local indisponible).", err);
-  }
-}
+  function calculerScores(questions, reponses, registre) {
+    const profils = idsProfils(registre);
+    const scores = {};
+    const maxPossible = {};
+    const contributions = {}; // profilId -> [{ label, poids }]
+    profils.forEach(p => { scores[p] = 0; maxPossible[p] = 0; contributions[p] = []; });
 
-function estFavori(id) {
-  return lireFavoris().includes(id);
-}
+    questions.forEach(q => {
+      if (q.meta) return;
+      const poids = (q.poids !== undefined) ? q.poids : 1;
 
-function basculerFavori(id) {
-  const liste = lireFavoris();
-  const index = liste.indexOf(id);
-  if (index === -1) {
-    liste.push(id);
-  } else {
-    liste.splice(index, 1);
-  }
-  ecrireFavoris(liste);
-  return liste.includes(id);
-}
-
-/* ---------- Historique de recherche (localStorage) ---------- */
-function lireHistorique() {
-  try {
-    const brut = localStorage.getItem(HISTORIQUE_KEY);
-    const liste = brut ? JSON.parse(brut) : [];
-    return Array.isArray(liste) ? liste : [];
-  } catch (err) {
-    return [];
-  }
-}
-
-function ajouterHistorique(terme) {
-  const propre = terme.trim();
-  if (!propre) return;
-  let liste = lireHistorique().filter(t => normaliser(t) !== normaliser(propre));
-  liste.unshift(propre);
-  liste = liste.slice(0, HISTORIQUE_MAX);
-  try {
-    localStorage.setItem(HISTORIQUE_KEY, JSON.stringify(liste));
-  } catch (err) {
-    console.warn("Impossible d'enregistrer l'historique de recherche.", err);
-  }
-}
-
-function effacerHistorique() {
-  try {
-    localStorage.removeItem(HISTORIQUE_KEY);
-  } catch (err) { /* pas grave */ }
-}
-
-function fermerModaleEcole() {
-  const modale = document.getElementById('ecoleModal');
-  if (!modale) return;
-  modale.classList.remove('is-open');
-  document.body.classList.remove('modal-open');
-}
-
-function ouvrirModaleEcole(e) {
-  const modale = document.getElementById('ecoleModal');
-  const contenu = document.getElementById('ecoleModalContent');
-  if (!modale || !contenu) return;
-
-  const lignesInfo = [];
-  if (e.adresse) lignesInfo.push(`<p class="ecole-modal-line">📍 ${e.adresse}</p>`);
-  if (!e.adresse && e.ville) lignesInfo.push(`<p class="ecole-modal-line">📍 ${e.ville}${e.region && e.region !== e.ville ? ` — région de ${e.region}` : ''}</p>`);
-  if (e.telephone) lignesInfo.push(`<p class="ecole-modal-line">📞 ${e.telephone}</p>`);
-  if (e.email) lignesInfo.push(`<p class="ecole-modal-line">✉️ ${e.email}</p>`);
-
-  const reseaux = e.reseaux && typeof e.reseaux === 'object' ? Object.entries(e.reseaux).filter(([, v]) => v) : [];
-  const reseauxHTML = reseaux.length
-    ? `<p class="ecole-modal-line">🔗 ${reseaux.map(([nom, url]) => `<a href="${url}" target="_blank" rel="noopener">${nom}</a>`).join(' · ')}</p>`
-    : '';
-
-  const tags = (liste) => (liste && liste.length)
-    ? `<div class="ecole-modal-tags">${liste.map(t => `<span class="ecole-modal-tag">${t}</span>`).join('')}</div>`
-    : '';
-
-  contenu.innerHTML = `
-    <div class="ecole-badges">
-      <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
-      ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${e.type === 'public' ? '🏛️' : '🏫'} ${typeLabels[e.type] || e.type}</span>` : ''}
-      ${e.reconnuEtat === true ? `<span class="reconnu-badge" title="Établissement reconnu par l'État du Sénégal">✔️ Reconnu par l'État</span>` : ''}
-    </div>
-    <h3>${e.nom}${e.sigle ? ` <span class="ecole-modal-sigle">(${e.sigle})</span>` : ''}</h3>
-    ${e.description ? `<p class="ecole-modal-desc">${e.description}</p>` : '<p class="ecole-modal-desc ecole-modal-desc-empty">Pas encore de description détaillée pour cet établissement — écris-nous si tu peux nous aider à la compléter.</p>'}
-    ${lignesInfo.join('')}
-    ${reseauxHTML}
-    ${e.secteurs && e.secteurs.length ? `<h4 class="ecole-modal-subtitle">Filières / secteurs</h4>${tags(e.secteurs)}` : ''}
-    ${e.diplomes && e.diplomes.length ? `<h4 class="ecole-modal-subtitle">Diplômes délivrés</h4>${tags(e.diplomes)}` : ''}
-    ${e.niveauAccepte && e.niveauAccepte.length ? `<h4 class="ecole-modal-subtitle">Niveau d'admission</h4>${tags(e.niveauAccepte)}` : ''}
-    ${e.admission ? `<h4 class="ecole-modal-subtitle">Conditions d'admission</h4><p class="ecole-modal-desc">${e.admission}</p>` : ''}
-    <div class="ecole-modal-actions">
-      <button type="button" class="ecole-modal-favori${e.id && estFavori(e.id) ? ' is-favori' : ''}" id="ecoleModalFavoriBtn" data-id="${e.id || ''}" aria-pressed="${e.id && estFavori(e.id) ? 'true' : 'false'}">
-        <span class="ecole-modal-favori-icon">${e.id && estFavori(e.id) ? '★' : '☆'}</span> ${e.id && estFavori(e.id) ? 'Dans mes favoris' : 'Ajouter aux favoris'}
-      </button>
-      ${e.siteOfficiel ? `<a class="btn-primary" href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter le site officiel</a>` : '<span class="ecole-modal-nosite">Site officiel non référencé pour le moment</span>'}
-    </div>
-  `;
-
-  const favoriBtn = document.getElementById('ecoleModalFavoriBtn');
-  if (favoriBtn && e.id) {
-    favoriBtn.addEventListener('click', () => {
-      const actif = basculerFavori(e.id);
-      favoriBtn.classList.toggle('is-favori', actif);
-      favoriBtn.setAttribute('aria-pressed', String(actif));
-      favoriBtn.querySelector('.ecole-modal-favori-icon').textContent = actif ? '★' : '☆';
-      favoriBtn.lastChild.textContent = actif ? ' Dans mes favoris' : ' Ajouter aux favoris';
-      const carte = document.querySelector(`.ecole-card[data-id="${CSS.escape(e.id)}"]`);
-      if (carte) {
-        const btnCarte = carte.querySelector('.ecole-card-favori');
-        if (btnCarte) {
-          btnCarte.classList.toggle('is-favori', actif);
-          btnCarte.setAttribute('aria-pressed', String(actif));
-          btnCarte.textContent = actif ? '★' : '☆';
+      if (q.type === "single") {
+        // Plafond théorique : meilleure option possible pour chaque profil
+        if (poids > 0) {
+          profils.forEach(p => {
+            const meilleur = Math.max(0, ...q.options.map(o => (o.scores[p] || 0) * poids));
+            maxPossible[p] += meilleur;
+          });
+        }
+        const valeur = reponses[q.id];
+        const opt = valeur ? trouverOption(q, valeur) : null;
+        if (opt) {
+          profils.forEach(p => {
+            const contrib = (opt.scores[p] || 0) * poids;
+            scores[p] += contrib;
+            if (contrib > 0) contributions[p].push({ label: `${q.label} → ${opt.label}`, poids: contrib });
+          });
         }
       }
-      if (typeof mettreAJourCompteurFavoris === 'function') mettreAJourCompteurFavoris();
-      if (typeof etatDirectoire !== 'undefined' && etatDirectoire.favorisSeuls) {
-        rendreEcolesDirectoire();
-      }
-    });
-  }
-  modale.classList.add('is-open');
-  document.body.classList.add('modal-open');
-}
 
-/* ---------- Comparateur d'écoles (en mémoire, limité à 3) ---------- */
-const COMPARE_MAX = 3;
-let compareSelection = [];
-let ecolesIndex = {}; // id -> école, rempli une fois la base chargée
-
-function mettreAJourBarreComparateur() {
-  const barre = document.getElementById('comparateurBar');
-  const compteEl = document.getElementById('comparateurCount');
-  const voirBtn = document.getElementById('comparateurVoirBtn');
-  if (!barre || !compteEl || !voirBtn) return;
-  const n = compareSelection.length;
-  compteEl.textContent = String(n);
-  barre.hidden = n === 0;
-  voirBtn.disabled = n < 2;
-}
-
-function basculerComparaison(id, carte) {
-  const index = compareSelection.indexOf(id);
-  if (index !== -1) {
-    compareSelection.splice(index, 1);
-  } else {
-    if (compareSelection.length >= COMPARE_MAX) {
-      alert(`Tu peux comparer ${COMPARE_MAX} écoles à la fois. Retire-en une avant d'en ajouter une nouvelle.`);
-      return;
-    }
-    compareSelection.push(id);
-  }
-  const actif = compareSelection.includes(id);
-  document.querySelectorAll(`.ecole-card-compare[data-compare-id="${CSS.escape(id)}"]`).forEach(btn => {
-    btn.classList.toggle('is-selected', actif);
-    btn.setAttribute('aria-pressed', String(actif));
-  });
-  mettreAJourBarreComparateur();
-}
-
-function celluleListe(valeurs) {
-  if (!valeurs || valeurs.length === 0) return '<span class="note">Non précisé</span>';
-  return valeurs.join(', ');
-}
-
-function rendreComparateur() {
-  const contenu = document.getElementById('comparateurModalContent');
-  if (!contenu) return;
-  const items = compareSelection.map(id => ecolesIndex[id]).filter(Boolean);
-  if (items.length === 0) {
-    contenu.innerHTML = '<h3>Comparateur d\'écoles</h3><p class="comparateur-empty">Sélectionne au moins deux écoles (bouton ⚖ sur chaque fiche) pour les comparer côte à côte.</p>';
-    return;
-  }
-  const lignes = [
-    { label: 'Ville / Région', rendu: e => `${e.ville || '—'}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}` },
-    { label: 'Statut', rendu: e => e.type === 'public' ? '🏛️ Public' : (e.type === 'privé' ? '🏫 Privé' : '—') },
-    { label: 'Domaine', rendu: e => domaineLabels[e.domaine] || e.domaine || '—' },
-    { label: 'Niveaux acceptés', rendu: e => celluleListe(e.niveauAccepte) },
-    { label: 'Diplômes', rendu: e => celluleListe(e.diplomes) },
-    { label: 'Secteurs / filières', rendu: e => celluleListe(e.secteurs) },
-    { label: 'Admission', rendu: e => e.admission || '<span class="note">Non précisé</span>' },
-    { label: 'Site officiel', rendu: e => e.siteOfficiel ? `<a href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter →</a>` : '<span class="note">Non référencé</span>' },
-  ];
-
-  contenu.innerHTML = `
-    <h3>Comparateur d'écoles</h3>
-    <p class="note">${items.length} école${items.length > 1 ? 's' : ''} comparée${items.length > 1 ? 's' : ''}.</p>
-    <div class="comparateur-table-wrap">
-      <table class="comparateur-table">
-        <thead>
-          <tr>
-            <th>Critère</th>
-            ${items.map(e => `<td class="comparateur-ecole-nom">${e.nom}<button type="button" class="comparateur-retirer" data-retirer-id="${e.id}">Retirer</button></td>`).join('')}
-          </tr>
-        </thead>
-        <tbody>
-          ${lignes.map(l => `
-            <tr>
-              <th>${l.label}</th>
-              ${items.map(e => `<td>${l.rendu(e)}</td>`).join('')}
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
-
-  contenu.querySelectorAll('.comparateur-retirer').forEach(btn => {
-    btn.addEventListener('click', () => {
-      basculerComparaison(btn.dataset.retirerId, null);
-      rendreComparateur();
-      if (rendreEcolesDirectoire) rendreEcolesDirectoire();
-      if (compareSelection.length === 0) fermerComparateur();
-    });
-  });
-}
-
-function ouvrirComparateur() {
-  rendreComparateur();
-  const modale = document.getElementById('comparateurModal');
-  if (modale) modale.classList.add('is-open');
-  document.body.classList.add('modal-open');
-}
-
-function fermerComparateur() {
-  const modale = document.getElementById('comparateurModal');
-  if (modale) modale.classList.remove('is-open');
-  document.body.classList.remove('modal-open');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const voirBtn = document.getElementById('comparateurVoirBtn');
-  const viderBtn = document.getElementById('comparateurViderBtn');
-  const closeBtn = document.getElementById('comparateurModalClose');
-  const backdrop = document.querySelector('#comparateurModal .comparateur-modal-backdrop');
-  if (voirBtn) voirBtn.addEventListener('click', ouvrirComparateur);
-  if (viderBtn) viderBtn.addEventListener('click', () => {
-    compareSelection.slice().forEach(id => basculerComparaison(id, null));
-    if (rendreEcolesDirectoire) rendreEcolesDirectoire();
-  });
-  if (closeBtn) closeBtn.addEventListener('click', fermerComparateur);
-  if (backdrop) backdrop.addEventListener('click', fermerComparateur);
-});
-
-let etatDirectoire = null;
-let rendreEcolesDirectoire = null;
-
-function mettreAJourCompteurFavoris() {
-  const compteEl = document.getElementById('favorisCount');
-  const toggle = document.getElementById('favorisToggle');
-  if (!compteEl || !toggle) return;
-  const n = lireFavoris().length;
-  compteEl.textContent = String(n);
-  compteEl.hidden = n === 0;
-}
-
-function rendreHistoriqueRecherche() {
-  const conteneur = document.getElementById('derniereRecherches');
-  const chipsEl = document.getElementById('derniereRecherchesChips');
-  if (!conteneur || !chipsEl) return;
-  const historique = lireHistorique();
-  if (historique.length === 0) {
-    conteneur.hidden = true;
-    chipsEl.innerHTML = '';
-    return;
-  }
-  conteneur.hidden = false;
-  chipsEl.innerHTML = historique
-    .map(terme => `<button type="button" class="recherche-chip" data-terme="${terme.replace(/"/g, '&quot;')}">${terme}</button>`)
-    .join('');
-  chipsEl.querySelectorAll('.recherche-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const searchInput = document.getElementById('ecoleSearch');
-      if (!searchInput || !etatDirectoire || !rendreEcolesDirectoire) return;
-      searchInput.value = btn.dataset.terme;
-      etatDirectoire.recherche = btn.dataset.terme;
-      rendreEcolesDirectoire();
-    });
-  });
-}
-
-rawEcolesPromise.then(liste => {
-  const grid = document.getElementById('ecoleDirectoryGrid');
-  const countEl = document.getElementById('ecoleCount');
-  const searchInput = document.getElementById('ecoleSearch');
-  const villeSelect = document.getElementById('ecoleVilleFilter');
-  const regionSelect = document.getElementById('ecoleRegionFilter');
-  const chips = document.querySelectorAll('.domaine-chip');
-  const typeChips = document.querySelectorAll('.type-chip');
-  const niveauChips = document.querySelectorAll('.niveau-chip');
-  const favorisToggle = document.getElementById('favorisToggle');
-  const masquerBtn = document.getElementById('ecolesMasquerBtn');
-
-  if (!grid || !countEl || !searchInput || !villeSelect) return;
-
-  const ecoles = liste.filter(e => e.ville && e.domaine && e.nom);
-  ecoles.forEach(e => { if (e.id) ecolesIndex[e.id] = e; });
-
-  /* Chiffres du hero et de la phrase d'intro de la section Écoles :
-     recalculés à partir du nombre réel d'entrées dans ecoles.json, pour ne
-     jamais afficher un total figé (ex. "206") qui deviendrait faux dès
-     qu'on ajoute ou retire une école du fichier. */
-  const nbEcoles = ecoles.length;
-  const nbRegions = new Set(ecoles.map(e => e.region).filter(Boolean)).size;
-  const heroStatEcoles = document.getElementById('heroStatEcoles');
-  const heroStatRegions = document.getElementById('heroStatRegions');
-  if (heroStatEcoles) heroStatEcoles.textContent = nbEcoles;
-  if (heroStatRegions) heroStatRegions.textContent = nbRegions;
-  const introCount = document.getElementById('ecolesSectionIntroCount');
-  const introRegions = document.getElementById('ecolesSectionIntroRegions');
-  if (introCount) introCount.textContent = nbEcoles;
-  if (introRegions) introRegions.textContent = nbRegions;
-
-  const villes = [...new Set(ecoles.map(e => e.ville))].sort((a, b) => a.localeCompare(b, 'fr'));
-  villes.forEach(ville => {
-    const option = document.createElement('option');
-    option.value = ville;
-    option.textContent = ville;
-    villeSelect.appendChild(option);
-  });
-
-  if (regionSelect) {
-    const regions = [...new Set(ecoles.map(e => e.region).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'fr'));
-    regions.forEach(region => {
-      const option = document.createElement('option');
-      option.value = region;
-      option.textContent = region;
-      regionSelect.appendChild(option);
-    });
-  }
-
-  const etat = { recherche: '', ville: '', region: '', domaine: '', type: '', niveau: '', favorisSeuls: false, aAfficheTout: false };
-  etatDirectoire = etat;
-
-  function filtresActifs() {
-    return !!(etat.recherche || etat.ville || etat.region || etat.domaine || etat.type || etat.niveau || etat.favorisSeuls);
-  }
-
-  function reinitialiserEtMasquer() {
-    etat.recherche = '';
-    etat.ville = '';
-    etat.region = '';
-    etat.domaine = '';
-    etat.type = '';
-    etat.niveau = '';
-    etat.favorisSeuls = false;
-    etat.aAfficheTout = false;
-
-    searchInput.value = '';
-    villeSelect.value = '';
-    if (regionSelect) regionSelect.value = '';
-    chips.forEach(c => c.classList.toggle('is-active', c.dataset.domaine === ''));
-    typeChips.forEach(c => c.classList.toggle('is-active', c.dataset.type === ''));
-    niveauChips.forEach(c => c.classList.toggle('is-active', c.dataset.niveau === ''));
-    if (favorisToggle) {
-      favorisToggle.setAttribute('aria-pressed', 'false');
-      favorisToggle.querySelector('.favoris-toggle-icon').textContent = '☆';
-    }
-
-    rendreEcoles();
-    document.getElementById('ecoles').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  if (masquerBtn) {
-    masquerBtn.addEventListener('click', reinitialiserEtMasquer);
-  }
-
-  function rendreEcoles() {
-    // Tant qu'aucun filtre/recherche n'est actif et que la personne n'a pas
-    // explicitement demandé à tout voir, on évite d'étaler la base entière
-    // (encombrant) : on affiche une invitation à filtrer, avec un bouton
-    // pour tout afficher quand même si elle le souhaite.
-    if (!filtresActifs() && !etat.aAfficheTout) {
-      if (masquerBtn) masquerBtn.hidden = true;
-      countEl.textContent = `${ecoles.length} école${ecoles.length > 1 ? 's' : ''} au total`;
-      grid.innerHTML = `
-        <div class="directory-empty directory-invite">
-          <p>Utilise la recherche ou les filtres ci-dessus pour trouver rapidement une école.</p>
-          <button type="button" class="btn-secondary" id="voirToutesLesEcoles">Voir les ${ecoles.length} écoles de la base</button>
-        </div>
-      `;
-      const voirToutBtn = document.getElementById('voirToutesLesEcoles');
-      if (voirToutBtn) {
-        voirToutBtn.addEventListener('click', () => {
-          etat.aAfficheTout = true;
-          rendreEcoles();
+      else if (q.type === "multi") {
+        if (poids > 0) {
+          profils.forEach(p => {
+            // Plafond : les "max" meilleures options pour ce profil
+            const valeursTriees = q.options.map(o => (o.scores[p] || 0) * poids).sort((a, b) => b - a);
+            const limite = q.max || valeursTriees.length;
+            const meilleur = valeursTriees.slice(0, limite).reduce((s, v) => s + Math.max(v, 0), 0);
+            maxPossible[p] += meilleur;
+          });
+        }
+        const valeurs = reponses[q.id] || [];
+        valeurs.forEach(v => {
+          const opt = trouverOption(q, v);
+          if (!opt) return;
+          profils.forEach(p => {
+            const contrib = (opt.scores[p] || 0) * poids;
+            scores[p] += contrib;
+            if (contrib > 0) contributions[p].push({ label: `${q.label} → ${opt.label}`, poids: contrib });
+          });
         });
       }
-      return;
-    }
 
-    if (masquerBtn) masquerBtn.hidden = false;
-
-    const rechercheNorm = normaliser(etat.recherche);
-    const favoris = lireFavoris();
-    const resultats = ecoles.filter(e => {
-      if (etat.favorisSeuls && !favoris.includes(e.id)) return false;
-      if (etat.ville && e.ville !== etat.ville) return false;
-      if (etat.region && e.region !== etat.region) return false;
-      if (etat.domaine && e.domaine !== etat.domaine) return false;
-      if (etat.type && e.type !== etat.type) return false;
-      if (etat.niveau && !(e.niveauAccepte || []).includes(etat.niveau)) return false;
-      if (rechercheNorm) {
-        const cible = normaliser([e.nom, e.sigle || '', ...(e.secteurs || [])].join(' '));
-        if (!cible.includes(rechercheNorm)) return false;
+      else if (q.type === "scale") {
+        const positions = q.echelle.positions;
+        if (poids > 0) {
+          profils.forEach(p => {
+            const meilleur = Math.max(0, ...positions.map(pos => (pos.scores[p] || 0) * poids));
+            maxPossible[p] += meilleur;
+          });
+        }
+        const valeur = reponses[q.id];
+        const pos = valeur ? positions.find(p2 => p2.value === valeur) : null;
+        if (pos) {
+          profils.forEach(p => {
+            const contrib = (pos.scores[p] || 0) * poids;
+            scores[p] += contrib;
+            if (contrib > 0) contributions[p].push({ label: `${q.label}`, poids: contrib });
+          });
+        }
       }
-      return true;
-    });
 
-    countEl.textContent = resultats.length > 0
-      ? `${resultats.length} école${resultats.length > 1 ? 's' : ''} trouvée${resultats.length > 1 ? 's' : ''}`
-      : 'Chargement des écoles…';
-
-    if (resultats.length === 0) {
-      grid.innerHTML = etat.favorisSeuls
-        ? '<p class="directory-empty">Tu n\'as pas encore d\'école en favoris. Clique sur l\'étoile ☆ d\'une fiche pour l\'ajouter ici.</p>'
-        : '<p class="directory-empty">Aucune école ne correspond à ta recherche. Essaie une autre ville, une autre région, un autre domaine, un autre statut, ou efface le texte recherché.</p>';
-      countEl.textContent = '0 école trouvée pour ces filtres';
-      return;
-    }
-
-    grid.innerHTML = resultats
-      .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
-      .map(e => `
-        <div class="card ecole-card visible" data-id="${e.id || ''}" tabindex="0" role="button" aria-label="Voir la fiche de ${e.nom}">
-          <button type="button" class="ecole-card-favori${e.id && favoris.includes(e.id) ? ' is-favori' : ''}" data-fav-id="${e.id || ''}" aria-pressed="${e.id && favoris.includes(e.id) ? 'true' : 'false'}" aria-label="${e.id && favoris.includes(e.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}">${e.id && favoris.includes(e.id) ? '★' : '☆'}</button>
-          <button type="button" class="ecole-card-compare${e.id && compareSelection.includes(e.id) ? ' is-selected' : ''}" data-compare-id="${e.id || ''}" aria-pressed="${e.id && compareSelection.includes(e.id) ? 'true' : 'false'}" aria-label="Ajouter au comparateur">⚖</button>
-          <div class="ecole-badges">
-            <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
-            ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${e.type === 'public' ? '🏛️' : '🏫'} ${typeLabels[e.type] || e.type}</span>` : ''}
-            ${e.reconnuEtat === true ? `<span class="reconnu-badge" title="Établissement reconnu par l'État du Sénégal">✔️ État</span>` : ''}
-          </div>
-          <h3>${e.nom}</h3>
-          <span class="ecole-ville">${e.ville}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}</span>
-          ${e.description ? `<p class="ecole-card-excerpt">${e.description.slice(0, 110)}${e.description.length > 110 ? '…' : ''}</p>` : ''}
-          <span class="ecole-card-more">Voir la fiche →</span>
-        </div>
-      `).join('');
-
-    grid.querySelectorAll('.ecole-card').forEach(carte => {
-      const ecole = resultats.find(r => r.id === carte.dataset.id);
-      if (!ecole) return;
-      const ouvrir = () => ouvrirModaleEcole(ecole);
-      carte.addEventListener('click', ouvrir);
-      carte.addEventListener('keydown', (evt) => {
-        if (evt.key === 'Enter' || evt.key === ' ') { evt.preventDefault(); ouvrir(); }
-      });
-      const favBtn = carte.querySelector('.ecole-card-favori');
-      if (favBtn) {
-        favBtn.addEventListener('click', (evt) => {
-          evt.stopPropagation();
-          const actif = basculerFavori(favBtn.dataset.favId);
-          favBtn.classList.toggle('is-favori', actif);
-          favBtn.setAttribute('aria-pressed', String(actif));
-          favBtn.setAttribute('aria-label', actif ? 'Retirer des favoris' : 'Ajouter aux favoris');
-          favBtn.textContent = actif ? '★' : '☆';
-          mettreAJourCompteurFavoris();
-          if (etat.favorisSeuls) rendreEcoles();
+      else if (q.type === "rank") {
+        // Plafond : meilleure combinaison possible (poids décroissants)
+        profils.forEach(p => {
+          const valeursTriees = q.options.map(o => (o.scores[p] || 0)).sort((a, b) => b - a);
+          let meilleur = 0;
+          valeursTriees.slice(0, q.max || 3).forEach((v, idx) => { meilleur += Math.max(v, 0) * (RANK_WEIGHTS[idx] || 1); });
+          maxPossible[p] += meilleur;
         });
-        favBtn.addEventListener('keydown', (evt) => evt.stopPropagation());
-      }
-      const compareBtn = carte.querySelector('.ecole-card-compare');
-      if (compareBtn) {
-        compareBtn.addEventListener('click', (evt) => {
-          evt.stopPropagation();
-          basculerComparaison(compareBtn.dataset.compareId, compareBtn);
+        const valeurs = reponses[q.id] || [];
+        valeurs.forEach((v, idx) => {
+          const opt = trouverOption(q, v);
+          if (!opt) return;
+          const poidsRang = RANK_WEIGHTS[idx] || 1;
+          profils.forEach(p => {
+            const contrib = (opt.scores[p] || 0) * poidsRang;
+            scores[p] += contrib;
+            if (contrib > 0) contributions[p].push({ label: `${q.label} → ${opt.label} (choix n°${idx + 1})`, poids: contrib });
+          });
         });
-        compareBtn.addEventListener('keydown', (evt) => evt.stopPropagation());
       }
     });
-  }
-  rendreEcolesDirectoire = rendreEcoles;
 
-  let rechercheDebounce;
-  searchInput.addEventListener('input', () => {
-    etat.recherche = searchInput.value;
-    rendreEcoles();
-    clearTimeout(rechercheDebounce);
-    rechercheDebounce = setTimeout(() => {
-      if (searchInput.value.trim().length >= 2) {
-        ajouterHistorique(searchInput.value);
-        rendreHistoriqueRecherche();
+    const pourcentages = {};
+    profils.forEach(p => {
+      const plafond = maxPossible[p] || 1;
+      pourcentages[p] = Math.max(0, Math.min(100, Math.round((scores[p] / plafond) * 100)));
+    });
+
+    return { scores, maxPossible, contributions, pourcentages };
+  }
+
+  function classerProfils(pourcentages) {
+    return Object.entries(pourcentages)
+      .sort((a, b) => b[1] - a[1])
+      .map(([id, pct]) => ({ id, pct }));
+  }
+
+  function genererExplication(profilId, contributions, limite) {
+    const liste = (contributions[profilId] || [])
+      .slice()
+      .sort((a, b) => b.poids - a.poids)
+      .map(c => c.label);
+    const vues = new Set();
+    const uniques = [];
+    liste.forEach(l => { if (!vues.has(l) && uniques.length < (limite || 4)) { vues.add(l); uniques.push(l); } });
+    return uniques;
+  }
+
+  /* ---------------------------------------------------------------
+     SÉLECTION DES ÉCOLES
+     --------------------------------------------------------------- */
+
+  function normaliserTexte(texte) {
+    return (texte || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  /* Renvoie jusqu'à "limite" écoles pertinentes pour un profil donné,
+     en priorisant : la ville, puis la région, puis le pays entier ;
+     et en valorisant les correspondances de secteur et de statut
+     public/privé sans jamais exclure totalement les autres résultats
+     (la base reste volontairement petite, mieux vaut montrer une
+     alternative que rien du tout). */
+  /* Renvoie jusqu'à "limite" écoles pertinentes pour un profil donné,
+     avec pour chacune un score de compatibilité en pourcentage et la
+     liste des raisons qui l'expliquent (pour l'affichage "94% compatible
+     ✓ raison1 ✓ raison2"). Priorise : la ville, puis la région, puis le
+     pays entier ; valorise aussi les correspondances de secteur, de
+     statut public/privé et de niveau d'études visé, sans jamais exclure
+     totalement les autres résultats (la base reste volontairement
+     petite, mieux vaut montrer une alternative que rien du tout). */
+  const NIVEAU_VISE_VERS_CANON = {
+    bts_dut: "BTS",
+    licence: "Licence",
+    master: "Master",
+    doctorat: "Master",
+    pro_courte: null
+  };
+
+  function selectionnerEcoles(ecolesBrutes, profil, contexte, limite) {
+    limite = limite || 4;
+    const ville = contexte.ville || "";
+    const region = contexte.region || "";
+    const typePref = contexte.type_etablissement || "indifferent";
+    const niveauViseCanon = NIVEAU_VISE_VERS_CANON[contexte.niveau_etudes_vise] || null;
+    const motsClefs = (profil.motsClefsSecteurs || []).map(normaliserTexte);
+
+    const candidatsDuDomaine = ecolesBrutes.filter(e => e.ville && e.domaine === profil.macro);
+
+    const BASE = 55;
+    const PTS_VILLE = 20;
+    const PTS_REGION = 12;
+    const PTS_TYPE = 8;
+    const PTS_SECTEUR = 6;
+    const PTS_SECTEUR_MAX = 12;
+    const PTS_NIVEAU = 10;
+    const PLAFOND = BASE + PTS_VILLE + PTS_TYPE + PTS_SECTEUR_MAX + PTS_NIVEAU;
+
+    function evaluer(e) {
+      let s = BASE;
+      let bonusLocalisation = 0;
+      const raisons = [`Domaine ${profil.nom.toLowerCase()} correspondant à ton profil`];
+
+      if (ville && e.ville === ville) {
+        bonusLocalisation = PTS_VILLE;
+        raisons.push(`Située à ${ville}, ta ville`);
+      } else if (region && e.region === region) {
+        bonusLocalisation = PTS_REGION;
+        raisons.push(`Dans ta région (${region})`);
       }
-    }, 900);
-  });
+      s += bonusLocalisation;
 
-  villeSelect.addEventListener('change', () => {
-    etat.ville = villeSelect.value;
-    rendreEcoles();
-  });
-
-  if (regionSelect) {
-    regionSelect.addEventListener('change', () => {
-      etat.region = regionSelect.value;
-      rendreEcoles();
-    });
-  }
-
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('is-active'));
-      chip.classList.add('is-active');
-      etat.domaine = chip.dataset.domaine;
-      rendreEcoles();
-    });
-  });
-
-  typeChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      typeChips.forEach(c => c.classList.remove('is-active'));
-      chip.classList.add('is-active');
-      etat.type = chip.dataset.type;
-      rendreEcoles();
-    });
-  });
-
-  niveauChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      niveauChips.forEach(c => c.classList.remove('is-active'));
-      chip.classList.add('is-active');
-      etat.niveau = chip.dataset.niveau;
-      rendreEcoles();
-    });
-  });
-
-  if (favorisToggle) {
-    favorisToggle.addEventListener('click', () => {
-      etat.favorisSeuls = !etat.favorisSeuls;
-      favorisToggle.setAttribute('aria-pressed', String(etat.favorisSeuls));
-      favorisToggle.querySelector('.favoris-toggle-icon').textContent = etat.favorisSeuls ? '★' : '☆';
-      rendreEcoles();
-    });
-  }
-
-  mettreAJourCompteurFavoris();
-  rendreHistoriqueRecherche();
-
-  const clearHistBtn = document.getElementById('derniereRecherchesClear');
-  if (clearHistBtn) {
-    clearHistBtn.addEventListener('click', () => {
-      effacerHistorique();
-      rendreHistoriqueRecherche();
-    });
-  }
-
-  rendreEcoles();
-});
-
-/* ---------- Fermeture de la fiche détaillée d'école ---------- */
-const ecoleModal = document.getElementById('ecoleModal');
-if (ecoleModal) {
-  ecoleModal.addEventListener('click', (e) => {
-    if (e.target === ecoleModal || e.target.classList.contains('ecole-modal-backdrop')) {
-      fermerModaleEcole();
-    }
-  });
-  const closeBtn = document.getElementById('ecoleModalClose');
-  if (closeBtn) closeBtn.addEventListener('click', fermerModaleEcole);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') fermerModaleEcole();
-  });
-}
-
-/* ---------- Formulaire de contact ---------- */
-const contactForm = document.getElementById('contactForm');
-const contactStatus = document.getElementById('contactStatus');
-
-function echapperTexte(texte) {
-  const div = document.createElement('div');
-  div.textContent = texte;
-  return div.innerHTML;
-}
-
-if (contactForm) {
-  contactForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    if (contactForm.action.includes('VOTRE_ID_FORMSPREE')) {
-      contactStatus.innerHTML = "Le formulaire n'est pas encore configuré (il manque l'identifiant Formspree). Écris-nous directement à contact0parcourio@gmail.com en attendant.";
-      contactStatus.classList.remove('is-success');
-      contactStatus.classList.add('is-error');
-      return;
-    }
-
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    const texteOriginal = submitBtn.textContent;
-    const prenomBrut = (contactForm.querySelector('[name="nom"]').value || '').trim().split(' ')[0];
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Envoi…";
-    contactStatus.innerHTML = '';
-    contactStatus.classList.remove('is-success', 'is-error');
-
-    try {
-      const response = await fetch(contactForm.action, {
-        method: 'POST',
-        body: new FormData(contactForm),
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        contactForm.reset();
-        const salutation = prenomBrut ? `Merci ${echapperTexte(prenomBrut)}, c'est envoyé !` : "C'est envoyé, merci !";
-        contactStatus.innerHTML = `
-          <span class="form-status-icon">✓</span>
-          <span class="form-status-text">
-            <strong>${salutation}</strong>
-            Ton message est bien arrivé jusqu'à nous. On le lit personnellement et on te répond par email, en général sous 24 à 48h.
-          </span>
-        `;
-        contactStatus.classList.add('is-success');
-      } else {
-        throw new Error('Réponse HTTP ' + response.status);
+      if (typePref !== "indifferent" && e.type === (typePref === "public" ? "public" : "privé")) {
+        s += PTS_TYPE;
+        raisons.push(`Statut ${e.type} comme souhaité`);
       }
-    } catch (err) {
-      console.error('Erreur envoi formulaire de contact', err);
-      contactStatus.innerHTML = `
-        <span class="form-status-icon">!</span>
-        <span class="form-status-text">
-          <strong>Ton message n'est pas parti.</strong>
-          Vérifie ta connexion et réessaie — ou écris-nous directement à <a href="mailto:contact0parcourio@gmail.com">contact0parcourio@gmail.com</a>, on te lira quand même.
-        </span>
-      `;
-      contactStatus.classList.add('is-error');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = texteOriginal;
+
+      if (motsClefs.length && e.secteurs && e.secteurs.length) {
+        const secteursNorm = e.secteurs.map(normaliserTexte);
+        const secteursMatches = e.secteurs.filter((sec, idx) => motsClefs.includes(secteursNorm[idx]));
+        if (secteursMatches.length) {
+          s += Math.min(secteursMatches.length * PTS_SECTEUR, PTS_SECTEUR_MAX);
+          raisons.push(`Propose une formation en ${secteursMatches.slice(0, 2).join(' / ')}`);
+        }
+      }
+
+      if (niveauViseCanon && e.niveauAccepte && e.niveauAccepte.includes(niveauViseCanon)) {
+        s += PTS_NIVEAU;
+        raisons.push(`Accessible au niveau ${niveauViseCanon} que tu vises`);
+      }
+
+      const pct = Math.max(1, Math.min(98, Math.round((s / PLAFOND) * 100)));
+      return { e, s, pct, raisons, bonusLocalisation };
     }
-  });
-}
+
+    let resultats = candidatsDuDomaine.map(evaluer).sort((a, b) => b.s - a.s);
+
+    let localise = resultats.filter(r => r.bonusLocalisation > 0); // ville ou région correspond
+    let fallbackUtilise = false;
+    if (localise.length === 0) {
+      // Aucune école connue à proximité pour ce profil : on montre les
+      // meilleures options nationales, en priorité à Dakar.
+      fallbackUtilise = true;
+      localise = resultats.length ? resultats : [];
+    }
+
+    // Filet de sécurité absolu : même si la base venait à ne plus
+    // contenir AUCUNE école dans ce domaine précis (cas extrême, pas
+    // rencontré aujourd'hui avec 200 écoles réparties sur les 4
+    // domaines), on ne renvoie jamais une liste vide. On élargit la
+    // recherche à toute la base, en gardant un score minimal honnête.
+    if (localise.length === 0) {
+      fallbackUtilise = true;
+      localise = ecolesBrutes
+        .filter(e => e.ville)
+        .map(e => ({
+          e,
+          s: 0,
+          pct: 15,
+          raisons: ["Base en cours d'enrichissement pour ce domaine : voici une école de référence en attendant"],
+          bonusLocalisation: 0
+        }));
+    }
+
+    return {
+      ecoles: localise.slice(0, limite).map(r => ({ ...r.e, compatibilite: r.pct, raisonsCompatibilite: r.raisons })),
+      fallbackUtilise
+    };
+  }
+
+  /* Variante de selectionnerEcoles pour le parcours "Je souhaite
+     apprendre un métier" : au lieu de valoriser le niveau d'études visé
+     (Master, Doctorat…), on valorise l'accessibilité immédiate — un
+     niveau BFEM accepté, ou un nom d'établissement typiquement associé
+     à la formation professionnelle (CFP, CFPT, Don Bosco…) — puisque
+     l'objectif ici est une insertion rapide, pas un parcours long. */
+  function selectionnerEcolesMetier(ecolesBrutes, metier, contexte, limite) {
+    limite = limite || 4;
+    const ville = contexte.ville || "";
+    const typePref = contexte.type_etablissement || "indifferent";
+    const motsClefsSecteurs = (metier.motsClefsSecteurs || []).map(normaliserTexte);
+    const motsClefsNom = (metier.motsClefsNom || []).map(normaliserTexte);
+
+    const candidats = ecolesBrutes.filter(e => e.ville && e.domaine === metier.macro);
+
+    const BASE = 50;
+    const PTS_VILLE = 18;
+    const PTS_REGION = 10;
+    const PTS_TYPE = 6;
+    const PTS_SECTEUR = 8;
+    const PTS_SECTEUR_MAX = 16;
+    const PTS_ACCESSIBLE = 14;
+    const PTS_NOM = 10;
+    const PLAFOND = BASE + PTS_VILLE + PTS_TYPE + PTS_SECTEUR_MAX + PTS_ACCESSIBLE + PTS_NOM;
+
+    function evaluer(e) {
+      let s = BASE;
+      let bonusLocalisation = 0;
+      const raisons = [`Formation en ${metier.nom.toLowerCase()}`];
+
+      if (ville && e.ville === ville) {
+        bonusLocalisation = PTS_VILLE;
+        raisons.push(`Située à ${ville}, ta ville`);
+      } else if (contexte.region && e.region === contexte.region) {
+        bonusLocalisation = PTS_REGION;
+        raisons.push(`Dans ta région (${contexte.region})`);
+      }
+      s += bonusLocalisation;
+
+      if (typePref !== "indifferent" && e.type === (typePref === "public" ? "public" : "privé")) {
+        s += PTS_TYPE;
+        raisons.push(`Statut ${e.type} comme souhaité`);
+      }
+
+      if (motsClefsSecteurs.length && e.secteurs && e.secteurs.length) {
+        const secteursNorm = e.secteurs.map(normaliserTexte);
+        const secteursMatches = e.secteurs.filter((sec, idx) => motsClefsSecteurs.includes(secteursNorm[idx]));
+        if (secteursMatches.length) {
+          s += Math.min(secteursMatches.length * PTS_SECTEUR, PTS_SECTEUR_MAX);
+          raisons.push(`Propose une formation en ${secteursMatches.slice(0, 2).join(' / ')}`);
+        }
+      }
+
+      if (e.niveauAccepte && e.niveauAccepte.includes("BFEM")) {
+        s += PTS_ACCESSIBLE;
+        raisons.push("Accessible dès le BFEM, sans attendre le BAC");
+      }
+
+      const cibleNom = normaliserTexte(`${e.nom || ""} ${e.sigle || ""}`);
+      if (motsClefsNom.some(mot => cibleNom.includes(mot))) {
+        s += PTS_NOM;
+        raisons.push("Centre reconnu pour la formation professionnelle");
+      }
+
+      const pct = Math.max(1, Math.min(98, Math.round((s / PLAFOND) * 100)));
+      return { e, s, pct, raisons, bonusLocalisation };
+    }
+
+    let resultats = candidats.map(evaluer).sort((a, b) => b.s - a.s);
+
+    let localise = resultats.filter(r => r.bonusLocalisation > 0);
+    let fallbackUtilise = false;
+    if (localise.length === 0) {
+      fallbackUtilise = true;
+      localise = resultats.length ? resultats : [];
+    }
+
+    if (localise.length === 0) {
+      fallbackUtilise = true;
+      localise = ecolesBrutes
+        .filter(e => e.ville)
+        .map(e => ({
+          e, s: 0, pct: 15,
+          raisons: ["Base en cours d'enrichissement pour ce métier : voici une école de référence en attendant"],
+          bonusLocalisation: 0
+        }));
+    }
+
+    return {
+      ecoles: localise.slice(0, limite).map(r => ({ ...r.e, compatibilite: r.pct, raisonsCompatibilite: r.raisons })),
+      fallbackUtilise
+    };
+  }
+
+  /* ---------------------------------------------------------------
+     EXPORT
+     --------------------------------------------------------------- */
+  global.OrientationEngine = {
+    rendreFormulaire,
+    collecterReponses,
+    calculerScores,
+    classerProfils,
+    genererExplication,
+    selectionnerEcoles,
+    selectionnerEcolesMetier
+  };
+})(window);
