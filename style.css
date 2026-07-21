@@ -1569,8 +1569,12 @@ a { color: inherit; }
 }
 
 .directory-masquer::before {
-  content: "▲";
+  content: "▼";
   font-size: 0.65rem;
+}
+
+.directory-masquer.is-masquer::before {
+  content: "▲";
 }
 
 .favoris-toggle {

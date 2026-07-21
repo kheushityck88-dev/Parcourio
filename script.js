@@ -792,7 +792,7 @@ rawEcolesPromise.then(liste => {
   const typeChips = document.querySelectorAll('.type-chip');
   const niveauChips = document.querySelectorAll('.niveau-chip');
   const favorisToggle = document.getElementById('favorisToggle');
-  const masquerBtn = document.getElementById('ecolesMasquerBtn');
+  const toggleBtn = document.getElementById('ecolesToggleBtn');
 
   if (!grid || !countEl || !searchInput || !villeSelect) return;
 
@@ -864,8 +864,18 @@ rawEcolesPromise.then(liste => {
     document.getElementById('ecoles').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  if (masquerBtn) {
-    masquerBtn.addEventListener('click', reinitialiserEtMasquer);
+  /* Un seul bouton qui bascule entre « Voir les X écoles de la base » et
+     « Masquer les écoles », plutôt que deux boutons séparés qui se
+     remplaçaient visuellement l'un l'autre à des endroits différents. */
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      if (filtresActifs() || etat.aAfficheTout) {
+        reinitialiserEtMasquer();
+      } else {
+        etat.aAfficheTout = true;
+        rendreEcoles();
+      }
+    });
   }
 
   function rendreEcoles() {
@@ -874,25 +884,23 @@ rawEcolesPromise.then(liste => {
     // (encombrant) : on affiche une invitation à filtrer, avec un bouton
     // pour tout afficher quand même si elle le souhaite.
     if (!filtresActifs() && !etat.aAfficheTout) {
-      if (masquerBtn) masquerBtn.hidden = true;
+      if (toggleBtn) {
+        toggleBtn.textContent = `Voir les ${ecoles.length} écoles de la base`;
+        toggleBtn.classList.remove('is-masquer');
+      }
       countEl.textContent = `${ecoles.length} école${ecoles.length > 1 ? 's' : ''} au total`;
       grid.innerHTML = `
         <div class="directory-empty directory-invite">
-          <p>Utilise la recherche ou les filtres ci-dessus pour trouver rapidement une école.</p>
-          <button type="button" class="btn-secondary" id="voirToutesLesEcoles">Voir les ${ecoles.length} écoles de la base</button>
+          <p>Utilise la recherche ou les filtres ci-dessus, ou clique sur le bouton pour voir toute la base.</p>
         </div>
       `;
-      const voirToutBtn = document.getElementById('voirToutesLesEcoles');
-      if (voirToutBtn) {
-        voirToutBtn.addEventListener('click', () => {
-          etat.aAfficheTout = true;
-          rendreEcoles();
-        });
-      }
       return;
     }
 
-    if (masquerBtn) masquerBtn.hidden = false;
+    if (toggleBtn) {
+      toggleBtn.textContent = 'Masquer les écoles';
+      toggleBtn.classList.add('is-masquer');
+    }
 
     const rechercheNorm = normaliser(etat.recherche);
     const favoris = lireFavoris();
