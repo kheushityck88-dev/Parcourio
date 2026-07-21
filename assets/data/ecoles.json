@@ -6239,7 +6239,7 @@
     "logo": null,
     "adresse": "Sicap Sacré-Cœur II, n°8613, Dakar",
     "description": "Structure reconnue par l'État qui forme les femmes aux métiers de la couture, de l'hôtellerie et à l'auto-emploi pour favoriser leur insertion économique.",
-    "siteOfficiel": null,
+    "siteOfficiel": "https://caifsn.com/",
     "telephone": "+221 33 825 13 50",
     "email": "caifsn@gmail.com",
     "reseaux": {},
@@ -7599,5 +7599,225 @@
     "admission": null,
     "region": "Dakar",
     "id": "dakar-lyc-e-technique-seydina-limamou-laye-de-pikine"
+  },
+  {
+    "id": "dakar-supdeco-dakar-groupe-ecole-superieure-de-commerce-de-dakar",
+    "nom": "SUPDECO Dakar — Groupe École Supérieure de Commerce de Dakar",
+    "sigle": "SUPDECO",
+    "logo": null,
+    "adresse": "7, Avenue Faidherbe, BP 21354, Dakar",
+    "description": "Première business school du Sénégal, fondée en 1993. Forme des managers de haut niveau dans le management et les TIC ; certifiée ISO 9001, diplômes reconnus par le CAMES.",
+    "telephone": "+221 33 849 69 19",
+    "email": "admission@supdeco.edu.sn",
+    "siteOfficiel": "https://supdeco.sn/",
+    "reseaux": {},
+    "secteurs": [
+      "Commerce",
+      "Gestion",
+      "Management",
+      "TIC"
+    ],
+    "filieres": [
+      "Commerce",
+      "Gestion",
+      "Management",
+      "TIC"
+    ],
+    "diplomes": [
+      "Bachelor",
+      "Master",
+      "Doctorat"
+    ],
+    "niveauAccepte": [
+      "Après BAC",
+      "Licence",
+      "Master"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "ville": "Dakar",
+    "domaine": "gestion",
+    "type": "privé"
+  },
+  {
+    "id": "thies-supdeco-thies-groupe-ecole-superieure-de-commerce-de-dakar",
+    "nom": "SUPDECO Thiès — Groupe École Supérieure de Commerce de Dakar",
+    "sigle": "SUPDECO",
+    "logo": null,
+    "adresse": "Rue de Lyon, Thiès",
+    "description": "Campus de Thiès du Groupe SUPDECO, première business school du Sénégal (fondée en 1993), management et TIC.",
+    "telephone": "+221 33 951 10 03",
+    "email": "campusthies@supdeco.edu.sn",
+    "siteOfficiel": "https://supdeco.sn/",
+    "reseaux": {},
+    "secteurs": [
+      "Commerce",
+      "Gestion",
+      "Management",
+      "TIC"
+    ],
+    "filieres": [
+      "Commerce",
+      "Gestion",
+      "Management",
+      "TIC"
+    ],
+    "diplomes": [
+      "Bachelor",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC",
+      "Licence",
+      "Master"
+    ],
+    "admission": null,
+    "region": "Thiès",
+    "ville": "Thiès",
+    "domaine": "gestion",
+    "type": "privé"
+  },
+  {
+    "id": "saint-louis-supdeco-saint-louis-groupe-ecole-superieure-de-commerce-de-dakar",
+    "nom": "SUPDECO Saint-Louis — Groupe École Supérieure de Commerce de Dakar",
+    "sigle": "SUPDECO",
+    "logo": null,
+    "adresse": "156, Rue Seydou Nourou Tall x Rue Khalifa Ababacar Sy, Saint-Louis",
+    "description": "Campus de Saint-Louis du Groupe SUPDECO, première business school du Sénégal (fondée en 1993), management et TIC.",
+    "telephone": "+221 33 961 66 99",
+    "email": "campussl@supdeco.edu.sn",
+    "siteOfficiel": "https://supdeco.sn/",
+    "reseaux": {},
+    "secteurs": [
+      "Commerce",
+      "Gestion",
+      "Management",
+      "TIC"
+    ],
+    "filieres": [
+      "Commerce",
+      "Gestion",
+      "Management",
+      "TIC"
+    ],
+    "diplomes": [
+      "Bachelor",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC",
+      "Licence",
+      "Master"
+    ],
+    "admission": null,
+    "region": "Saint-Louis",
+    "ville": "Saint-Louis",
+    "domaine": "gestion",
+    "type": "privé"
+  },
+  {
+    "id": "dakar-universite-amadou-hampate-ba-uahb",
+    "nom": "Université Amadou Hampaté Bâ (UAHB)",
+    "sigle": "UAHB",
+    "logo": null,
+    "adresse": "Rocade Fann-Bel Air x Canal IV, Dakar",
+    "description": "Université privée laïque fondée en 2006, filiale du Groupe Jean de la Fontaine. Cinq facultés : Lettres et Sciences humaines, Sciences juridiques et politiques, Sciences économiques et de gestion, Sciences et technologies, Sciences de la santé. Diplômes reconnus par le CAMES.",
+    "telephone": "+221 33 824 01 24",
+    "email": null,
+    "siteOfficiel": "https://univ.uahb.sn/",
+    "reseaux": {},
+    "secteurs": [
+      "Droit",
+      "Gestion",
+      "Santé",
+      "Informatique"
+    ],
+    "filieres": [
+      "Droit",
+      "Gestion",
+      "Santé",
+      "Informatique"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
+    "niveauAccepte": [
+      "Après BAC",
+      "Licence",
+      "Master"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "ville": "Dakar",
+    "domaine": "gestion",
+    "type": "privé"
+  },
+  {
+    "id": "dakar-aimac-academie-internationale-des-metiers-de-l-aviation-civile",
+    "nom": "AIMAC — Académie Internationale des Métiers de l'Aviation Civile",
+    "sigle": "AIMAC",
+    "logo": null,
+    "adresse": "S.I.C.A.P. Amitié 2, Allées Seydou Nourou Tall, Dakar",
+    "description": "Académie créée par AIBD SA en collaboration avec l'Armée de l'Air, dédiée à la formation aux métiers de l'aviation civile (pilotage, maintenance aéronautique, métiers aéroportuaires), certification EASA.",
+    "telephone": "+221 77 374 94 94",
+    "email": "information@aimac.sn",
+    "siteOfficiel": "https://aimac.sn/",
+    "reseaux": {},
+    "secteurs": [
+      "Aviation civile",
+      "Maintenance aéronautique",
+      "Pilotage"
+    ],
+    "filieres": [
+      "Aviation civile",
+      "Maintenance aéronautique",
+      "Pilotage"
+    ],
+    "diplomes": [
+      "BTS",
+      "Licence"
+    ],
+    "niveauAccepte": [
+      "Après BAC",
+      "BTS"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "ville": "Dakar",
+    "domaine": "technologie",
+    "type": "public"
+  },
+  {
+    "id": "saly-institut-diambars",
+    "nom": "Institut Diambars",
+    "sigle": "Diambars",
+    "logo": null,
+    "adresse": "Saly, région de Thiès",
+    "description": "Académie sport-études combinant football de haut niveau et scolarité complète (collège/lycée), fondée en 2003 par Bernard Lama, Patrick Vieira, Jimmy Adjovi-Boco et Saer Seck. Taux de réussite au BFEM/Bac proche de 80%.",
+    "telephone": "+221 33 824 40 32",
+    "email": null,
+    "siteOfficiel": "https://www.diambars.org/",
+    "reseaux": {},
+    "secteurs": [
+      "Sport-études",
+      "Football"
+    ],
+    "filieres": [
+      "Sport-études"
+    ],
+    "diplomes": [
+      "BFEM",
+      "Baccalauréat"
+    ],
+    "niveauAccepte": [
+      "BFEM"
+    ],
+    "admission": null,
+    "region": "Thiès",
+    "ville": "Saly",
+    "domaine": "social",
+    "type": "privé"
   }
 ]

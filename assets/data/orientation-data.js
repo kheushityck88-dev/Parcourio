@@ -549,17 +549,6 @@
     { value: "medias_int", label: "Réseaux sociaux, médias, création de contenu", scores: { communication_medias: 2 } }
   ];
 
-  const BANQUE_ACTIVITES = [
-    { value: "club_tech", label: "Club informatique / robotique", scores: { info_num: 2, ingenierie: 1 } },
-    { value: "club_art", label: "Théâtre, musique, arts plastiques", scores: { creation_design: 2, communication_medias: 1 } },
-    { value: "club_sport", label: "Sport en club ou compétition", scores: { sante_social: 1, commerce_gestion: 1 } },
-    { value: "benevolat", label: "Bénévolat / engagement associatif", scores: { sante_social: 1, education_humaines: 2 } },
-    { value: "junior_entreprise", label: "Junior-entreprise / petit commerce / business", scores: { commerce_gestion: 2 } },
-    { value: "debat", label: "Club de débat / journal scolaire", scores: { droit_admin: 1, communication_medias: 2 } },
-    { value: "soutien_scolaire", label: "Soutien scolaire à d'autres élèves", scores: { education_humaines: 2 } },
-    { value: "aucune_activite", label: "Aucune activité régulière pour l'instant", scores: {} }
-  ];
-
   const BANQUE_RESOLUTION = [
     { value: "logique_methodique", label: "De façon logique et méthodique, étape par étape", scores: { info_num: 2, ingenierie: 2, droit_admin: 1 } },
     { value: "creative_intuitive", label: "De façon créative et intuitive, en testant des idées", scores: { creation_design: 2, communication_medias: 1 } },
@@ -591,30 +580,6 @@
       { value: "3", scores: {} },
       { value: "4", scores: { commerce_gestion: 1, ingenierie: 1 } },
       { value: "5", scores: { info_num: 2, creation_design: 1 } }
-    ]
-  };
-
-  const ECHELLE_INTROVERTI_EXTRAVERTI = {
-    poleGauche: "Plutôt introverti·e",
-    poleDroite: "Plutôt extraverti·e",
-    positions: [
-      { value: "1", scores: { info_num: 1, ingenierie: 1 } },
-      { value: "2", scores: { sante_social: 1 } },
-      { value: "3", scores: {} },
-      { value: "4", scores: { education_humaines: 1 } },
-      { value: "5", scores: { communication_medias: 2, commerce_gestion: 1 } }
-    ]
-  };
-
-  const ECHELLE_REFLECHI_SPONTANE = {
-    poleGauche: "Réfléchi·e et méthodique",
-    poleDroite: "Spontané·e et créatif·ve",
-    positions: [
-      { value: "1", scores: { droit_admin: 1, ingenierie: 1 } },
-      { value: "2", scores: { info_num: 1 } },
-      { value: "3", scores: {} },
-      { value: "4", scores: { communication_medias: 1 } },
-      { value: "5", scores: { creation_design: 2 } }
     ]
   };
 
