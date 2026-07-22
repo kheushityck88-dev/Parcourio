@@ -2022,10 +2022,6 @@ a { color: inherit; }
   color: var(--ink-500);
 }
 
-.ecole-reco-item .reconnu-badge {
-  margin-top: 10px;
-}
-
 .ecole-reco-lien {
   display: block;
   margin-top: 10px;
@@ -2100,18 +2096,6 @@ a { color: inherit; }
 
 .type-badge.is-public { color: #7dd3fc; border-color: #38bdf8; background: rgba(56,189,248,0.1); }
 .type-badge.is-prive { color: #fca5a5; border-color: #f87171; background: rgba(248,113,113,0.1); }
-
-.reconnu-badge {
-  align-self: flex-start;
-  font-size: 0.72rem;
-  font-family: var(--font-mono);
-  padding: 4px 11px;
-  border-radius: 999px;
-  border: 1px solid;
-  color: #86efac;
-  border-color: #4ade80;
-  background: rgba(74, 222, 128, 0.1);
-}
 
 .ecole-card-excerpt {
   font-size: 0.85rem;

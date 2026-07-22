@@ -316,7 +316,6 @@ function afficherCarteResultat(d) {
         </div>
         <div class="ecole-reco-barre"><div class="ecole-reco-barre-remplie" style="width:${e.compatibilite}%"></div></div>
         ${e.raisonsCompatibilite && e.raisonsCompatibilite.length ? `<ul class="ecole-reco-raisons">${e.raisonsCompatibilite.map(r => `<li>✓ ${r}</li>`).join('')}</ul>` : ''}
-        ${e.reconnuEtat === true ? `<span class="reconnu-badge" title="Établissement reconnu par l'État du Sénégal">✔️ Reconnu par l'État</span>` : ''}
         ${e.id ? `<button type="button" class="ecole-reco-lien">Voir les filières et infos complètes →</button>` : ''}
       </div>
     `).join('') + '</div>';
@@ -581,7 +580,6 @@ function ouvrirModaleEcole(e) {
     <div class="ecole-badges">
       <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
       ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${e.type === 'public' ? '🏛️' : '🏫'} ${typeLabels[e.type] || e.type}</span>` : ''}
-      ${e.reconnuEtat === true ? `<span class="reconnu-badge" title="Établissement reconnu par l'État du Sénégal">✔️ Reconnu par l'État</span>` : ''}
     </div>
     <h3>${e.nom}${e.sigle ? ` <span class="ecole-modal-sigle">(${e.sigle})</span>` : ''}</h3>
     ${e.description ? `<p class="ecole-modal-desc">${e.description}</p>` : '<p class="ecole-modal-desc ecole-modal-desc-empty">Pas encore de description détaillée pour cet établissement — écris-nous si tu peux nous aider à la compléter.</p>'}
@@ -939,7 +937,6 @@ rawEcolesPromise.then(liste => {
           <div class="ecole-badges">
             <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
             ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${e.type === 'public' ? '🏛️' : '🏫'} ${typeLabels[e.type] || e.type}</span>` : ''}
-            ${e.reconnuEtat === true ? `<span class="reconnu-badge" title="Établissement reconnu par l'État du Sénégal">✔️ État</span>` : ''}
           </div>
           <h3>${e.nom}</h3>
           <span class="ecole-ville">${e.ville}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}</span>
