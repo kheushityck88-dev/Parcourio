@@ -601,6 +601,11 @@ a { color: inherit; }
   color: var(--gold-400);
 }
 
+.waypoint-num .icon {
+  width: 1.3em;
+  height: 1.3em;
+}
+
 .waypoint-line {
   width: 2px;
   flex: 1;
@@ -641,6 +646,23 @@ a { color: inherit; }
   color: var(--blue-200);
 }
 
+/* ---------- Icônes (Lucide, en SVG inline) ---------- */
+.icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: -0.15em;
+  color: currentColor;
+}
+
+.icon-inline {
+  width: 0.85em;
+  height: 0.85em;
+  vertical-align: -0.1em;
+  margin: 0 0.05em;
+}
+
 /* ---------- Cards ---------- */
 .cards {
   display: grid;
@@ -670,6 +692,7 @@ a { color: inherit; }
 
 .card-pin {
   font-size: 1.4rem;
+  color: var(--blue-400);
   display: block;
   margin-bottom: 14px;
 }
@@ -742,6 +765,7 @@ a { color: inherit; }
 .parcours-icon {
   display: block;
   font-size: 2.2rem;
+  color: var(--gold-400);
   margin-bottom: 16px;
 }
 
@@ -1473,6 +1497,9 @@ a { color: inherit; }
 }
 
 .domaine-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   padding: 9px 16px;
   border-radius: 999px;
   border: 1px solid var(--line);
@@ -1500,6 +1527,9 @@ a { color: inherit; }
 }
 
 .type-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   padding: 9px 16px;
   border-radius: 999px;
   border: 1px solid var(--line);
@@ -2060,8 +2090,20 @@ a { color: inherit; }
 }
 
 .ecole-card .ecole-ville::before {
-  content: "📍";
-  font-size: 0.85rem;
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  background-color: var(--ink-500);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .ecole-badges {

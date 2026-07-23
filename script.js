@@ -55,7 +55,7 @@ let etatParcours = { parcours: null, diplome: null, objectif: null, questions: n
 /* --- Rendu des deux grandes cartes de parcours --- */
 parcoursPicker.innerHTML = PARCOURS.map(p => `
   <button type="button" class="parcours-card" data-parcours="${p.id}">
-    <span class="parcours-icon">${p.icone}</span>
+    <span class="parcours-icon">${Icons.svg(p.icone)}</span>
     <h3>${p.titre}</h3>
     <p>${p.description}</p>
   </button>
@@ -315,8 +315,8 @@ function afficherCarteResultat(d) {
           <span class="ecole-reco-score">${e.compatibilite}% compatible</span>
         </div>
         <div class="ecole-reco-barre"><div class="ecole-reco-barre-remplie" style="width:${e.compatibilite}%"></div></div>
-        ${e.raisonsCompatibilite && e.raisonsCompatibilite.length ? `<ul class="ecole-reco-raisons">${e.raisonsCompatibilite.map(r => `<li>✓ ${r}</li>`).join('')}</ul>` : ''}
-        ${e.id ? `<button type="button" class="ecole-reco-lien">Voir les filières et infos complètes →</button>` : ''}
+        ${e.raisonsCompatibilite && e.raisonsCompatibilite.length ? `<ul class="ecole-reco-raisons">${e.raisonsCompatibilite.map(r => `<li>${Icons.svg('check', { class: 'icon-inline' })} ${r}</li>`).join('')}</ul>` : ''}
+        ${e.id ? `<button type="button" class="ecole-reco-lien">Voir les filières et infos complètes ${Icons.svg('arrow-right', { class: 'icon-inline' })}</button>` : ''}
       </div>
     `).join('') + '</div>';
     if (d.fallbackUtilise) {
@@ -337,7 +337,7 @@ function afficherCarteResultat(d) {
   resultSection.className = `section result-section waypoint destination ${d.parcoursClasse}`;
   resultSection.innerHTML = `
     <div class="waypoint-marker">
-      <span class="waypoint-num">★</span>
+      <span class="waypoint-num">${Icons.svg('check')}</span>
       <span class="waypoint-line short"></span>
     </div>
     <div class="waypoint-body">
@@ -345,7 +345,7 @@ function afficherCarteResultat(d) {
       <h2>Ton orientation personnalisée</h2>
       <div class="cards">
         <div class="card result-profile-card" style="--profile-color:${d.couleur}; border-color:${d.couleur}66;">
-          <span class="result-profile-icon">${d.icone}</span>
+          <span class="result-profile-icon">${Icons.svg(d.icone)}</span>
           <h3>${d.titre}</h3>
           <p><strong>Correspondance :</strong> ${d.correspondance}</p>
           ${d.enteteExtra}
@@ -362,7 +362,7 @@ function afficherCarteResultat(d) {
       </div>
       ${d.radar ? '<canvas id="profilRadar"></canvas>' : ''}
       <div class="result-actions">
-        <button type="button" class="btn-secondary" id="refaireLeTest">↺ Refaire le test</button>
+        <button type="button" class="btn-secondary" id="refaireLeTest">${Icons.svg('rotate-ccw', { class: 'icon-inline' })} Refaire le test</button>
       </div>
     </div>
   `;
@@ -562,14 +562,14 @@ function ouvrirModaleEcole(e) {
   if (!modale || !contenu) return;
 
   const lignesInfo = [];
-  if (e.adresse) lignesInfo.push(`<p class="ecole-modal-line">📍 ${e.adresse}</p>`);
-  if (!e.adresse && e.ville) lignesInfo.push(`<p class="ecole-modal-line">📍 ${e.ville}${e.region && e.region !== e.ville ? ` — région de ${e.region}` : ''}</p>`);
-  if (e.telephone) lignesInfo.push(`<p class="ecole-modal-line">📞 ${e.telephone}</p>`);
-  if (e.email) lignesInfo.push(`<p class="ecole-modal-line">✉️ ${e.email}</p>`);
+  if (e.adresse) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.adresse}</p>`);
+  if (!e.adresse && e.ville) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.ville}${e.region && e.region !== e.ville ? ` — région de ${e.region}` : ''}</p>`);
+  if (e.telephone) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('phone', { class: 'icon-inline' })} ${e.telephone}</p>`);
+  if (e.email) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('mail', { class: 'icon-inline' })} ${e.email}</p>`);
 
   const reseaux = e.reseaux && typeof e.reseaux === 'object' ? Object.entries(e.reseaux).filter(([, v]) => v) : [];
   const reseauxHTML = reseaux.length
-    ? `<p class="ecole-modal-line">🔗 ${reseaux.map(([nom, url]) => `<a href="${url}" target="_blank" rel="noopener">${nom}</a>`).join(' · ')}</p>`
+    ? `<p class="ecole-modal-line">${Icons.svg('link', { class: 'icon-inline' })} ${reseaux.map(([nom, url]) => `<a href="${url}" target="_blank" rel="noopener">${nom}</a>`).join(' · ')}</p>`
     : '';
 
   const tags = (liste) => (liste && liste.length)
@@ -579,7 +579,7 @@ function ouvrirModaleEcole(e) {
   contenu.innerHTML = `
     <div class="ecole-badges">
       <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
-      ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${e.type === 'public' ? '🏛️' : '🏫'} ${typeLabels[e.type] || e.type}</span>` : ''}
+      ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${Icons.svg(e.type === 'public' ? 'landmark' : 'school', { class: 'icon-inline' })} ${typeLabels[e.type] || e.type}</span>` : ''}
     </div>
     <h3>${e.nom}${e.sigle ? ` <span class="ecole-modal-sigle">(${e.sigle})</span>` : ''}</h3>
     ${e.description ? `<p class="ecole-modal-desc">${e.description}</p>` : '<p class="ecole-modal-desc ecole-modal-desc-empty">Pas encore de description détaillée pour cet établissement — écris-nous si tu peux nous aider à la compléter.</p>'}
@@ -591,7 +591,7 @@ function ouvrirModaleEcole(e) {
     ${e.admission ? `<h4 class="ecole-modal-subtitle">Conditions d'admission</h4><p class="ecole-modal-desc">${e.admission}</p>` : ''}
     <div class="ecole-modal-actions">
       <button type="button" class="ecole-modal-favori${e.id && estFavori(e.id) ? ' is-favori' : ''}" id="ecoleModalFavoriBtn" data-id="${e.id || ''}" aria-pressed="${e.id && estFavori(e.id) ? 'true' : 'false'}">
-        <span class="ecole-modal-favori-icon">${e.id && estFavori(e.id) ? '★' : '☆'}</span> ${e.id && estFavori(e.id) ? 'Dans mes favoris' : 'Ajouter aux favoris'}
+        <span class="ecole-modal-favori-icon">${Icons.svg('star', { filled: e.id && estFavori(e.id) })}</span> ${e.id && estFavori(e.id) ? 'Dans mes favoris' : 'Ajouter aux favoris'}
       </button>
       ${e.siteOfficiel ? `<a class="btn-primary" href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter le site officiel</a>` : '<span class="ecole-modal-nosite">Site officiel non référencé pour le moment</span>'}
     </div>
@@ -603,7 +603,7 @@ function ouvrirModaleEcole(e) {
       const actif = basculerFavori(e.id);
       favoriBtn.classList.toggle('is-favori', actif);
       favoriBtn.setAttribute('aria-pressed', String(actif));
-      favoriBtn.querySelector('.ecole-modal-favori-icon').textContent = actif ? '★' : '☆';
+      favoriBtn.querySelector('.ecole-modal-favori-icon').innerHTML = Icons.svg('star', { filled: actif });
       favoriBtn.lastChild.textContent = actif ? ' Dans mes favoris' : ' Ajouter aux favoris';
       const carte = document.querySelector(`.ecole-card[data-id="${CSS.escape(e.id)}"]`);
       if (carte) {
@@ -611,7 +611,7 @@ function ouvrirModaleEcole(e) {
         if (btnCarte) {
           btnCarte.classList.toggle('is-favori', actif);
           btnCarte.setAttribute('aria-pressed', String(actif));
-          btnCarte.textContent = actif ? '★' : '☆';
+          btnCarte.innerHTML = Icons.svg('star', { filled: actif });
         }
       }
       if (typeof mettreAJourCompteurFavoris === 'function') mettreAJourCompteurFavoris();
@@ -669,18 +669,18 @@ function rendreComparateur() {
   if (!contenu) return;
   const items = compareSelection.map(id => ecolesIndex[id]).filter(Boolean);
   if (items.length === 0) {
-    contenu.innerHTML = '<h3>Comparateur d\'écoles</h3><p class="comparateur-empty">Sélectionne au moins deux écoles (bouton ⚖ sur chaque fiche) pour les comparer côte à côte.</p>';
+    contenu.innerHTML = `<h3>Comparateur d'écoles</h3><p class="comparateur-empty">Sélectionne au moins deux écoles (bouton ${Icons.svg('scale', { class: 'icon-inline' })} sur chaque fiche) pour les comparer côte à côte.</p>`;
     return;
   }
   const lignes = [
     { label: 'Ville / Région', rendu: e => `${e.ville || '—'}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}` },
-    { label: 'Statut', rendu: e => e.type === 'public' ? '🏛️ Public' : (e.type === 'privé' ? '🏫 Privé' : '—') },
+    { label: 'Statut', rendu: e => e.type === 'public' ? `${Icons.svg('landmark', { class: 'icon-inline' })} Public` : (e.type === 'privé' ? `${Icons.svg('school', { class: 'icon-inline' })} Privé` : '—') },
     { label: 'Domaine', rendu: e => domaineLabels[e.domaine] || e.domaine || '—' },
     { label: 'Niveaux acceptés', rendu: e => celluleListe(e.niveauAccepte) },
     { label: 'Diplômes', rendu: e => celluleListe(e.diplomes) },
     { label: 'Secteurs / filières', rendu: e => celluleListe(e.secteurs) },
     { label: 'Admission', rendu: e => e.admission || '<span class="note">Non précisé</span>' },
-    { label: 'Site officiel', rendu: e => e.siteOfficiel ? `<a href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter →</a>` : '<span class="note">Non référencé</span>' },
+    { label: 'Site officiel', rendu: e => e.siteOfficiel ? `<a href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter ${Icons.svg('arrow-right', { class: 'icon-inline' })}</a>` : '<span class="note">Non référencé</span>' },
   ];
 
   contenu.innerHTML = `
@@ -855,7 +855,7 @@ rawEcolesPromise.then(liste => {
     niveauChips.forEach(c => c.classList.toggle('is-active', c.dataset.niveau === ''));
     if (favorisToggle) {
       favorisToggle.setAttribute('aria-pressed', 'false');
-      favorisToggle.querySelector('.favoris-toggle-icon').textContent = '☆';
+      favorisToggle.querySelector('.favoris-toggle-icon').innerHTML = Icons.svg('star');
     }
 
     rendreEcoles();
@@ -922,7 +922,7 @@ rawEcolesPromise.then(liste => {
 
     if (resultats.length === 0) {
       grid.innerHTML = etat.favorisSeuls
-        ? '<p class="directory-empty">Tu n\'as pas encore d\'école en favoris. Clique sur l\'étoile ☆ d\'une fiche pour l\'ajouter ici.</p>'
+        ? `<p class="directory-empty">Tu n'as pas encore d'école en favoris. Clique sur l'étoile ${Icons.svg('star', { class: 'icon-inline' })} d'une fiche pour l'ajouter ici.</p>`
         : '<p class="directory-empty">Aucune école ne correspond à ta recherche. Essaie une autre ville, une autre région, un autre domaine, un autre statut, ou efface le texte recherché.</p>';
       countEl.textContent = '0 école trouvée pour ces filtres';
       return;
@@ -932,16 +932,16 @@ rawEcolesPromise.then(liste => {
       .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
       .map(e => `
         <div class="card ecole-card visible" data-id="${e.id || ''}" tabindex="0" role="button" aria-label="Voir la fiche de ${e.nom}">
-          <button type="button" class="ecole-card-favori${e.id && favoris.includes(e.id) ? ' is-favori' : ''}" data-fav-id="${e.id || ''}" aria-pressed="${e.id && favoris.includes(e.id) ? 'true' : 'false'}" aria-label="${e.id && favoris.includes(e.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}">${e.id && favoris.includes(e.id) ? '★' : '☆'}</button>
-          <button type="button" class="ecole-card-compare${e.id && compareSelection.includes(e.id) ? ' is-selected' : ''}" data-compare-id="${e.id || ''}" aria-pressed="${e.id && compareSelection.includes(e.id) ? 'true' : 'false'}" aria-label="Ajouter au comparateur">⚖</button>
+          <button type="button" class="ecole-card-favori${e.id && favoris.includes(e.id) ? ' is-favori' : ''}" data-fav-id="${e.id || ''}" aria-pressed="${e.id && favoris.includes(e.id) ? 'true' : 'false'}" aria-label="${e.id && favoris.includes(e.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}">${Icons.svg('star', { filled: e.id && favoris.includes(e.id) })}</button>
+          <button type="button" class="ecole-card-compare${e.id && compareSelection.includes(e.id) ? ' is-selected' : ''}" data-compare-id="${e.id || ''}" aria-pressed="${e.id && compareSelection.includes(e.id) ? 'true' : 'false'}" aria-label="Ajouter au comparateur">${Icons.svg('scale')}</button>
           <div class="ecole-badges">
             <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
-            ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${e.type === 'public' ? '🏛️' : '🏫'} ${typeLabels[e.type] || e.type}</span>` : ''}
+            ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${Icons.svg(e.type === 'public' ? 'landmark' : 'school', { class: 'icon-inline' })} ${typeLabels[e.type] || e.type}</span>` : ''}
           </div>
           <h3>${e.nom}</h3>
           <span class="ecole-ville">${e.ville}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}</span>
           ${e.description ? `<p class="ecole-card-excerpt">${e.description.slice(0, 110)}${e.description.length > 110 ? '…' : ''}</p>` : ''}
-          <span class="ecole-card-more">Voir la fiche →</span>
+          <span class="ecole-card-more">Voir la fiche ${Icons.svg('arrow-right', { class: 'icon-inline' })}</span>
         </div>
       `).join('');
 
@@ -961,7 +961,7 @@ rawEcolesPromise.then(liste => {
           favBtn.classList.toggle('is-favori', actif);
           favBtn.setAttribute('aria-pressed', String(actif));
           favBtn.setAttribute('aria-label', actif ? 'Retirer des favoris' : 'Ajouter aux favoris');
-          favBtn.textContent = actif ? '★' : '☆';
+          favBtn.innerHTML = Icons.svg('star', { filled: actif });
           mettreAJourCompteurFavoris();
           if (etat.favorisSeuls) rendreEcoles();
         });
@@ -1035,7 +1035,7 @@ rawEcolesPromise.then(liste => {
     favorisToggle.addEventListener('click', () => {
       etat.favorisSeuls = !etat.favorisSeuls;
       favorisToggle.setAttribute('aria-pressed', String(etat.favorisSeuls));
-      favorisToggle.querySelector('.favoris-toggle-icon').textContent = etat.favorisSeuls ? '★' : '☆';
+      favorisToggle.querySelector('.favoris-toggle-icon').innerHTML = Icons.svg('star', { filled: etat.favorisSeuls });
       rendreEcoles();
     });
   }
@@ -1109,7 +1109,7 @@ if (contactForm) {
         contactForm.reset();
         const salutation = prenomBrut ? `Merci ${echapperTexte(prenomBrut)}, c'est envoyé !` : "C'est envoyé, merci !";
         contactStatus.innerHTML = `
-          <span class="form-status-icon">✓</span>
+          <span class="form-status-icon">${Icons.svg('check')}</span>
           <span class="form-status-text">
             <strong>${salutation}</strong>
             Ton message est bien arrivé jusqu'à nous. On le lit personnellement et on te répond par email, en général sous 24 à 48h.

@@ -164,7 +164,7 @@
     const barre = document.createElement("div");
     barre.className = "quiz-progress";
     barre.innerHTML = `
-      <button type="button" class="quiz-progress-retour">← Changer de parcours</button>
+      <button type="button" class="quiz-progress-retour">${Icons.svg('arrow-left', { class: 'icon-inline' })} Changer de parcours</button>
       <div class="quiz-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="0">
         <div class="quiz-progress-fill"></div>
       </div>
@@ -328,7 +328,7 @@
           profils.forEach(p => {
             const contrib = (opt.scores[p] || 0) * poids;
             scores[p] += contrib;
-            if (contrib > 0) contributions[p].push({ label: `${q.label} → ${opt.label}`, poids: contrib });
+            if (contrib > 0) contributions[p].push({ label: `${q.label} ${Icons.svg('arrow-right', { class: 'icon-inline' })} ${opt.label}`, poids: contrib });
           });
         }
       }
@@ -350,7 +350,7 @@
           profils.forEach(p => {
             const contrib = (opt.scores[p] || 0) * poids;
             scores[p] += contrib;
-            if (contrib > 0) contributions[p].push({ label: `${q.label} → ${opt.label}`, poids: contrib });
+            if (contrib > 0) contributions[p].push({ label: `${q.label} ${Icons.svg('arrow-right', { class: 'icon-inline' })} ${opt.label}`, poids: contrib });
           });
         });
       }
@@ -390,7 +390,7 @@
           profils.forEach(p => {
             const contrib = (opt.scores[p] || 0) * poidsRang;
             scores[p] += contrib;
-            if (contrib > 0) contributions[p].push({ label: `${q.label} → ${opt.label} (choix n°${idx + 1})`, poids: contrib });
+            if (contrib > 0) contributions[p].push({ label: `${q.label} ${Icons.svg('arrow-right', { class: 'icon-inline' })} ${opt.label} (choix n°${idx + 1})`, poids: contrib });
           });
         });
       }

@@ -33,7 +33,7 @@
       id: "info_num",
       macro: "technologie",
       nom: "Informatique & Numérique",
-      icone: "💻",
+      icone: "laptop",
       couleur: "#175EFF",
       description: "Tu raisonnes de façon logique et tu aimes comprendre comment fonctionnent les outils numériques. Les filières informatiques (développement, réseaux, data, intelligence artificielle) te permettront de construire des solutions concrètes et très recherchées sur le marché de l'emploi.",
       metiers: ["Développeur·se logiciel / web", "Data analyst ou data scientist", "Administrateur systèmes & réseaux", "Ingénieur·e en intelligence artificielle", "Cybersécurité"],
@@ -50,7 +50,7 @@
       id: "ingenierie",
       macro: "technologie",
       nom: "Ingénierie & Sciences appliquées",
-      icone: "⚙️",
+      icone: "settings",
       couleur: "#3B82F6",
       description: "Tu aimes comprendre comment les choses sont construites et résoudre des problèmes concrets sur le terrain ou en atelier. Les filières d'ingénierie (génie civil, mécanique, électrique, industriel) mènent à des métiers très demandés dans les infrastructures et l'industrie au Sénégal.",
       metiers: ["Ingénieur·e génie civil / BTP", "Technicien·ne ou ingénieur·e en génie électrique", "Ingénieur·e génie mécanique", "Responsable QHSE", "Ingénieur·e agronome ou environnement"],
@@ -67,7 +67,7 @@
       id: "creation_design",
       macro: "creatif",
       nom: "Création & Design",
-      icone: "🎨",
+      icone: "palette",
       couleur: "#FDD400",
       description: "Tu exprimes tes idées par l'image, la forme ou l'esthétique. Les filières de design, mode, arts visuels ou audiovisuel te permettent de transformer ta sensibilité créative en un métier et un style reconnaissable.",
       metiers: ["Designer graphique / UI-UX", "Styliste / créateur·rice de mode", "Photographe / vidéaste", "Illustrateur·rice / artiste plasticien·ne", "Décorateur·rice / architecte d'intérieur"],
@@ -84,7 +84,7 @@
       id: "communication_medias",
       macro: "creatif",
       nom: "Communication & Médias",
-      icone: "📣",
+      icone: "megaphone",
       couleur: "#F59E0B",
       description: "Tu aimes t'exprimer, convaincre et raconter des histoires. Les filières de communication, journalisme, marketing digital ou langues appliquées mènent à des métiers où le relationnel et les mots sont les outils principaux.",
       metiers: ["Chargé·e de communication / community manager", "Journaliste / rédacteur·rice", "Chargé·e de marketing digital", "Interprète / traducteur·rice", "Chargé·e de relations publiques"],
@@ -101,7 +101,7 @@
       id: "sante_social",
       macro: "social",
       nom: "Santé & Soin",
-      icone: "🩺",
+      icone: "stethoscope",
       couleur: "#2DD9B9",
       description: "Tu es attiré·e par le soin et l'accompagnement des personnes. Les filières de santé (médecine, soins infirmiers, pharmacie) demandent de la rigueur et de l'empathie, pour un impact direct sur la vie des gens.",
       metiers: ["Médecin généraliste ou spécialiste", "Infirmier·ère", "Pharmacien·ne", "Sage-femme", "Technicien·ne de laboratoire médical"],
@@ -118,7 +118,7 @@
       id: "education_humaines",
       macro: "social",
       nom: "Éducation & Sciences humaines",
-      icone: "📚",
+      icone: "book-open",
       couleur: "#22C1A6",
       description: "Tu aimes comprendre les sociétés, transmettre un savoir ou accompagner le développement des autres. Les filières d'éducation, sciences sociales, psychologie ou développement communautaire te permettent d'avoir un impact durable et humain.",
       metiers: ["Enseignant·e", "Éducateur·rice spécialisé·e", "Psychologue", "Travailleur·se social·e", "Chargé·e de projet ONG / développement communautaire"],
@@ -135,7 +135,7 @@
       id: "commerce_gestion",
       macro: "gestion",
       nom: "Commerce & Gestion",
-      icone: "📊",
+      icone: "bar-chart-3",
       couleur: "#A78BFA",
       description: "Tu aimes organiser, négocier et faire avancer des projets concrets. Les filières de gestion, commerce, marketing ou finance mènent à des métiers d'entreprise variés, du commerce à l'entrepreneuriat.",
       metiers: ["Chargé·e de marketing / commercial·e", "Comptable / auditeur·rice", "Chef·fe de projet / entrepreneur·e", "Gestionnaire en hôtellerie", "Chargé·e de clientèle bancaire"],
@@ -152,7 +152,7 @@
       id: "droit_admin",
       macro: "gestion",
       nom: "Droit & Administration",
-      icone: "⚖️",
+      icone: "scale",
       couleur: "#8B5CF6",
       description: "Tu aimes la rigueur, l'argumentation et les règles qui organisent la société. Les filières de droit, administration publique ou ressources humaines mènent à des métiers d'analyse, de gestion des règles et de service public.",
       metiers: ["Juriste / avocat·e", "Magistrat·e", "Cadre de l'administration publique", "Responsable ressources humaines", "Huissier / notaire"],
@@ -170,10 +170,10 @@
   /* Style visuel par macro-domaine, repris tel quel de l'ancienne version
      pour ne pas casser la mise en page (radar chart, couleurs, etc.) */
   const MACRO_STYLE = {
-    technologie: { icone: "💻", couleur: "#175EFF", label: "Technologie" },
-    creatif: { icone: "🎨", couleur: "#FDD400", label: "Créatif" },
-    social: { icone: "🤝", couleur: "#2DD9B9", label: "Social" },
-    gestion: { icone: "📊", couleur: "#A78BFA", label: "Gestion" }
+    technologie: { icone: "laptop", couleur: "#175EFF", label: "Technologie" },
+    creatif: { icone: "palette", couleur: "#FDD400", label: "Créatif" },
+    social: { icone: "handshake", couleur: "#2DD9B9", label: "Social" },
+    gestion: { icone: "bar-chart-3", couleur: "#A78BFA", label: "Gestion" }
   };
 
   /* ---------------------------------------------------------------
@@ -190,7 +190,7 @@
     batiment_industrie: {
       id: "batiment_industrie", macro: "technologie",
       nom: "Bâtiment, Électricité & Industrie",
-      icone: "🧱", couleur: "#3B82F6",
+      icone: "brick-wall", couleur: "#3B82F6",
       description: "Tu aimes travailler de tes mains, construire, réparer ou installer. Les métiers du bâtiment et de l'industrie recrutent fortement au Sénégal et permettent une insertion rapide, avec de vraies possibilités d'évolution vers le statut de technicien ou de chef d'équipe.",
       metiers: ["Électricien·ne", "Maçon·ne / Chef·fe de chantier", "Soudeur·se", "Technicien·ne froid-climatisation", "Mécanicien·ne auto"],
       motsClefsSecteurs: ["Électricité", "Génie civil", "Froid-climatisation", "Plomberie", "Mécanique auto", "Bâtiment et travaux publics", "Génie mécanique", "Machinisme agricole"],
@@ -200,7 +200,7 @@
     numerique_pratique: {
       id: "numerique_pratique", macro: "technologie",
       nom: "Numérique & Métiers du digital",
-      icone: "💻", couleur: "#175EFF",
+      icone: "laptop", couleur: "#175EFF",
       description: "Tu es à l'aise avec un ordinateur ou un smartphone et tu apprends vite les outils numériques. Les métiers techniques du digital (maintenance, réseaux, community management) sont très demandés et accessibles sans long parcours universitaire.",
       metiers: ["Technicien·ne maintenance informatique", "Développeur·se web junior", "Community manager", "Opérateur·rice de saisie", "Technicien·ne réseaux"],
       motsClefsSecteurs: ["Informatique", "Réseaux et télécommunications", "Développement web", "Marketing digital", "Informatique de gestion"],
@@ -210,7 +210,7 @@
     hotellerie_restauration: {
       id: "hotellerie_restauration", macro: "gestion",
       nom: "Hôtellerie, Restauration & Tourisme",
-      icone: "🍽️", couleur: "#A78BFA",
+      icone: "utensils", couleur: "#A78BFA",
       description: "Tu aimes accueillir, cuisiner ou organiser un service. L'hôtellerie-restauration-tourisme est un secteur historique et en croissance au Sénégal, avec des formations reconnues et une forte demande, y compris à l'international.",
       metiers: ["Cuisinier·ère", "Serveur·se / Réceptionniste", "Guide touristique", "Pâtissier·ère", "Barman / Barmaid"],
       motsClefsSecteurs: ["Hôtellerie", "Restauration", "Tourisme", "Gastronomie", "Hôtellerie-tourisme", "Gestion hôtelière"],
@@ -220,7 +220,7 @@
     mode_artisanat: {
       id: "mode_artisanat", macro: "creatif",
       nom: "Mode, Couture & Artisanat d'art",
-      icone: "🧵", couleur: "#FDD400",
+      icone: "shirt", couleur: "#FDD400",
       description: "Tu as le sens du geste, du détail et de l'esthétique. La mode, la couture et l'artisanat d'art sont des filières où le savoir-faire prime, avec une vraie possibilité de créer ta propre activité par la suite.",
       metiers: ["Couturier·ère / Styliste", "Modéliste", "Coiffeur·se / Esthéticien·ne", "Artisan·e d'art", "Bijoutier·ère"],
       motsClefsSecteurs: ["mode", "stylisme", "modélisme", "couture", "Design", "Infographie"],
@@ -230,7 +230,7 @@
     audiovisuel_creation: {
       id: "audiovisuel_creation", macro: "creatif",
       nom: "Audiovisuel, Image & Création numérique",
-      icone: "🎬", couleur: "#F59E0B",
+      icone: "clapperboard", couleur: "#F59E0B",
       description: "Tu aimes filmer, monter, photographier ou créer du contenu pour les réseaux sociaux. Le secteur audiovisuel sénégalais est en pleine croissance et de plus en plus de formations gratuites ou courtes permettent d'y entrer sans diplôme préalable.",
       metiers: ["Monteur·se vidéo", "Photographe", "Opérateur·rice prise de son", "Infographiste", "Créateur·rice de contenu"],
       motsClefsSecteurs: ["audiovisuel", "Design UX/UI", "Webdesign", "Photographie", "cinéma", "Production multimédia", "Infographie"],
@@ -240,7 +240,7 @@
     sante_aide_personne: {
       id: "sante_aide_personne", macro: "social",
       nom: "Santé, Social & Aide à la personne",
-      icone: "🩺", couleur: "#2DD9B9",
+      icone: "stethoscope", couleur: "#2DD9B9",
       description: "Tu aimes prendre soin des autres et tu as le sens du contact. Les métiers d'aide à la personne et de santé de premier niveau sont fortement recherchés, avec des formations plus courtes que médecine ou pharmacie.",
       metiers: ["Aide-soignant·e", "Auxiliaire de puériculture", "Assistant·e dentaire", "Agent·e de santé communautaire", "Aide à domicile"],
       motsClefsSecteurs: ["Infirmier", "Santé", "Sciences infirmières", "Biologie médicale"],
@@ -250,7 +250,7 @@
     commerce_vente_gestion: {
       id: "commerce_vente_gestion", macro: "gestion",
       nom: "Commerce, Vente & Gestion pratique",
-      icone: "🛒", couleur: "#A78BFA",
+      icone: "shopping-cart", couleur: "#A78BFA",
       description: "Tu aimes vendre, conseiller ou organiser. Les métiers du commerce et de la gestion pratique s'apprennent vite et ouvrent la voie à l'entrepreneuriat, très valorisé au Sénégal.",
       metiers: ["Vendeur·se / Commercial·e", "Caissier·ère / Agent·e de comptoir", "Secrétaire / Assistant·e administratif", "Agent·e de saisie comptable", "Auto-entrepreneur·se"],
       motsClefsSecteurs: ["Commerce", "Gestion commerciale", "Comptabilité", "Gestion des entreprises", "Marketing"],
@@ -260,7 +260,7 @@
     agriculture_environnement: {
       id: "agriculture_environnement", macro: "technologie",
       nom: "Agriculture, Élevage & Environnement",
-      icone: "🌱", couleur: "#22C1A6",
+      icone: "sprout", couleur: "#22C1A6",
       description: "Tu aimes le plein air, la nature ou le travail de la terre. L'agriculture, l'élevage et les métiers verts sont stratégiques pour le Sénégal et bénéficient d'un vrai soutien de l'État et des bailleurs.",
       metiers: ["Technicien·ne agricole", "Éleveur·se / Agent·e d'élevage", "Agent·e forestier", "Technicien·ne agroalimentaire", "Éco-guide"],
       motsClefsSecteurs: ["Agriculture", "Environnement", "Productions animales", "Gestion forestière"],
@@ -270,7 +270,7 @@
     transport_securite: {
       id: "transport_securite", macro: "technologie",
       nom: "Transport, Logistique & Sécurité",
-      icone: "🚚", couleur: "#8B5CF6",
+      icone: "truck", couleur: "#8B5CF6",
       description: "Tu aimes bouger, organiser des flux ou veiller à la sécurité des autres. Les métiers du transport, de la logistique et de la sécurité recrutent en continu, avec des formations courtes et un accès à l'emploi rapide.",
       metiers: ["Chauffeur·se professionnel·le", "Agent·e logistique", "Agent·e de sécurité", "Marin / Agent·e maritime", "Magasinier·ère"],
       motsClefsSecteurs: ["Transport-logistique", "Navigation maritime", "Sécurité", "Mécanique navale"],
@@ -317,13 +317,13 @@
     {
       id: "apres_diplome",
       titre: "Je souhaite m'orienter après un diplôme",
-      icone: "🎓",
+      icone: "graduation-cap",
       description: "Tu as déjà un BAC, un BTS, un DUT, une Licence, un Master, un Doctorat ou un autre diplôme reconnu, et tu veux poursuivre, te spécialiser, changer de filière ou te réorienter."
     },
     {
       id: "apprendre_metier",
       titre: "Je souhaite apprendre un métier",
-      icone: "🛠️",
+      icone: "wrench",
       description: "Tu n'as pas encore de diplôme, ou tu ne veux pas d'un parcours universitaire classique : tu cherches une formation qualifiante, une certification et une insertion rapide sur le marché du travail."
     }
   ];
