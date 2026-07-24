@@ -24,9 +24,19 @@ create table if not exists ecoles (
   diplomes         text[] default '{}',        -- ex: {"BTS","Licence","Master"}
   niveau_accepte   text[] default '{}',        -- ex: {"Bac","Bac+2"}
   admission        text,
+  groupe_id        text,                       -- identifiant partagé par toutes les implantations
+                                                 -- d'un même établissement (ex: "isi", "supdeco") ;
+                                                 -- NULL pour un établissement mono-site
+  groupe_nom       text,                       -- nom de l'établissement mère, affiché dans la fiche
+                                                 -- pour relier les implantations entre elles
+  implantation     text check (implantation in ('siege','campus')),
+                                                 -- "siege" = établissement principal, "campus" = antenne
+                                                 -- régionale ; NULL pour un établissement mono-site
   created_at       timestamptz default now(),
   updated_at       timestamptz default now()
 );
+
+create index if not exists idx_ecoles_groupe  on ecoles (groupe_id);
 
 create index if not exists idx_ecoles_region  on ecoles (region);
 create index if not exists idx_ecoles_ville   on ecoles (ville);

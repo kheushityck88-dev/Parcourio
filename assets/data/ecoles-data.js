@@ -90,7 +90,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Dakar",
-    "id": "dakar-institut-superieur-d-informatique-isi"
+    "id": "dakar-institut-superieur-d-informatique-isi",
+    "groupeId": "isi",
+    "groupeNom": "ISI — Institut Supérieur d'Informatique",
+    "implantation": "siege"
   },
   {
     "ville": "Dakar",
@@ -302,7 +305,10 @@ window.ECOLES_DATA = [
     ],
     "admission": "Étude de dossier et/ou test de niveau selon la filière et le cycle visé.",
     "region": "Dakar",
-    "id": "dakar-institut-superieur-de-management-ism-dakar"
+    "id": "dakar-institut-superieur-de-management-ism-dakar",
+    "groupeId": "ism",
+    "groupeNom": "ISM — Institut Supérieur de Management",
+    "implantation": "siege"
   },
   {
     "ville": "Dakar",
@@ -380,7 +386,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Dakar",
-    "id": "dakar-supdeco-dakar"
+    "id": "dakar-supdeco-dakar",
+    "groupeId": "supdeco",
+    "groupeNom": "SUPDECO — École Supérieure de Commerce de Dakar",
+    "implantation": "siege"
   },
   {
     "ville": "Dakar",
@@ -1121,42 +1130,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Dakar",
-    "id": "dakar-cefas-centre-de-formation-africain-du-senegal-sante-technique-management"
-  },
-  {
-    "ville": "Dakar",
-    "domaine": "social",
-    "type": "privé",
-    "nom": "ETSHOS — École Technique Supérieure des Hôtesses et des Secrétaires",
-    "sigle": "ETSHOS",
-    "logo": null,
-    "adresse": null,
-    "description": "École privée historique de Dakar formant aux métiers du secrétariat de direction, du tourisme, de la gestion hôtelière et du commerce international.",
-    "siteOfficiel": "https://etshosimed.sn/",
-    "telephone": "+221 33 824 78 08",
-    "email": null,
-    "reseaux": {},
-    "secteurs": [
-      "Tourisme",
-      "Hôtellerie",
-      "Secrétariat"
-    ],
-    "filieres": [
-      "Tourisme",
-      "Hôtellerie",
-      "Secrétariat"
-    ],
-    "diplomes": [
-      "BTS",
-      "DTS"
-    ],
-    "niveauAccepte": [
-      "Après BAC",
-      "BTS"
-    ],
-    "admission": null,
-    "region": "Dakar",
-    "id": "dakar-etshos-ecole-technique-superieure-des-hotesses-et-des-secretaires"
+    "id": "dakar-cefas-centre-de-formation-africain-du-senegal-sante-technique-management",
+    "groupeId": "cefas",
+    "groupeNom": "CEFAS — Centre de Formation Africain du Sénégal",
+    "implantation": "siege"
   },
   {
     "ville": "Dakar",
@@ -1564,7 +1541,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Kaolack",
-    "id": "kaolack-institut-superieur-d-informatique-isi-kaolack"
+    "id": "kaolack-institut-superieur-d-informatique-isi-kaolack",
+    "groupeId": "isi",
+    "groupeNom": "ISI — Institut Supérieur d'Informatique",
+    "implantation": "campus"
   },
   {
     "ville": "Kaolack",
@@ -1587,7 +1567,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Kaolack",
-    "id": "kaolack-institut-superieur-de-management-ism-kaolack"
+    "id": "kaolack-institut-superieur-de-management-ism-kaolack",
+    "groupeId": "ism",
+    "groupeNom": "ISM — Institut Supérieur de Management",
+    "implantation": "campus"
   },
   {
     "ville": "Kaolack",
@@ -1610,7 +1593,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Kaolack",
-    "id": "kaolack-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-gestion"
+    "id": "kaolack-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-gestion",
+    "groupeId": "ussein",
+    "groupeNom": "USSEIN — Université du Sine-Saloum El Hadji Ibrahima Niass",
+    "implantation": "siege"
   },
   {
     "ville": "Kaolack",
@@ -1633,7 +1619,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Kaolack",
-    "id": "kaolack-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-social"
+    "id": "kaolack-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-social",
+    "groupeId": "ussein",
+    "groupeNom": "USSEIN — Université du Sine-Saloum El Hadji Ibrahima Niass",
+    "implantation": "siege"
   },
   {
     "ville": "Saint-Louis",
@@ -2332,7 +2321,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Fatick",
-    "id": "fatick-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-campus-de-fatick-sciences-agronomiques"
+    "id": "fatick-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-campus-de-fatick-sciences-agronomiques",
+    "groupeId": "ussein",
+    "groupeNom": "USSEIN — Université du Sine-Saloum El Hadji Ibrahima Niass",
+    "implantation": "campus"
   },
   {
     "ville": "Fatick",
@@ -2355,7 +2347,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Fatick",
-    "id": "fatick-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-campus-de-fatick-sciences-economiques-et-de-gestion"
+    "id": "fatick-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-campus-de-fatick-sciences-economiques-et-de-gestion",
+    "groupeId": "ussein",
+    "groupeNom": "USSEIN — Université du Sine-Saloum El Hadji Ibrahima Niass",
+    "implantation": "campus"
   },
   {
     "ville": "Kaffrine",
@@ -2378,7 +2373,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Kaffrine",
-    "id": "kaffrine-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-campus-de-kaffrine-agronomie-elevage"
+    "id": "kaffrine-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-campus-de-kaffrine-agronomie-elevage",
+    "groupeId": "ussein",
+    "groupeNom": "USSEIN — Université du Sine-Saloum El Hadji Ibrahima Niass",
+    "implantation": "campus"
   },
   {
     "ville": "Kaffrine",
@@ -2401,7 +2399,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Kaffrine",
-    "id": "kaffrine-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-campus-de-kaffrine-sciences-economiques-et-de-gestion"
+    "id": "kaffrine-universite-du-sine-saloum-el-hadji-ibrahima-niass-ussein-campus-de-kaffrine-sciences-economiques-et-de-gestion",
+    "groupeId": "ussein",
+    "groupeNom": "USSEIN — Université du Sine-Saloum El Hadji Ibrahima Niass",
+    "implantation": "campus"
   },
   {
     "ville": "Kolda",
@@ -3068,7 +3069,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Dakar",
-    "id": "dakar-esup-dakar-sante-groupe-esup-dakar"
+    "id": "dakar-esup-dakar-sante-groupe-esup-dakar",
+    "groupeId": "esup_sante",
+    "groupeNom": "ESUP Santé — École Supérieure de Formation Professionnelle en Santé",
+    "implantation": "siege"
   },
   {
     "ville": "Dakar",
@@ -3103,7 +3107,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Dakar",
-    "id": "dakar-institut-elite-sante-ies"
+    "id": "dakar-institut-elite-sante-ies",
+    "groupeId": "ies",
+    "groupeNom": "IES — Institut Élite Santé",
+    "implantation": "siege"
   },
   {
     "ville": "Thiès",
@@ -3134,7 +3141,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Thiès",
-    "id": "thies-institut-elite-sante-ies"
+    "id": "thies-institut-elite-sante-ies",
+    "groupeId": "ies",
+    "groupeNom": "IES — Institut Élite Santé",
+    "implantation": "campus"
   },
   {
     "ville": "Kaolack",
@@ -3165,7 +3175,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Kaolack",
-    "id": "kaolack-institut-elite-sante-ies"
+    "id": "kaolack-institut-elite-sante-ies",
+    "groupeId": "ies",
+    "groupeNom": "IES — Institut Élite Santé",
+    "implantation": "campus"
   },
   {
     "ville": "Thiès",
@@ -3225,7 +3238,10 @@ window.ECOLES_DATA = [
     "diplomes": [],
     "admission": null,
     "region": "Saint-Louis",
-    "id": "saint-louis-cefas-campus-de-saint-louis"
+    "id": "saint-louis-cefas-campus-de-saint-louis",
+    "groupeId": "cefas",
+    "groupeNom": "CEFAS — Centre de Formation Africain du Sénégal",
+    "implantation": "campus"
   },
   {
     "ville": "Dakar",
@@ -4047,7 +4063,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Kolda",
-    "id": "kolda-groupe-ism-kolda"
+    "id": "kolda-groupe-ism-kolda",
+    "groupeId": "ism",
+    "groupeNom": "ISM — Institut Supérieur de Management",
+    "implantation": "campus"
   },
   {
     "ville": "Kolda",
@@ -5380,7 +5399,7 @@ window.ECOLES_DATA = [
   },
   {
     "ville": "Dakar",
-    "domaine": "creatif",
+    "domaine": "gestion",
     "type": "privé",
     "nom": "ESCOM — École Supérieure de Communication et Management",
     "sigle": "ESCOM",
@@ -5620,7 +5639,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Dakar",
-    "id": "dakar-estg-dakar-ecole-superieure-des-techniques-de-gestion"
+    "id": "dakar-estg-dakar-ecole-superieure-des-techniques-de-gestion",
+    "groupeId": "estg",
+    "groupeNom": "ESTG — École Supérieure des Techniques de Gestion",
+    "implantation": "siege"
   },
   {
     "ville": "Rufisque",
@@ -5654,7 +5676,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Dakar",
-    "id": "rufisque-estg-rufisque-ecole-superieure-des-techniques-de-gestion"
+    "id": "rufisque-estg-rufisque-ecole-superieure-des-techniques-de-gestion",
+    "groupeId": "estg",
+    "groupeNom": "ESTG — École Supérieure des Techniques de Gestion",
+    "implantation": "campus"
   },
   {
     "ville": "Dakar",
@@ -5758,7 +5783,10 @@ window.ECOLES_DATA = [
     ],
     "admission": null,
     "region": "Saint-Louis",
-    "id": "saint-louis-esup-sante-ecole-superieure-de-formation-professionnelle-en-sante"
+    "id": "saint-louis-esup-sante-ecole-superieure-de-formation-professionnelle-en-sante",
+    "groupeId": "esup_sante",
+    "groupeNom": "ESUP Santé — École Supérieure de Formation Professionnelle en Santé",
+    "implantation": "campus"
   },
   {
     "ville": "Dakar",
@@ -5796,7 +5824,7 @@ window.ECOLES_DATA = [
   },
   {
     "ville": "Dakar",
-    "domaine": "gestion",
+    "domaine": "technologie",
     "type": "privé",
     "nom": "HEC Dakar — Université Internationale de Dakar",
     "sigle": "HEC Dakar",
@@ -6105,11 +6133,11 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "privé",
     "reconnuEtat": null,
-    "nom": "ETSHOS — École Supérieure d'Interprétation, de Techniques Administratives, de Management et de Gestion Hôtelière",
+    "nom": "ETSHOS — École Technique Supérieure des Hôtesses et des Secrétaires",
     "sigle": "ETSHOS",
     "logo": null,
     "adresse": "Avenue Cheikh Anta Diop, Dakar",
-    "description": "École privée qui prépare aux BTS et DTS dans les filières de gestion hôtelière, d'interprétariat et de techniques administratives.",
+    "description": "École privée historique de Dakar formant aux métiers du secrétariat de direction, du tourisme, de la gestion hôtelière, de l'interprétariat et des techniques administratives.",
     "siteOfficiel": "https://etshosimed.sn/",
     "telephone": "+221 33 824 78 08",
     "email": "etshos@sentoo.sn",
@@ -6117,12 +6145,18 @@ window.ECOLES_DATA = [
     "secteurs": [
       "Gestion hôtelière",
       "Interprétariat",
-      "Techniques administratives"
+      "Techniques administratives",
+      "Tourisme",
+      "Hôtellerie",
+      "Secrétariat"
     ],
     "filieres": [
       "Gestion hôtelière",
       "Interprétariat",
-      "Techniques administratives"
+      "Techniques administratives",
+      "Tourisme",
+      "Hôtellerie",
+      "Secrétariat"
     ],
     "diplomes": [
       "BTS",
@@ -7612,45 +7646,6 @@ window.ECOLES_DATA = [
     "id": "dakar-lyc-e-technique-seydina-limamou-laye-de-pikine"
   },
   {
-    "id": "dakar-supdeco-dakar-groupe-ecole-superieure-de-commerce-de-dakar",
-    "nom": "SUPDECO Dakar — Groupe École Supérieure de Commerce de Dakar",
-    "sigle": "SUPDECO",
-    "logo": null,
-    "adresse": "7, Avenue Faidherbe, BP 21354, Dakar",
-    "description": "Première business school du Sénégal, fondée en 1993. Forme des managers de haut niveau dans le management et les TIC ; certifiée ISO 9001, diplômes reconnus par le CAMES.",
-    "telephone": "+221 33 849 69 19",
-    "email": "admission@supdeco.edu.sn",
-    "siteOfficiel": "https://supdeco.sn/",
-    "reseaux": {},
-    "secteurs": [
-      "Commerce",
-      "Gestion",
-      "Management",
-      "TIC"
-    ],
-    "filieres": [
-      "Commerce",
-      "Gestion",
-      "Management",
-      "TIC"
-    ],
-    "diplomes": [
-      "Bachelor",
-      "Master",
-      "Doctorat"
-    ],
-    "niveauAccepte": [
-      "Après BAC",
-      "Licence",
-      "Master"
-    ],
-    "admission": null,
-    "region": "Dakar",
-    "ville": "Dakar",
-    "domaine": "gestion",
-    "type": "privé"
-  },
-  {
     "id": "thies-supdeco-thies-groupe-ecole-superieure-de-commerce-de-dakar",
     "nom": "SUPDECO Thiès — Groupe École Supérieure de Commerce de Dakar",
     "sigle": "SUPDECO",
@@ -7686,7 +7681,10 @@ window.ECOLES_DATA = [
     "region": "Thiès",
     "ville": "Thiès",
     "domaine": "gestion",
-    "type": "privé"
+    "type": "privé",
+    "groupeId": "supdeco",
+    "groupeNom": "SUPDECO — École Supérieure de Commerce de Dakar",
+    "implantation": "campus"
   },
   {
     "id": "saint-louis-supdeco-saint-louis-groupe-ecole-superieure-de-commerce-de-dakar",
@@ -7724,7 +7722,10 @@ window.ECOLES_DATA = [
     "region": "Saint-Louis",
     "ville": "Saint-Louis",
     "domaine": "gestion",
-    "type": "privé"
+    "type": "privé",
+    "groupeId": "supdeco",
+    "groupeNom": "SUPDECO — École Supérieure de Commerce de Dakar",
+    "implantation": "campus"
   },
   {
     "id": "dakar-universite-amadou-hampate-ba-uahb",
@@ -7830,5 +7831,458 @@ window.ECOLES_DATA = [
     "ville": "Saly",
     "domaine": "social",
     "type": "privé"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "technologie",
+    "type": "public",
+    "nom": "FST — Faculté des Sciences et Techniques (UCAD)",
+    "sigle": "FST",
+    "logo": null,
+    "adresse": null,
+    "description": "Faculté de l'Université Cheikh Anta Diop regroupant les départements Mathématiques-Informatique, Physique, Chimie, Biologie Animale, Biologie Végétale et Géologie, ainsi que l'Institut des Sciences de l'Environnement et l'Institut des Sciences de la Terre.",
+    "siteOfficiel": "https://fst.ucad.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Mathématiques-Informatique",
+      "Physique-Chimie",
+      "Sciences de la Terre",
+      "Environnement"
+    ],
+    "filieres": [
+      "Mathématiques-Informatique",
+      "Physique-Chimie",
+      "Sciences de la Terre",
+      "Environnement"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-fst-faculte-des-sciences-et-techniques-ucad"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "gestion",
+    "type": "public",
+    "nom": "FSJP — Faculté des Sciences Juridiques et Politiques (UCAD)",
+    "sigle": "FSJP",
+    "logo": null,
+    "adresse": null,
+    "description": "Faculté de droit de l'Université Cheikh Anta Diop, héritière de l'École de Droit de Dakar fondée en 1949, formant en sciences juridiques et politiques.",
+    "siteOfficiel": "https://fsjp.ucad.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Droit privé",
+      "Droit public",
+      "Sciences politiques"
+    ],
+    "filieres": [
+      "Droit privé",
+      "Droit public",
+      "Sciences politiques"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-fsjp-faculte-des-sciences-juridiques-et-politiques-ucad"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "gestion",
+    "type": "public",
+    "nom": "FASEG — Faculté des Sciences Économiques et de Gestion (UCAD)",
+    "sigle": "FASEG",
+    "logo": null,
+    "adresse": null,
+    "description": "Faculté de l'Université Cheikh Anta Diop créée en 1970, organisée en départements Économie, Gestion et Techniques Quantitatives.",
+    "siteOfficiel": "https://faseg.ucad.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Économie",
+      "Gestion",
+      "Techniques quantitatives"
+    ],
+    "filieres": [
+      "Économie",
+      "Gestion",
+      "Techniques quantitatives"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-faseg-faculte-des-sciences-economiques-et-de-gestion-ucad"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "social",
+    "type": "public",
+    "nom": "FMPOS — Faculté de Médecine, de Pharmacie et d'Odontologie (UCAD)",
+    "sigle": "FMPOS",
+    "logo": null,
+    "adresse": null,
+    "description": "Faculté de médecine de l'Université Cheikh Anta Diop, héritière de l'École Africaine de Médecine et de Pharmacie de Dakar fondée en 1918, formant médecins, pharmaciens et chirurgiens-dentistes.",
+    "siteOfficiel": "https://fmpos.ucad.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Médecine",
+      "Pharmacie",
+      "Odontologie"
+    ],
+    "filieres": [
+      "Médecine",
+      "Pharmacie",
+      "Odontologie"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-fmpos-faculte-de-medecine-de-pharmacie-et-d-odontologie-ucad"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "social",
+    "type": "public",
+    "nom": "FASTEF — Faculté des Sciences et Technologies de l'Éducation et de la Formation (UCAD)",
+    "sigle": "FASTEF",
+    "logo": null,
+    "adresse": null,
+    "description": "Ex-École Normale Supérieure de Dakar, aujourd'hui faculté de l'Université Cheikh Anta Diop chargée de la formation initiale et continue des enseignants du moyen et du secondaire.",
+    "siteOfficiel": "https://fastef.ucad.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Sciences de l'éducation",
+      "Formation des enseignants"
+    ],
+    "filieres": [
+      "Sciences de l'éducation",
+      "Formation des enseignants"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-fastef-faculte-des-sciences-et-technologies-de-l-education-et-de-la-formation-ucad"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "technologie",
+    "type": "privé",
+    "nom": "DIT — Dakar Institute of Technology",
+    "sigle": "DIT",
+    "logo": null,
+    "adresse": "Immeuble 46, Cité Keur Gorgui, Dakar",
+    "description": "Première école d'ingénieurs spécialisée en intelligence artificielle et big data d'Afrique de l'Ouest, fondée en 2019. Diplômes reconnus par l'État du Sénégal et accrédités par l'ANAQ-SUP.",
+    "siteOfficiel": "https://dit.sn/",
+    "telephone": "+221 33 822 47 33",
+    "email": "info@dit.sn",
+    "reseaux": {},
+    "secteurs": [
+      "Big Data",
+      "Intelligence artificielle",
+      "Finance digitale",
+      "Marketing digital"
+    ],
+    "filieres": [
+      "Big Data",
+      "Intelligence artificielle",
+      "Finance digitale",
+      "Marketing digital"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-dit-dakar-institute-of-technology"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "gestion",
+    "type": "privé",
+    "nom": "UDB — Université Dakar-Bourguiba",
+    "sigle": "UDB",
+    "logo": null,
+    "adresse": "12, Avenue Bourguiba, Dakar-Fann",
+    "description": "Première université privée du Sénégal, fondée en 1995 par le Professeur Sakhir Thiam. Diplômes LMD reconnus par le CAMES et l'ANAQ-SUP, organisés en UFR de Génie Juridique, Gestion Économique, Sciences et Technologies, et Langues et Affaires.",
+    "siteOfficiel": "https://udb.sn/",
+    "telephone": "+221 33 825 36 11",
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Droit des affaires",
+      "Gestion",
+      "Informatique",
+      "Banque-assurance"
+    ],
+    "filieres": [
+      "Droit des affaires",
+      "Gestion",
+      "Informatique",
+      "Banque-assurance"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-udb-universite-dakar-bourguiba"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "gestion",
+    "type": "privé",
+    "nom": "EIA — École Internationale des Affaires (Dakar)",
+    "sigle": "EIA",
+    "logo": null,
+    "adresse": null,
+    "description": "École supérieure de commerce et de management fondée en 1998, accréditée CAMES et habilitée ANAQ-Sup, formant en finance, ressources humaines, transport-logistique, commerce international et marketing.",
+    "siteOfficiel": "https://eia.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Finance",
+      "Ressources humaines",
+      "Commerce international",
+      "Marketing"
+    ],
+    "filieres": [
+      "Finance",
+      "Ressources humaines",
+      "Commerce international",
+      "Marketing"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-eia-ecole-internationale-des-affaires-dakar",
+    "groupeId": "eia",
+    "groupeNom": "EIA — École Internationale des Affaires",
+    "implantation": "siege"
+  },
+  {
+    "ville": "Thiès",
+    "domaine": "gestion",
+    "type": "privé",
+    "nom": "EIA — École Internationale des Affaires (Thiès)",
+    "sigle": "EIA",
+    "logo": null,
+    "adresse": null,
+    "description": "Campus régional de l'École Internationale des Affaires (EIA) à Thiès, avec collège et lycée associés.",
+    "siteOfficiel": "https://eia.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Finance",
+      "Ressources humaines",
+      "Commerce international",
+      "Marketing"
+    ],
+    "filieres": [
+      "Finance",
+      "Ressources humaines",
+      "Commerce international",
+      "Marketing"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Thiès",
+    "id": "thies-eia-ecole-internationale-des-affaires-thies",
+    "groupeId": "eia",
+    "groupeNom": "EIA — École Internationale des Affaires",
+    "implantation": "campus"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "gestion",
+    "type": "privé",
+    "nom": "Groupe ESTEL — École Supérieure des Métiers du Management et des Langues",
+    "sigle": "ESTEL",
+    "logo": null,
+    "adresse": "Rue 3 Bis x Boulevard de l'Est, Point E, Dakar",
+    "description": "École privée fondée en 2006, reconnue par le CAMES et l'ANAQ-Sup, formant des cadres bilingues/trilingues alliant langues étrangères appliquées, management interculturel, tourisme-hôtellerie et traduction-interprétation.",
+    "siteOfficiel": "https://www.estel.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Langues étrangères appliquées",
+      "Management interculturel",
+      "Tourisme-hôtellerie",
+      "Traduction-interprétation"
+    ],
+    "filieres": [
+      "Langues étrangères appliquées",
+      "Management interculturel",
+      "Tourisme-hôtellerie",
+      "Traduction-interprétation"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-groupe-estel-ecole-superieure-des-metiers-du-management-et-des-langues"
+  },
+  {
+    "ville": "Ziguinchor",
+    "domaine": "gestion",
+    "type": "privé",
+    "nom": "ISM Ziguinchor",
+    "sigle": null,
+    "logo": null,
+    "adresse": null,
+    "description": "Implantation casamançaise du Groupe ISM, créée en 2006, proposant des cursus en finance, droit, ressources humaines et gestion selon le système LMD.",
+    "siteOfficiel": "https://www.groupeism.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Finance",
+      "Droit des affaires",
+      "Ressources humaines",
+      "Gestion"
+    ],
+    "filieres": [
+      "Finance",
+      "Droit des affaires",
+      "Ressources humaines",
+      "Gestion"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Ziguinchor",
+    "id": "ziguinchor-ism-ziguinchor",
+    "groupeId": "ism",
+    "groupeNom": "ISM — Institut Supérieur de Management",
+    "implantation": "campus"
+  },
+  {
+    "ville": "Kaffrine",
+    "domaine": "social",
+    "type": "privé",
+    "nom": "CEFAS — Campus de Kaffrine",
+    "sigle": "CEFAS",
+    "logo": null,
+    "adresse": null,
+    "description": "Campus régional du CEFAS (Centre de Formation Africain du Sénégal) à Kaffrine, formations en santé, technique et management.",
+    "siteOfficiel": "https://cefas-senegal.com/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [],
+    "filieres": [],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Kaffrine",
+    "id": "kaffrine-cefas-campus-de-kaffrine",
+    "groupeId": "cefas",
+    "groupeNom": "CEFAS — Centre de Formation Africain du Sénégal",
+    "implantation": "campus"
+  },
+  {
+    "ville": "Touba",
+    "domaine": "social",
+    "type": "privé",
+    "nom": "CEFAS — Campus de Touba-Mbacké",
+    "sigle": "CEFAS",
+    "logo": null,
+    "adresse": null,
+    "description": "Campus régional du CEFAS (Centre de Formation Africain du Sénégal) à Touba-Mbacké, formations en santé, technique et management.",
+    "siteOfficiel": "https://cefas-senegal.com/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [],
+    "filieres": [],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Diourbel",
+    "id": "touba-cefas-campus-de-touba-mbacke",
+    "groupeId": "cefas",
+    "groupeNom": "CEFAS — Centre de Formation Africain du Sénégal",
+    "implantation": "campus"
   }
 ];

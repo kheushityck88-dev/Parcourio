@@ -470,6 +470,11 @@ const typeLabels = {
   "privé": "Privée"
 };
 
+const implantationLabels = {
+  siege: "Siège",
+  campus: "Campus"
+};
+
 function normaliser(texte) {
   return texte
     .toLowerCase()
@@ -576,15 +581,42 @@ function ouvrirModaleEcole(e) {
     ? `<div class="ecole-modal-tags">${liste.map(t => `<span class="ecole-modal-tag">${t}</span>`).join('')}</div>`
     : '';
 
+  /* Établissements ayant plusieurs implantations : on retrouve les fiches
+     sœurs (même groupeId) pour permettre de basculer d'un campus à l'autre
+     sans confusion sur laquelle on consulte. */
+  const autresImplantations = e.groupeId
+    ? Object.values(ecolesIndex)
+        .filter(autre => autre.groupeId === e.groupeId && autre.id !== e.id)
+        .sort((a, b) => (a.implantation === 'siege' ? -1 : 1) - (b.implantation === 'siege' ? -1 : 1))
+    : [];
+
+  const implantationHTML = autresImplantations.length
+    ? `<div class="ecole-modal-implantations">
+        <h4 class="ecole-modal-subtitle">Autres implantations de ${e.groupeNom || 'cet établissement'}</h4>
+        <div class="ecole-modal-implantations-list">
+          ${autresImplantations.map(autre => `
+            <button type="button" class="ecole-modal-implantation-btn" data-implantation-id="${autre.id}">
+              ${Icons.svg(autre.implantation === 'siege' ? 'landmark' : 'map-pin', { class: 'icon-inline' })}
+              <span>${autre.ville}</span>
+              <span class="ecole-modal-implantation-tag">${implantationLabels[autre.implantation] || ''}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>`
+    : '';
+
   contenu.innerHTML = `
     <div class="ecole-badges">
       <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
       ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${Icons.svg(e.type === 'public' ? 'landmark' : 'school', { class: 'icon-inline' })} ${typeLabels[e.type] || e.type}</span>` : ''}
+      ${e.implantation ? `<span class="implantation-badge is-${e.implantation}">${Icons.svg(e.implantation === 'siege' ? 'landmark' : 'map-pin', { class: 'icon-inline' })} ${implantationLabels[e.implantation]}</span>` : ''}
     </div>
     <h3>${e.nom}${e.sigle ? ` <span class="ecole-modal-sigle">(${e.sigle})</span>` : ''}</h3>
+    ${e.groupeNom ? `<p class="ecole-modal-groupe-note">${implantationLabels[e.implantation] || ''} de ${e.groupeNom} — les informations ci-dessous concernent uniquement l'implantation de ${e.ville}.</p>` : ''}
     ${e.description ? `<p class="ecole-modal-desc">${e.description}</p>` : '<p class="ecole-modal-desc ecole-modal-desc-empty">Pas encore de description détaillée pour cet établissement — écris-nous si tu peux nous aider à la compléter.</p>'}
     ${lignesInfo.join('')}
     ${reseauxHTML}
+    ${implantationHTML}
     ${e.secteurs && e.secteurs.length ? `<h4 class="ecole-modal-subtitle">Filières / secteurs</h4>${tags(e.secteurs)}` : ''}
     ${e.diplomes && e.diplomes.length ? `<h4 class="ecole-modal-subtitle">Diplômes délivrés</h4>${tags(e.diplomes)}` : ''}
     ${e.niveauAccepte && e.niveauAccepte.length ? `<h4 class="ecole-modal-subtitle">Niveau d'admission</h4>${tags(e.niveauAccepte)}` : ''}
@@ -596,6 +628,13 @@ function ouvrirModaleEcole(e) {
       ${e.siteOfficiel ? `<a class="btn-primary" href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter le site officiel</a>` : '<span class="ecole-modal-nosite">Site officiel non référencé pour le moment</span>'}
     </div>
   `;
+
+  contenu.querySelectorAll('.ecole-modal-implantation-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const autre = ecolesIndex[btn.dataset.implantationId];
+      if (autre) ouvrirModaleEcole(autre);
+    });
+  });
 
   const favoriBtn = document.getElementById('ecoleModalFavoriBtn');
   if (favoriBtn && e.id) {
@@ -789,6 +828,8 @@ rawEcolesPromise.then(liste => {
   const chips = document.querySelectorAll('.domaine-chip');
   const typeChips = document.querySelectorAll('.type-chip');
   const niveauChips = document.querySelectorAll('.niveau-chip');
+  const implantationChips = document.querySelectorAll('.implantation-chip');
+  const implantationFilterGroup = document.getElementById('implantationFilterGroup');
   const favorisToggle = document.getElementById('favorisToggle');
   const toggleBtn = document.getElementById('ecolesToggleBtn');
 
@@ -796,6 +837,13 @@ rawEcolesPromise.then(liste => {
 
   const ecoles = liste.filter(e => e.ville && e.domaine && e.nom);
   ecoles.forEach(e => { if (e.id) ecolesIndex[e.id] = e; });
+
+  /* Le filtre Siège / Campus n'apparaît que si le jeu de données contient
+     effectivement des établissements multi-implantations : inutile de
+     montrer ce filtre tant qu'aucune école n'a de groupeId renseigné. */
+  if (implantationFilterGroup && ecoles.some(e => e.implantation)) {
+    implantationFilterGroup.hidden = false;
+  }
 
   /* Chiffres du hero et de la phrase d'intro de la section Écoles :
      recalculés à partir du nombre réel d'entrées dans ecoles.json, pour ne
@@ -830,11 +878,11 @@ rawEcolesPromise.then(liste => {
     });
   }
 
-  const etat = { recherche: '', ville: '', region: '', domaine: '', type: '', niveau: '', favorisSeuls: false, aAfficheTout: false };
+  const etat = { recherche: '', ville: '', region: '', domaine: '', type: '', niveau: '', implantation: '', favorisSeuls: false, aAfficheTout: false };
   etatDirectoire = etat;
 
   function filtresActifs() {
-    return !!(etat.recherche || etat.ville || etat.region || etat.domaine || etat.type || etat.niveau || etat.favorisSeuls);
+    return !!(etat.recherche || etat.ville || etat.region || etat.domaine || etat.type || etat.niveau || etat.implantation || etat.favorisSeuls);
   }
 
   function reinitialiserEtMasquer() {
@@ -844,6 +892,7 @@ rawEcolesPromise.then(liste => {
     etat.domaine = '';
     etat.type = '';
     etat.niveau = '';
+    etat.implantation = '';
     etat.favorisSeuls = false;
     etat.aAfficheTout = false;
 
@@ -853,6 +902,7 @@ rawEcolesPromise.then(liste => {
     chips.forEach(c => c.classList.toggle('is-active', c.dataset.domaine === ''));
     typeChips.forEach(c => c.classList.toggle('is-active', c.dataset.type === ''));
     niveauChips.forEach(c => c.classList.toggle('is-active', c.dataset.niveau === ''));
+    implantationChips.forEach(c => c.classList.toggle('is-active', c.dataset.implantation === ''));
     if (favorisToggle) {
       favorisToggle.setAttribute('aria-pressed', 'false');
       favorisToggle.querySelector('.favoris-toggle-icon').innerHTML = Icons.svg('star');
@@ -909,6 +959,7 @@ rawEcolesPromise.then(liste => {
       if (etat.domaine && e.domaine !== etat.domaine) return false;
       if (etat.type && e.type !== etat.type) return false;
       if (etat.niveau && !(e.niveauAccepte || []).includes(etat.niveau)) return false;
+      if (etat.implantation && e.implantation !== etat.implantation) return false;
       if (rechercheNorm) {
         const cible = normaliser([e.nom, e.sigle || '', ...(e.secteurs || [])].join(' '));
         if (!cible.includes(rechercheNorm)) return false;
@@ -937,9 +988,11 @@ rawEcolesPromise.then(liste => {
           <div class="ecole-badges">
             <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
             ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${Icons.svg(e.type === 'public' ? 'landmark' : 'school', { class: 'icon-inline' })} ${typeLabels[e.type] || e.type}</span>` : ''}
+            ${e.implantation ? `<span class="implantation-badge is-${e.implantation}">${Icons.svg(e.implantation === 'siege' ? 'landmark' : 'map-pin', { class: 'icon-inline' })} ${implantationLabels[e.implantation]}</span>` : ''}
           </div>
           <h3>${e.nom}</h3>
           <span class="ecole-ville">${e.ville}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}</span>
+          ${e.groupeNom ? `<span class="ecole-groupe-note">${implantationLabels[e.implantation] || ''} de ${e.groupeNom}</span>` : ''}
           ${e.description ? `<p class="ecole-card-excerpt">${e.description.slice(0, 110)}${e.description.length > 110 ? '…' : ''}</p>` : ''}
           <span class="ecole-card-more">Voir la fiche ${Icons.svg('arrow-right', { class: 'icon-inline' })}</span>
         </div>
