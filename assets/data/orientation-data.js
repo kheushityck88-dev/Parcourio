@@ -549,13 +549,6 @@
     { value: "medias_int", label: "Réseaux sociaux, médias, création de contenu", scores: { communication_medias: 2 } }
   ];
 
-  const BANQUE_RESOLUTION = [
-    { value: "logique_methodique", label: "De façon logique et méthodique, étape par étape", scores: { info_num: 2, ingenierie: 2, droit_admin: 1 } },
-    { value: "creative_intuitive", label: "De façon créative et intuitive, en testant des idées", scores: { creation_design: 2, communication_medias: 1 } },
-    { value: "collaborative", label: "En échangeant avec d'autres pour trouver un consensus", scores: { sante_social: 1, education_humaines: 1, commerce_gestion: 1 } },
-    { value: "pragmatique", label: "En testant directement sur le terrain, par la pratique", scores: { ingenierie: 2, sante_social: 1 } }
-  ];
-
   /* Échelles (curseurs / échelles de préférence) : 5 positions, chacune
      avec son propre vecteur de scores. Rendu comme une ligne de 5 choix
      entre deux pôles. */
@@ -572,8 +565,8 @@
   };
 
   const ECHELLE_STABILITE_INNOVATION = {
-    poleGauche: "Stabilité et règles claires",
-    poleDroite: "Innovation et prise de risque",
+    poleGauche: "Des règles claires",
+    poleDroite: "Inventer de nouvelles solutions",
     positions: [
       { value: "1", scores: { droit_admin: 2, sante_social: 1 } },
       { value: "2", scores: { droit_admin: 1, commerce_gestion: 1 } },
@@ -726,21 +719,16 @@
           label: "Ta série actuelle ou celle de ton bac", required: false, options: BANQUE_SERIE_BAC },
         { id: "matieres_preferees", type: "multi", max: 3, poids: 2.2, categorie: "Matières & compétences",
           label: "Tes matières préférées (jusqu'à 3)", required: true, options: BANQUE_MATIERES },
-        { id: "matieres_moins_aimees", type: "multi", max: 2, poids: -1.8, categorie: "Matières & compétences",
-          label: "Tes matières les moins appréciées (jusqu'à 2)", required: false,
-          aide: "Ces matières réduisent légèrement le score des filières associées.", options: BANQUE_MATIERES },
         { id: "competences_naturelles", type: "multi", max: 3, poids: 2, categorie: "Matières & compétences",
           label: "Tes compétences naturelles (jusqu'à 3)", required: true, options: BANQUE_COMPETENCES },
-        { id: "resolution_problemes", type: "single", poids: 2, categorie: "Matières & compétences",
-          label: "Face à un problème compliqué, tu réagis plutôt…", required: true, options: BANQUE_RESOLUTION },
         { id: "centres_interet", type: "multi", max: 4, poids: 1.4, categorie: "Intérêts & passions",
           label: "Tes centres d'intérêt (jusqu'à 4)", required: true, options: BANQUE_INTERETS },
         { id: "type_travail", type: "single", poids: 2, categorie: "Environnement de travail",
           label: "Ton environnement de travail idéal", required: true, options: BANQUE_TYPE_TRAVAIL },
         { id: "mode_travail", type: "scale", poids: 1.5, categorie: "Environnement de travail",
-          label: "Seul·e ou en équipe ?", required: true, echelle: ECHELLE_MODE_TRAVAIL },
+          label: "Tu préfères travailler seul·e ou en équipe ?", required: true, echelle: ECHELLE_MODE_TRAVAIL },
         { id: "stabilite_innovation", type: "scale", poids: 1.5, categorie: "Environnement de travail",
-          label: "Tu préfères plutôt…", required: true, echelle: ECHELLE_STABILITE_INNOVATION },
+          label: "Tu préfères un travail avec des règles claires, ou un travail où tu inventes de nouvelles façons de faire ?", required: true, echelle: ECHELLE_STABILITE_INNOVATION },
         { id: "qualites_personnelles", type: "multi", max: 3, poids: 2, categorie: "Personnalité",
           label: "Tes qualités personnelles (jusqu'à 3)", required: true, options: BANQUE_QUALITES },
         { id: "niveau_informatique", type: "single", poids: 2, categorie: "Compétences techniques",
@@ -794,8 +782,8 @@
         label: "Ce qui te ferait le plus vibrer dans 10 ans", required: true, options: BANQUE_OBJECTIFS_CARRIERE },
       { id: "secteurs_attirants", type: "multi", max: 3, poids: 2.2, categorie: "Objectifs de carrière",
         label: "Les secteurs professionnels qui t'attirent (jusqu'à 3)", required: true, options: BANQUE_SECTEURS },
-      { id: "valeurs_importantes", type: "rank", max: 3, categorie: "Objectifs de carrière",
-        label: "Classe les 3 valeurs les plus importantes pour toi, dans l'ordre", required: true, options: BANQUE_VALEURS }
+      { id: "valeurs_importantes", type: "multi", max: 3, poids: 2, categorie: "Objectifs de carrière",
+        label: "Les valeurs les plus importantes pour toi (jusqu'à 3)", required: true, options: BANQUE_VALEURS }
     );
 
     // --- Tronc commun : études et logistique ---
