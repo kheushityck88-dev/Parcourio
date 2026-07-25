@@ -5762,7 +5762,7 @@ window.ECOLES_DATA = [
     "logo": null,
     "adresse": null,
     "description": "École privée de Saint-Louis formant en sciences infirmières et obstétricales (infirmier, sage-femme).",
-    "siteOfficiel": null,
+    "siteOfficiel": "https://esupsante.com/",
     "telephone": null,
     "email": null,
     "reseaux": {},
@@ -8284,5 +8284,111 @@ window.ECOLES_DATA = [
     "groupeId": "cefas",
     "groupeNom": "CEFAS — Centre de Formation Africain du Sénégal",
     "implantation": "campus"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "gestion",
+    "type": "privé",
+    "nom": "Akademia Dakar — École de Droit et de Sciences Politiques",
+    "sigle": "Akademia",
+    "logo": null,
+    "adresse": "Rue 3 Bis x Boulevard de l'Est, Point E, Dakar",
+    "description": "École privée fondée en 2015, habilitée par l'ANAQ-Sup, offrant des licences et masters en droit des affaires, sciences politiques et gouvernance d'entreprise, avec des séjours obligatoires en entreprise.",
+    "siteOfficiel": "https://akademiadakar.com/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Droit des affaires",
+      "Sciences politiques",
+      "Gouvernance d'entreprise",
+      "Relations internationales"
+    ],
+    "filieres": [
+      "Droit des affaires",
+      "Sciences politiques",
+      "Gouvernance d'entreprise",
+      "Relations internationales"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-akademia-dakar-ecole-de-droit-et-de-sciences-politiques"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "gestion",
+    "type": "privé",
+    "nom": "Complexe Saint-Michel — UCAO (Institut Supérieur de Gestion)",
+    "sigle": "CSM",
+    "logo": null,
+    "adresse": "17, Rue Saint-Michel, Dakar",
+    "description": "Institut Supérieur de Gestion rattaché à l'Université Catholique de l'Afrique de l'Ouest (UCAO), fondé en 1928. Formations du BTS au Master en gestion, finance, droit, informatique, logistique et communication.",
+    "siteOfficiel": "https://www.st-michel.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Gestion",
+      "Finance-comptabilité",
+      "Droit",
+      "Informatique de gestion",
+      "Logistique"
+    ],
+    "filieres": [
+      "Gestion",
+      "Finance-comptabilité",
+      "Droit",
+      "Informatique de gestion",
+      "Logistique"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-complexe-saint-michel-ucao-institut-superieur-de-gestion"
+  },
+  {
+    "ville": "Dakar",
+    "domaine": "technologie",
+    "type": "privé",
+    "nom": "EPITA Dakar — École Pour l'Informatique et les Techniques Avancées",
+    "sigle": "EPITA",
+    "logo": null,
+    "adresse": "Rue 48 x Rue de Kaolack, Point E, Dakar",
+    "description": "Campus sénégalais de l'école d'ingénierie informatique française EPITA, hébergé sur le campus Sup de Co, formant des ingénieurs en informatique.",
+    "siteOfficiel": "https://www.epita.sn/",
+    "telephone": null,
+    "email": null,
+    "reseaux": {},
+    "secteurs": [
+      "Génie informatique",
+      "Développement logiciel"
+    ],
+    "filieres": [
+      "Génie informatique",
+      "Développement logiciel"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
+    "niveauAccepte": [
+      "Après BAC"
+    ],
+    "admission": null,
+    "region": "Dakar",
+    "id": "dakar-epita-dakar-ecole-pour-l-informatique-et-les-techniques-avancees"
   }
 ];
