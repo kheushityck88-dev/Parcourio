@@ -106,7 +106,7 @@
       description: "Tu es attiré·e par le soin et l'accompagnement des personnes. Les filières de santé (médecine, soins infirmiers, pharmacie) demandent de la rigueur et de l'empathie, pour un impact direct sur la vie des gens.",
       metiers: ["Médecin généraliste ou spécialiste", "Infirmier·ère", "Pharmacien·ne", "Sage-femme", "Technicien·ne de laboratoire médical"],
       filieresTypes: ["Médecine", "Soins infirmiers", "Pharmacie", "Chirurgie dentaire", "Biologie médicale"],
-      motsClefsSecteurs: ["Médecine", "Infirmier", "Pharmacie", "Chirurgie dentaire", "Odontologie", "Biologie médicale", "Délégué médical", "Sage-femme", "Santé", "Sciences infirmières", "Santé publique", "Médecine vétérinaire", "Santé animale", "Productions animales"],
+      motsClefsSecteurs: ["Médecine", "Infirmier", "Pharmacie", "Chirurgie dentaire", "Odontologie", "Biologie médicale", "Délégué médical", "Sage-femme", "Santé", "Sciences infirmières", "Santé publique", "Médecine vétérinaire", "Santé animale", "Productions animales", "Agriculture", "Agronomie", "Élevage", "Agroalimentaire", "Pêche", "Foresterie"],
       conseil: {
         "Collège": "Renforce les sciences (SVT, physique-chimie) qui sont indispensables pour les filières de santé, et observe les métiers médicaux autour de toi.",
         "Lycée": "Vise une série scientifique solide, et si possible fais du bénévolat ou une immersion dans un centre de santé.",
@@ -297,7 +297,7 @@
     { value: "s1", label: "S1 — Sciences exactes (maths, physique-chimie)", scores: { info_num: 3, ingenierie: 3 } },
     { value: "s2", label: "S2 — Sciences expérimentales (SVT, physique-chimie)", scores: { sante_social: 3, ingenierie: 1 } },
     { value: "s3", label: "S3 — Sciences et techniques / agronomie", scores: { ingenierie: 2, sante_social: 1 } },
-    { value: "l1_l1a", label: "L1 / L1a — Lettres, langues et civilisations", scores: { communication_medias: 2, education_humaines: 2 } },
+    { value: "l1_l1a", label: "L1 / L1a — Lettres, langues et civilisations", scores: { communication_medias: 2, education_humaines: 2, creation_design: 1 } },
     { value: "l2", label: "L2 — Sciences sociales et humaines", scores: { education_humaines: 2, droit_admin: 2, communication_medias: 1 } },
     { value: "g", label: "G — Gestion (comptabilité, action commerciale, administratif)", scores: { commerce_gestion: 3 } },
     { value: "t1_t2", label: "T1 / T2 — Techniques industrielles (mécanique, électrotechnique)", scores: { ingenierie: 3 } },
@@ -447,38 +447,28 @@
      (rester dans le même domaine renforce son score ; se réorienter
      laisse la suite du questionnaire — secteurs, compétences,
      objectifs — décider). */
-  const BANQUE_PROJET_APRES = {
-    niveau_superieur: { label: "Continuer et me spécialiser dans mon domaine actuel", biaisMemeDomaine: 3 },
-    specialisation: { label: "Me spécialiser encore davantage dans mon domaine actuel", biaisMemeDomaine: 3 },
-    insertion: { label: "Trouver un emploi rapidement dans mon domaine actuel", biaisMemeDomaine: 2 },
-    changer_filiere: { label: "Changer complètement de filière", biaisMemeDomaine: 0 },
-    competences: { label: "Développer de nouvelles compétences sans changer de domaine", biaisMemeDomaine: 2 },
-    carriere_academique: { label: "Poursuivre dans la recherche / l'enseignement supérieur", biaisMemeDomaine: 3 }
-  };
-
-
   const BANQUE_MATIERES = [
     { value: "maths_info", label: "Mathématiques / Informatique", scores: { info_num: 3, ingenierie: 2 } },
     { value: "physique_techno", label: "Physique / Technologie", scores: { ingenierie: 3, info_num: 1 } },
     { value: "svt", label: "SVT / Biologie", scores: { sante_social: 3, ingenierie: 1 } },
     { value: "arts", label: "Arts plastiques / Musique", scores: { creation_design: 3 } },
-    { value: "francais_lettres", label: "Français / Littérature", scores: { communication_medias: 2, education_humaines: 2 } },
+    { value: "francais_lettres", label: "Français / Littérature", scores: { communication_medias: 2, education_humaines: 2, creation_design: 1 } },
     { value: "langues", label: "Langues vivantes", scores: { communication_medias: 3 } },
     { value: "histoire_geo", label: "Histoire-Géographie / Éducation civique", scores: { droit_admin: 2, education_humaines: 2 } },
     { value: "eco_gestion", label: "Économie / Gestion", scores: { commerce_gestion: 3 } },
     { value: "philo", label: "Philosophie", scores: { education_humaines: 2, droit_admin: 2, communication_medias: 1 } },
-    { value: "eps", label: "Sport / EPS", scores: { sante_social: 1, commerce_gestion: 1 } }
+    { value: "eps", label: "Sport / EPS", scores: { sante_social: 2 } }
   ];
 
   const BANQUE_COMPETENCES = [
     { value: "logique", label: "Résoudre des problèmes logiques ou mathématiques", scores: { info_num: 3, ingenierie: 2 } },
     { value: "manuel", label: "Bricoler, réparer, construire de mes mains", scores: { ingenierie: 3 } },
     { value: "artistique", label: "Dessiner, créer, avoir le sens esthétique", scores: { creation_design: 3 } },
-    { value: "expression", label: "M'exprimer à l'écrit ou à l'oral", scores: { communication_medias: 3 } },
+    { value: "expression", label: "M'exprimer à l'écrit ou à l'oral", scores: { communication_medias: 3, creation_design: 1 } },
     { value: "ecoute", label: "Écouter et comprendre les émotions des autres", scores: { sante_social: 2, education_humaines: 2 } },
     { value: "soin", label: "Prendre soin, rassurer, aider concrètement", scores: { sante_social: 3 } },
     { value: "organisation", label: "Organiser, planifier, gérer un budget", scores: { commerce_gestion: 3 } },
-    { value: "negociation", label: "Négocier, convaincre, vendre une idée", scores: { commerce_gestion: 2, droit_admin: 1 } },
+    { value: "negociation", label: "Négocier, convaincre, vendre une idée", scores: { commerce_gestion: 2, droit_admin: 1, communication_medias: 1 } },
     { value: "analyse", label: "Analyser des règles, des textes, des situations complexes", scores: { droit_admin: 3 } },
     { value: "leadership", label: "Motiver et diriger un groupe", scores: { commerce_gestion: 2, droit_admin: 1 } }
   ];
@@ -488,14 +478,14 @@
     { value: "terrain", label: "Sur le terrain, au contact direct des gens ou de l'environnement", scores: { sante_social: 2, education_humaines: 2, ingenierie: 1 } },
     { value: "laboratoire", label: "En laboratoire ou en environnement scientifique", scores: { sante_social: 2, ingenierie: 2, info_num: 1 } },
     { value: "teletravail", label: "En télétravail ou à distance, en autonomie", scores: { info_num: 3, communication_medias: 2 } },
-    { value: "atelier", label: "En atelier, sur un chantier ou en production", scores: { ingenierie: 3, creation_design: 1 } }
+    { value: "atelier", label: "En atelier, sur un chantier ou en production", scores: { ingenierie: 3, creation_design: 2 } }
   ];
 
   const BANQUE_OBJECTIFS_CARRIERE = [
     { value: "stable", label: "Avoir un emploi stable et sécurisant (fonction publique, grande entreprise…)", scores: { droit_admin: 2, sante_social: 2, commerce_gestion: 1 } },
     { value: "entreprendre", label: "Créer ou diriger ma propre entreprise", scores: { commerce_gestion: 3, info_num: 1, creation_design: 1 } },
     { value: "expertise", label: "Devenir un·e expert·e technique reconnu·e", scores: { info_num: 2, ingenierie: 2 } },
-    { value: "impact_social", label: "Avoir un impact social ou humain concret", scores: { sante_social: 2, education_humaines: 2 } },
+    { value: "impact_social", label: "Avoir un impact social ou humain concret", scores: { sante_social: 2, education_humaines: 2, communication_medias: 1 } },
     { value: "creation", label: "Créer une œuvre, une marque ou un univers artistique", scores: { creation_design: 3, communication_medias: 1 } },
     { value: "responsabilite", label: "Occuper un poste à responsabilité, gérer des équipes", scores: { commerce_gestion: 2, droit_admin: 2 } }
   ];
@@ -506,10 +496,10 @@
     { value: "sante", label: "Santé", scores: { sante_social: 3 } },
     { value: "education", label: "Éducation / Social", scores: { education_humaines: 3 } },
     { value: "art_culture", label: "Art / Culture / Design", scores: { creation_design: 3 } },
-    { value: "medias", label: "Médias / Communication", scores: { communication_medias: 3 } },
+    { value: "medias", label: "Médias / Communication", scores: { communication_medias: 3, creation_design: 1 } },
     { value: "business", label: "Commerce / Business / Finance", scores: { commerce_gestion: 3 } },
     { value: "droit_public", label: "Droit / Administration / Fonction publique", scores: { droit_admin: 3 } },
-    { value: "agri_env", label: "Agriculture / Environnement", scores: { ingenierie: 2, education_humaines: 1 } }
+    { value: "agri_env", label: "Agriculture / Environnement", scores: { sante_social: 2, ingenierie: 1, education_humaines: 1 } }
   ];
 
   const BANQUE_VALEURS = [
@@ -526,7 +516,7 @@
     { value: "empathie", label: "Empathie", scores: { sante_social: 2, education_humaines: 2 } },
     { value: "creativite_qual", label: "Créativité", scores: { creation_design: 2, communication_medias: 1 } },
     { value: "leadership_qual", label: "Leadership", scores: { commerce_gestion: 2, droit_admin: 1 } },
-    { value: "curiosite", label: "Curiosité", scores: { info_num: 1, ingenierie: 1, communication_medias: 1 } },
+    { value: "curiosite", label: "Curiosité", scores: { info_num: 1, ingenierie: 1, communication_medias: 1, creation_design: 1 } },
     { value: "patience", label: "Patience", scores: { sante_social: 1, education_humaines: 2 } },
     { value: "sens_pratique", label: "Sens pratique", scores: { ingenierie: 2, commerce_gestion: 1 } },
     { value: "esprit_analyse", label: "Esprit d'analyse", scores: { info_num: 1, droit_admin: 2 } },
@@ -539,7 +529,7 @@
     { value: "sciences_int", label: "Sciences, expériences, nature", scores: { ingenierie: 1, sante_social: 1 } },
     { value: "sante_int", label: "Santé, bien-être, médecine", scores: { sante_social: 2 } },
     { value: "art_int", label: "Dessin, mode, photographie, musique", scores: { creation_design: 2 } },
-    { value: "sport_int", label: "Sport et compétition", scores: { sante_social: 1, commerce_gestion: 1 } },
+    { value: "sport_int", label: "Sport et compétition", scores: { sante_social: 2 } },
     { value: "voyages_langues_int", label: "Voyages et langues étrangères", scores: { communication_medias: 2 } },
     { value: "societe_int", label: "Actualité, politique, société", scores: { droit_admin: 2, education_humaines: 1 } },
     { value: "business_int", label: "Business, argent, entrepreneuriat", scores: { commerce_gestion: 2 } },
@@ -773,6 +763,20 @@
           label: diplome === "doctorat" ? "Après ce doctorat, tu te vois plutôt en…" : "Après ce Master, tu te vois plutôt en…",
           required: true, options: optionsRecherchePro
         });
+      } else if (["bts", "dut", "licence", "autre"].includes(diplome)) {
+        questions.push({
+          id: "orientation_pro_diplome", type: "single", poids: 2, categorie: "Ta situation actuelle",
+          label: `Après ce ${infoDiplome.label || "diplôme"}, tu voudrais plutôt…`,
+          required: true,
+          options: [
+            { value: "poursuivre_etudes", label: "Poursuivre des études plus poussées (licence, master…)", scores: { education_humaines: 1 } },
+            { value: "insertion_rapide", label: "Trouver un emploi rapidement", scores: {} },
+            { value: "creation_entreprise", label: "Créer ma propre activité / entreprendre", scores: { commerce_gestion: 3 } },
+            { value: "expertise_technique", label: "Devenir un·e expert·e technique très pointu·e", scores: { info_num: 2, ingenierie: 2 } },
+            { value: "enseignement_transmission", label: "Enseigner / transmettre mes compétences", scores: { education_humaines: 3 } },
+            { value: "conseil_independant", label: "Devenir consultant·e / travailler en indépendant·e", scores: { commerce_gestion: 2, droit_admin: 1 } }
+          ]
+        });
       }
     }
 
@@ -819,7 +823,6 @@
     PARCOURS,
     DIPLOMES,
     OBJECTIFS_PAR_DIPLOME,
-    BANQUE_PROJET_APRES,
     VILLES_SENEGAL,
     REGIONS_SENEGAL,
     construireQuestionnaireApresDiplome,
