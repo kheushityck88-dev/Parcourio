@@ -540,17 +540,40 @@ a { color: inherit; }
   background: var(--blue-500);
   color: var(--ink-100);
   box-shadow: 0 8px 24px rgba(23, 94, 255, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary::before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23FDD400' stroke-width='1.6'/%3E%3Cpath d='M15 9l-4.5 2-2 4.5 4.5-2z' fill='%23FDD400'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: transform 0.35s ease;
+}
+
+.btn-primary:hover::before {
+  transform: rotate(-25deg);
 }
 
 .btn-primary:hover {
   background: #0d4de0;
-  transform: translateY(-2px);
 }
 
 .btn-secondary {
   border: 1.5px solid rgba(255, 255, 255, 0.35);
   color: var(--ink-100);
   background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-secondary[data-preselect-parcours="apprendre_metier"]:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .btn-secondary:hover {
@@ -681,7 +704,7 @@ a { color: inherit; }
 
 .card {
   background: var(--navy-800);
-  border: 1.5px dashed rgba(253, 212, 0, 0.32);
+  border: 1px solid var(--line);
   padding: 26px 26px 22px;
   border-radius: 10px;
   position: relative;
@@ -699,21 +722,6 @@ a { color: inherit; }
   transform: translateY(-6px) rotate(-0.6deg);
   border-color: var(--gold-400);
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
-}
-
-.card-coord {
-  position: absolute;
-  top: 16px;
-  right: 18px;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.03em;
-  color: var(--ink-500);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  padding: 3px 7px;
-  white-space: nowrap;
 }
 
 .card-stub-line {
@@ -777,14 +785,18 @@ a { color: inherit; }
 .parcours-card {
   text-align: left;
   background: var(--navy-800);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--line);
   border-radius: var(--radius);
   padding: 32px 28px;
   cursor: pointer;
+  position: relative;
   transition: transform 0.25s, border-color 0.25s, background 0.25s;
   color: inherit;
   font-family: inherit;
 }
+
+.parcours-card[data-parcours="apres_diplome"] { border-color: rgba(23, 94, 255, 0.5); }
+.parcours-card[data-parcours="apprendre_metier"] { border-color: rgba(255, 255, 255, 0.4); }
 
 .section.alt .parcours-card {
   background: var(--navy-900);
@@ -792,11 +804,19 @@ a { color: inherit; }
 
 .parcours-card:hover {
   transform: translateY(-6px);
+}
+
+.parcours-card[data-parcours="apres_diplome"]:hover,
+.parcours-card[data-parcours="apres_diplome"].is-active {
   border-color: var(--blue-500);
 }
 
+.parcours-card[data-parcours="apprendre_metier"]:hover,
+.parcours-card[data-parcours="apprendre_metier"].is-active {
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
 .parcours-card.is-active {
-  border-color: var(--gold-400);
   background: var(--navy-700, #1c2c4d);
 }
 
@@ -1077,18 +1097,57 @@ a { color: inherit; }
 
 .quiz-progress-track {
   flex: 1;
-  height: 8px;
-  border-radius: 999px;
+  height: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.quiz-progress-track::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 22px;
+  top: 50%;
+  height: 3px;
+  transform: translateY(-50%);
   background: var(--navy-950);
-  overflow: hidden;
+  border-radius: 999px;
 }
 
 .quiz-progress-fill {
-  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 3px;
   width: 0%;
+  max-width: calc(100% - 22px);
+  transform: translateY(-50%);
   background: var(--gold-400);
   border-radius: 999px;
   transition: width 0.25s ease;
+}
+
+.quiz-progress-marker {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--gold-400);
+  box-shadow: 0 0 0 4px rgba(253, 212, 0, 0.22);
+  transition: left 0.25s ease;
+}
+
+.quiz-progress-flag {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .quiz-progress-label {
@@ -1505,9 +1564,12 @@ a { color: inherit; }
   font-size: 0.95rem;
 }
 
-.section.alt .directory-search,
-.section.alt .directory-select-wrap select {
+.section.alt .directory-search {
   background: var(--navy-900);
+}
+
+.section.alt .directory-select-wrap select {
+  background-color: var(--navy-900);
 }
 
 .directory-search:focus,
@@ -1516,11 +1578,20 @@ a { color: inherit; }
   outline-offset: 1px;
 }
 
+.directory-select-wrap {
+  position: relative;
+}
+
 .directory-select-wrap select {
-  padding: 13px 16px;
+  padding: 13px 38px 13px 16px;
   border-radius: 10px;
-  border: 1px solid var(--line);
-  background: var(--navy-950);
+  border: 1.5px solid rgba(23, 94, 255, 0.4);
+  background-color: var(--navy-950);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A82FF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 15px;
+  appearance: none;
   color: var(--ink-100);
   font-family: var(--font-body);
   font-size: 0.95rem;

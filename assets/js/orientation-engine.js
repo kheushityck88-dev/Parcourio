@@ -167,8 +167,10 @@
       <button type="button" class="quiz-progress-retour">${Icons.svg('arrow-left', { class: 'icon-inline' })} Changer de parcours</button>
       <div class="quiz-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="0">
         <div class="quiz-progress-fill"></div>
+        <div class="quiz-progress-marker"></div>
+        <span class="quiz-progress-flag" aria-hidden="true">🏁</span>
       </div>
-      <span class="quiz-progress-label">0 / ${total} répondues</span>
+      <span class="quiz-progress-label">Q0 · ${total} restantes</span>
     `;
     const ancienneBarre = formEl.previousElementSibling;
     if (ancienneBarre && ancienneBarre.classList.contains("quiz-progress")) {
@@ -178,6 +180,7 @@
 
     const track = barre.querySelector(".quiz-progress-track");
     const fill = barre.querySelector(".quiz-progress-fill");
+    const marker = barre.querySelector(".quiz-progress-marker");
     const label = barre.querySelector(".quiz-progress-label");
     const retourBtn = barre.querySelector(".quiz-progress-retour");
     if (typeof onRetour === "function") retourBtn.addEventListener("click", onRetour);
@@ -186,8 +189,9 @@
       const repondues = compterReponses(formEl, questions, formId);
       const pct = total ? Math.round((repondues / total) * 100) : 0;
       fill.style.width = `${pct}%`;
+      marker.style.left = `${pct}%`;
       track.setAttribute("aria-valuenow", String(repondues));
-      label.textContent = `${repondues} / ${total} répondues`;
+      label.textContent = `Q${repondues} · ${total - repondues} restantes`;
     };
     formEl.addEventListener("input", maj);
     formEl.addEventListener("change", maj);

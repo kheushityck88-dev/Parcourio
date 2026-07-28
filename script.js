@@ -475,25 +475,6 @@ formDynamique.addEventListener('submit', async function (e) {
    secteurs (tags de filière fine), diplomes, niveauAccepte, admission.
    Tous ces champs sont facultatifs : une école sans ces infos s'affiche
    quand même, simplement avec une fiche plus courte. */
-/* Coordonnées GPS approximatives des villes référencées, utilisées comme
-   petit tag "billet de voyage" sur les fiches écoles (clin d'œil au thème
-   parcours/coordonnées du site). */
-const coordonneesVilles = {
-  "Dakar": "14.69°N · 17.45°O", "Guédiawaye": "14.78°N · 17.40°O", "Pikine": "14.75°N · 17.40°O",
-  "Rufisque": "14.72°N · 17.27°O", "Diamniadio": "14.72°N · 17.18°O",
-  "Thiès": "14.79°N · 16.94°O", "Mbour": "14.42°N · 16.96°O", "Saly": "14.45°N · 17.01°O", "Somone": "14.48°N · 17.03°O",
-  "Diourbel": "14.65°N · 16.23°O", "Touba": "14.87°N · 15.88°O", "Mbacké": "14.79°N · 15.91°O", "Bambey": "14.70°N · 16.45°O",
-  "Louga": "15.61°N · 16.23°O", "Kébémer": "15.39°N · 16.44°O", "Dahra": "15.35°N · 15.48°O", "Koki": "15.78°N · 16.17°O",
-  "Saint-Louis": "16.02°N · 16.49°O", "Richard-Toll": "16.46°N · 15.70°O",
-  "Kaolack": "14.17°N · 16.07°O", "Guinguinéo": "14.27°N · 15.95°O", "Ngourane": "14.10°N · 16.20°O",
-  "Fatick": "14.34°N · 16.41°O", "Foundiougne": "14.13°N · 16.47°O", "Diofior": "14.18°N · 16.67°O", "Gossas": "14.49°N · 16.07°O",
-  "Kaffrine": "14.11°N · 15.54°O",
-  "Kolda": "12.89°N · 14.94°O", "Sédhiou": "12.71°N · 15.56°O", "Bounkiling": "12.98°N · 15.75°O",
-  "Ziguinchor": "12.57°N · 16.27°O", "Bignona": "12.81°N · 16.23°O",
-  "Tambacounda": "13.77°N · 13.67°O", "Bakel": "14.90°N · 12.47°O", "Goudiry": "14.18°N · 12.72°O",
-  "Kédougou": "12.56°N · 12.17°O", "Matam": "15.66°N · 13.25°O"
-};
-
 const domaineLabels = {
   technologie: "Technologie",
   creatif: "Créatif",
@@ -1027,7 +1008,6 @@ rawEcolesPromise.then(liste => {
             ${e.implantation ? `<span class="implantation-badge is-${e.implantation}">${Icons.svg(e.implantation === 'siege' ? 'landmark' : 'map-pin', { class: 'icon-inline' })} ${implantationLabels[e.implantation]}</span>` : ''}
           </div>
           <h3>${e.nom}</h3>
-          ${coordonneesVilles[e.ville] ? `<span class="card-coord">${coordonneesVilles[e.ville]}</span>` : ''}
           <span class="ecole-ville">${e.ville}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}</span>
           ${e.groupeNom ? `<span class="ecole-groupe-note">${implantationLabels[e.implantation] || ''} de ${e.groupeNom}</span>` : ''}
           <hr class="card-stub-line" aria-hidden="true" />
