@@ -5,17 +5,37 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "École Supérieure Polytechnique (ESP – UCAD)",
-    "sigle": null,
+    "sigle": "ESP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Campus de l'Université Cheikh Anta Diop, Corniche Ouest, BP 5085, Dakar-Fann",
+    "description": "Établissement public à vocation régionale fondé en 1964, rattaché à l'UCAD mais doté de la personnalité juridique et financière. L'une des plus importantes écoles d'ingénieurs d'Afrique de l'Ouest, née de la fusion de l'École Polytechnique de Thiès et de l'ENSUT. Forme techniciens supérieurs (DUT), ingénieurs technologues (DIT) et ingénieurs de conception (DIC) dans six départements.",
     "siteOfficiel": "https://esp.sn/",
-    "telephone": null,
-    "email": null,
+    "telephone": "+221 33 825 08 79",
+    "email": "esp@ucad.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Génie informatique",
+      "Génie électrique",
+      "Génie mécanique",
+      "Génie civil",
+      "Génie chimique et biologie appliquée",
+      "Gestion"
+    ],
+    "filieres": [
+      "Génie informatique",
+      "Génie électrique",
+      "Génie mécanique",
+      "Génie civil",
+      "Génie chimique et biologie appliquée",
+      "Gestion"
+    ],
+    "diplomes": [
+      "DUT",
+      "Diplôme d'ingénieur technologue",
+      "Diplôme d'ingénieur de conception",
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -51,17 +71,34 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "Université Numérique Cheikh Hamidou Kane (UN-CHK)",
-    "sigle": null,
+    "sigle": "UN-CHK",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Avenue Bourguiba, Rue 13, Immeuble Adja Rokhaya, Dakar",
+    "description": "Première université publique numérique du Sénégal, créée en 2013 (ex-Université Virtuelle du Sénégal, renommée en 2023). Enseignement hybride à distance via un réseau de 18 Espaces Numériques Ouverts (ENO) dans toutes les régions du pays. Plus de 60 000 étudiants, 29 filières de licence et master.",
     "siteOfficiel": "https://www.unchk.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Informatique",
+      "Big Data",
+      "Intelligence artificielle",
+      "Droit",
+      "Sciences politiques",
+      "Gestion"
+    ],
+    "filieres": [
+      "Informatique",
+      "Big Data",
+      "Intelligence artificielle",
+      "Droit",
+      "Sciences politiques",
+      "Gestion"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -74,17 +111,35 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "privé",
     "nom": "Institut Supérieur d'Informatique (ISI)",
-    "sigle": null,
+    "sigle": "ISI",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Km 1, Avenue Cheikh Anta Diop, BP 28110, Dakar",
+    "description": "Institut privé d'enseignement supérieur fondé en 1994 (né en 1988 sous le nom JET Informatique), agréé par le Ministère de l'Enseignement Supérieur et accrédité ANAQ-Sup. Réseau de 9 campus au Sénégal et en Mauritanie, plus de 30 nationalités représentées. Leader reconnu en informatique et technologies au Sénégal.",
     "siteOfficiel": "https://www.groupeisi.com/",
-    "telephone": null,
-    "email": null,
+    "telephone": "+221 33 822 41 78",
+    "email": "isi@isi.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Génie logiciel",
+      "Réseaux et télécommunications",
+      "Cybersécurité",
+      "Data science / IA",
+      "Infographie et multimédia",
+      "Informatique de gestion"
+    ],
+    "filieres": [
+      "Génie logiciel",
+      "Réseaux et télécommunications",
+      "Cybersécurité",
+      "Data science / IA",
+      "Infographie et multimédia",
+      "Informatique de gestion"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Diplôme d'ingénieur"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -100,17 +155,28 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "privé",
     "nom": "Sup'Info Dakar",
-    "sigle": null,
+    "sigle": "SUP'INFO",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "3 Rue Aristide Le Dantec x Rue Huart, BP 21104, Dakar-Ponty",
+    "description": "International IT Academy of Dakar, établissement privé agréé par l'État sénégalais, fondé en 1992. Forme aux technologies de l'information et au management avec une approche pédagogique orientée entreprise.",
     "siteOfficiel": "https://www.supinfo.sn/",
-    "telephone": null,
-    "email": null,
+    "telephone": "+221 33 889 11 88",
+    "email": "supinfo@supinfo.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Réseaux informatiques et télécoms",
+      "Programmation-développement",
+      "Informatique de gestion"
+    ],
+    "filieres": [
+      "Réseaux informatiques et télécoms",
+      "Programmation-développement",
+      "Informatique de gestion"
+    ],
+    "diplomes": [
+      "Licence professionnelle",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -123,17 +189,32 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "privé",
     "nom": "Simplon Sénégal",
-    "sigle": null,
+    "sigle": "Simplon",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://senegal.simplon.co/",
-    "telephone": null,
-    "email": null,
+    "adresse": "Cité Keur Gorgui, Villa AD65, Dakar",
+    "description": "Réseau international d'écoles inclusives du numérique implanté au Sénégal depuis 2017 (à l'origine de la Sonatel Academy avec Orange). Formations gratuites aux métiers du numérique en tension, prioritairement pour les publics éloignés de l'emploi (femmes, jeunes, personnes en situation de handicap), avec un objectif de parité.",
+    "siteOfficiel": "https://simplon.sn/",
+    "telephone": "+221 33 824 05 15",
+    "email": "simplon.senegal@simplon.co",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Développement web et mobile",
+      "Data et intelligence artificielle",
+      "Marketing digital",
+      "Systèmes et réseaux",
+      "Cybersécurité"
+    ],
+    "filieres": [
+      "Développement web et mobile",
+      "Data et intelligence artificielle",
+      "Marketing digital",
+      "Systèmes et réseaux",
+      "Cybersécurité"
+    ],
+    "diplomes": [
+      "Certificat professionnel",
+      "Titre professionnel"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -146,17 +227,31 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "privé",
     "nom": "ISM-IT",
-    "sigle": null,
+    "sigle": "ISM-IT",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Dakar",
+    "description": "École d'ingénieurs du Groupe ISM, spécialisée dans les filières décisionnelles et systèmes d'information, avec une approche orientée vers les usages business de l'informatique. Diplôme d'informatique délocalisé possible avec l'INU Champollion d'Albi/Toulouse.",
     "siteOfficiel": "https://www.groupeism.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Génie logiciel",
+      "Réseaux et systèmes",
+      "Informatique appliquée à la gestion",
+      "Électronique et systèmes embarqués"
+    ],
+    "filieres": [
+      "Génie logiciel",
+      "Réseaux et systèmes",
+      "Informatique appliquée à la gestion",
+      "Électronique et systèmes embarqués"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "MBA"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -168,40 +263,25 @@ window.ECOLES_DATA = [
     "ville": "Dakar",
     "domaine": "technologie",
     "type": "privé",
-    "nom": "Dakar Institute of Technology (DIT)",
-    "sigle": null,
-    "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://dit.sn/",
-    "telephone": null,
-    "email": null,
-    "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
-    "niveauAccepte": [
-      "Après BAC"
-    ],
-    "admission": null,
-    "region": "Dakar",
-    "id": "dakar-dakar-institute-of-technology-dit"
-  },
-  {
-    "ville": "Dakar",
-    "domaine": "technologie",
-    "type": "privé",
     "nom": "École Centrale des Logiciels Libres et des Télécommunications",
-    "sigle": null,
+    "sigle": "EC2LT",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Liberté 2, près du Rond-Point Jet d'Eau, derrière l'immeuble CBAO, Dakar",
+    "description": "École privée d'enseignement supérieur fondée pour former aux logiciels libres et aux télécommunications, avec un centre d'incubation favorisant l'alternance entreprise. Partenariats avec Cisco (CCNA).",
     "siteOfficiel": "https://www.ec2lt.sn/",
-    "telephone": null,
-    "email": null,
+    "telephone": "+221 33 868 18 85",
+    "email": "contacts.ec2lt@gmail.com",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
+    "secteurs": [
+      "Logiciels libres",
+      "Télécommunications",
+      "Réseaux"
+    ],
+    "filieres": [
+      "Logiciels libres",
+      "Télécommunications",
+      "Réseaux"
+    ],
     "diplomes": [],
     "niveauAccepte": [
       "Après BAC"
@@ -436,46 +516,32 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "privé",
     "nom": "AFI — Université de l'Entreprise (AFI-L'UE)",
-    "sigle": null,
+    "sigle": "AFI-L'UE",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Rue G, Zone B, BP 17016, Dakar-Liberté",
+    "description": "Groupe AFI — L'Université de l'Entreprise, regroupant plusieurs instituts et écoles orientés vers le monde professionnel, dont l'Institut International de Management et de Gestion (IMG).",
     "siteOfficiel": "https://afi-ue.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Management",
+      "Gestion des entreprises"
+    ],
+    "filieres": [
+      "Management",
+      "Gestion des entreprises"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
     "admission": null,
     "region": "Dakar",
     "id": "dakar-afi-universite-de-l-entreprise-afi-l-ue"
-  },
-  {
-    "ville": "Dakar",
-    "domaine": "gestion",
-    "type": "privé",
-    "nom": "Université Dakar-Bourguiba (UDB)",
-    "sigle": null,
-    "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://www.udb.sn/",
-    "telephone": null,
-    "email": null,
-    "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
-    "niveauAccepte": [
-      "Après BAC"
-    ],
-    "admission": null,
-    "region": "Dakar",
-    "id": "dakar-universite-dakar-bourguiba-udb"
   },
   {
     "ville": "Dakar",
@@ -555,17 +621,28 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "ESEA — École Supérieure d'Économie Appliquée (ex-ENEA)",
-    "sigle": null,
+    "sigle": "ESEA",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://www.ucad.sn/index.php?option=com_content&view=article&id=778:ecole-superieure-deconomie-appliquee-esea&catid=161",
+    "adresse": "Université Cheikh Anta Diop, Dakar",
+    "description": "Fondée en 1963 (ex-ENEA), rattachée à l'UCAD depuis 2008. Établissement public de formation professionnelle supérieure spécialisé dans la formation de cadres du développement, avec une pédagogie en alternance (7 mois de cours, 4 mois de stage par an).",
+    "siteOfficiel": "https://esea.ucad.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Aménagement du territoire et gestion urbaine",
+      "Développement communautaire",
+      "Planification économique et gestion des organisations"
+    ],
+    "filieres": [
+      "Aménagement du territoire et gestion urbaine",
+      "Développement communautaire",
+      "Planification économique et gestion des organisations"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -740,17 +817,28 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "privé",
     "nom": "ESFIAM — École Supérieure de Finance, d'Audit et de Management",
-    "sigle": null,
+    "sigle": "ESFIAM",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": null,
-    "telephone": null,
-    "email": null,
+    "adresse": "Avenue Malick Sy, Angle Autoroute (derrière COSEC), Dakar",
+    "description": "École privée de Dakar spécialisée dans la finance, l'audit et le management.",
+    "siteOfficiel": "https://www.esfiam.net/",
+    "telephone": "+221 33 821 57 57",
+    "email": "contactesfiam@yahoo.fr",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Finance",
+      "Audit",
+      "Management"
+    ],
+    "filieres": [
+      "Finance",
+      "Audit",
+      "Management"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -763,17 +851,32 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "privé",
     "nom": "IFAGE — Institut Interafricain de Formation en Assurance et en Gestion des Entreprises",
-    "sigle": null,
+    "sigle": "IFAGE",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://ifage.net/",
-    "telephone": null,
-    "email": null,
+    "adresse": "Voie de dégagement Nord, Liberté 6 Extension, Dakar",
+    "description": "Fondé en 2008 par Mandaw Kandji, ancien commissaire contrôleur en chef des assurances à la CIMA. Premier institut privé d'enseignement supérieur spécialisé en assurance et actuariat de toute la zone CIMA (Afrique francophone), accrédité CAMES et habilité ANAQ-Sup, avec double diplomation possible avec l'École Supérieure d'Assurances de Paris.",
+    "siteOfficiel": "https://www.ifage.net/",
+    "telephone": "+221 77 740 30 52",
+    "email": "contact@ifage.net",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Assurance",
+      "Actuariat",
+      "Gestion des risques",
+      "Comptabilité-Audit-Contrôle de gestion",
+      "Data science"
+    ],
+    "filieres": [
+      "Assurance",
+      "Actuariat",
+      "Gestion des risques",
+      "Comptabilité-Audit-Contrôle de gestion",
+      "Data science"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -925,17 +1028,35 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "ENDSS — École Nationale de Développement Sanitaire et Social",
-    "sigle": null,
+    "sigle": "ENDSS",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Km 4,5 Avenue Cheikh Anta Diop, BP 5603, Dakar-Fann",
+    "description": "Établissement public d'enseignement supérieur en sciences de la santé, rattaché à l'UCAD, né en 1992 du regroupement de plusieurs écoles paramédicales et sociales publiques (dont l'École Nationale des Infirmiers et Infirmières d'État). Forme le personnel de santé et d'action sociale du Sénégal et de la sous-région.",
     "siteOfficiel": "https://endss.ucad.sn/",
-    "telephone": null,
+    "telephone": "+221 33 824 00 85",
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences infirmières",
+      "Sage-femme",
+      "Génie sanitaire",
+      "Kinésithérapie",
+      "Imagerie médicale",
+      "Action sociale"
+    ],
+    "filieres": [
+      "Sciences infirmières",
+      "Sage-femme",
+      "Génie sanitaire",
+      "Kinésithérapie",
+      "Imagerie médicale",
+      "Action sociale"
+    ],
+    "diplomes": [
+      "Diplôme d'État",
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -948,17 +1069,26 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "École Normale Supérieure d'Enseignement Technique et Professionnel (ENSETP)",
-    "sigle": null,
+    "sigle": "ENSETP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Université Cheikh Anta Diop, Dakar",
+    "description": "Établissement public de l'UCAD formant les enseignants et formateurs techniques et professionnels du Sénégal, reconstitué en 2005 avec sa composante industrielle historiquement liée à l'ESP.",
     "siteOfficiel": "https://ensetp.ucad.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Formation des enseignants techniques",
+      "Enseignement professionnel"
+    ],
+    "filieres": [
+      "Formation des enseignants techniques",
+      "Enseignement professionnel"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -971,17 +1101,29 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "INSEPS — Institut National Supérieur de l'Éducation Populaire et du Sport",
-    "sigle": null,
+    "sigle": "INSEPS",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Stade Iba Mar Diop, Médina, Dakar",
+    "description": "Institut public à rang de faculté de l'UCAD, créé en 1979, formant dans les domaines de l'éducation sportive, du management sportif et de l'animation socio-éducative. Admission par concours.",
     "siteOfficiel": "https://inseps.ucad.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Éducation physique et sportive",
+      "Management sportif",
+      "Animation socio-éducative"
+    ],
+    "filieres": [
+      "Éducation physique et sportive",
+      "Management sportif",
+      "Animation socio-éducative"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -994,17 +1136,30 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "EBAD — École de Bibliothécaires, Archivistes et Documentalistes (UCAD)",
-    "sigle": null,
+    "sigle": "EBAD",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Université Cheikh Anta Diop, Dakar",
+    "description": "Fondée en 1962 sous le nom de Centre Régional de Formation des Bibliothécaires, érigée en institut universitaire en 1967. Forme les professionnels des sciences de l'information (bibliothéconomie, archivistique, documentation) du Sénégal et de toute l'Afrique francophone.",
     "siteOfficiel": "https://ebad.ucad.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Bibliothéconomie",
+      "Archivistique",
+      "Documentation",
+      "Sciences de l'information"
+    ],
+    "filieres": [
+      "Bibliothéconomie",
+      "Archivistique",
+      "Documentation",
+      "Sciences de l'information"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1017,17 +1172,28 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Institut de Santé et Développement (ISED — UCAD)",
-    "sigle": null,
+    "sigle": "ISED",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Université Cheikh Anta Diop, Dakar",
+    "description": "Institut de l'UCAD spécialisé dans la formation supérieure et la recherche en santé publique, démographie et sciences de la population, à destination de professionnels de santé souhaitant se spécialiser.",
     "siteOfficiel": "https://ised.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Santé publique",
+      "Démographie",
+      "Sciences de la population"
+    ],
+    "filieres": [
+      "Santé publique",
+      "Démographie",
+      "Sciences de la population"
+    ],
+    "diplomes": [
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1040,17 +1206,28 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "privé",
     "nom": "Université du Sahel (UNIS)",
-    "sigle": null,
+    "sigle": "UNIS",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://www.sahel.education/",
+    "adresse": "33 Rue MZ-198, Mermoz, BP 5355, Dakar-Fann",
+    "description": "Université privée fondée en 1998, dotée de la personnalité juridique et de l'autonomie financière, autorisée par l'État du Sénégal. Comprend cinq facultés couvrant plusieurs domaines d'enseignement et de recherche.",
+    "siteOfficiel": "https://sahel.education/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Éducation",
+      "Gestion",
+      "Droit"
+    ],
+    "filieres": [
+      "Éducation",
+      "Gestion",
+      "Droit"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1140,17 +1317,26 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "privé",
     "nom": "Institut Supérieur de Théologie (Institut Biblique Parole Vivante)",
-    "sigle": null,
+    "sigle": "IBPV",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "BP 10099, Dakar-Liberté",
+    "description": "Institut Biblique Parole Vivante, institut supérieur privé de théologie basé à Dakar.",
     "siteOfficiel": "http://www.ibpv.org/",
-    "telephone": null,
+    "telephone": "+221 33 864 60 73",
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Théologie",
+      "Sciences bibliques"
+    ],
+    "filieres": [
+      "Théologie",
+      "Sciences bibliques"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1163,17 +1349,28 @@ window.ECOLES_DATA = [
     "domaine": "creatif",
     "type": "public",
     "nom": "CESTI — Centre d'Études des Sciences et Techniques de l'Information (journalisme, UCAD)",
-    "sigle": null,
+    "sigle": "CESTI",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Université Cheikh Anta Diop, Dakar-Fann",
+    "description": "Fondé en 1965 avec l'appui de l'UNESCO, le CESTI est la plus prestigieuse école de journalisme et de communication d'Afrique de l'Ouest francophone. Recrutement par concours panafricain très sélectif, environ 28 étudiants par promotion, provenant du Sénégal et de nombreux pays voisins.",
     "siteOfficiel": "https://cesti.ucad.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Journalisme",
+      "Communication",
+      "Production audiovisuelle"
+    ],
+    "filieres": [
+      "Journalisme",
+      "Communication",
+      "Production audiovisuelle"
+    ],
+    "diplomes": [
+      "Licence professionnelle",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1186,17 +1383,28 @@ window.ECOLES_DATA = [
     "domaine": "creatif",
     "type": "public",
     "nom": "UCAD — Faculté des Lettres, section Arts",
-    "sigle": null,
+    "sigle": "UCAD",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Université Cheikh Anta Diop, Dakar",
+    "description": "Section Arts de la Faculté des Lettres et Sciences Humaines de l'UCAD, formant en arts plastiques, musique et arts du spectacle au sein de la plus ancienne université du Sénégal.",
     "siteOfficiel": "https://www.ucad.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Arts plastiques",
+      "Musique",
+      "Arts du spectacle"
+    ],
+    "filieres": [
+      "Arts plastiques",
+      "Musique",
+      "Arts du spectacle"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1209,17 +1417,27 @@ window.ECOLES_DATA = [
     "domaine": "creatif",
     "type": "privé",
     "nom": "École des Sables (danse contemporaine, Toubab Dialaw)",
-    "sigle": null,
+    "sigle": "École des Sables",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Toubab Dialaw, Rufisque",
+    "description": "Centre international de formation en danses traditionnelles et contemporaines d'Afrique, fondé par la chorégraphe Germaine Acogny à Toubab Dialaw. Référence internationale pour la formation professionnelle en danse africaine.",
     "siteOfficiel": "https://ecoledessables.org/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Danse contemporaine",
+      "Danses traditionnelles africaines",
+      "Chorégraphie"
+    ],
+    "filieres": [
+      "Danse contemporaine",
+      "Danses traditionnelles africaines",
+      "Chorégraphie"
+    ],
+    "diplomes": [
+      "Certificat professionnel"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1232,17 +1450,29 @@ window.ECOLES_DATA = [
     "domaine": "creatif",
     "type": "privé",
     "nom": "Sup'Info Dakar (design & multimédia)",
-    "sigle": null,
+    "sigle": "SUP'IMAX",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "3 Rue Aristide Le Dantec x Rue Huart, BP 21104, Dakar-Ponty",
+    "description": "SUP'IMAX, branche création du Groupe Sup'Info, avec des studios professionnels dédiés à l'audiovisuel, l'animation 3D, le design graphique et la réalisation radio/TV.",
     "siteOfficiel": "https://www.supinfo.sn/",
-    "telephone": null,
+    "telephone": "+221 33 889 11 88",
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Audiovisuel",
+      "Animation 3D",
+      "Design graphique",
+      "Réalisation radio/TV"
+    ],
+    "filieres": [
+      "Audiovisuel",
+      "Animation 3D",
+      "Design graphique",
+      "Réalisation radio/TV"
+    ],
+    "diplomes": [
+      "Licence professionnelle"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1278,17 +1508,26 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "ISEP Thiès — TIC & génie",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route Nationale, Thiès",
+    "description": "Établissement public inauguré en 2021, premier Institut Supérieur d'Enseignement Professionnel du Sénégal habilité par l'ANAQ-Sup, accrédité CAMES. Formation en alternance école-entreprise menant au Diplôme de Technicien Supérieur (DiSEP, Bac+2). Pôle TIC & génie : arts graphiques, multimédia, réseaux et télécommunications.",
     "siteOfficiel": "https://www.isep-thies.sn/",
     "telephone": null,
-    "email": null,
+    "email": "isep@isep.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Réseaux et télécommunications",
+      "Arts graphiques et multimédia"
+    ],
+    "filieres": [
+      "Réseaux et télécommunications",
+      "Arts graphiques et multimédia"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)",
+      "Certificat de compétence professionnelle"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1301,17 +1540,35 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "Université Iba Der Thiam de Thiès (UIDT)",
-    "sigle": null,
+    "sigle": "UIDT",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route de Mbour, BP A320, Thiès",
+    "description": "Université publique créée en 2005, opérationnelle depuis 2007, renommée en 2021 en hommage à l'historien Iba Der Thiam. Née pour désengorger l'UCAD et proposer des formations professionnalisantes tournées STEM. Pôle technologique : génie informatique, mathématiques, télécommunications, génie civil, génie électrique.",
     "siteOfficiel": "https://www.uidt.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Génie informatique",
+      "Mathématiques",
+      "Télécommunications",
+      "Génie civil",
+      "Génie électrique"
+    ],
+    "filieres": [
+      "Génie informatique",
+      "Mathématiques",
+      "Télécommunications",
+      "Génie civil",
+      "Génie électrique"
+    ],
+    "diplomes": [
+      "DUT",
+      "Licence",
+      "Master",
+      "Diplôme d'ingénieur",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1356,17 +1613,33 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "Université Iba Der Thiam de Thiès (UIDT)",
-    "sigle": null,
+    "sigle": "UIDT",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route de Mbour, BP A320, Thiès",
+    "description": "Pôle tertiaire de l'Université Iba Der Thiam de Thiès (UFR Sciences Économiques et Sociales) : économie, gestion, management des organisations, tourisme, langues étrangères appliquées.",
     "siteOfficiel": "https://www.uidt.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences économiques",
+      "Gestion",
+      "Management des organisations",
+      "Tourisme",
+      "Langues étrangères appliquées"
+    ],
+    "filieres": [
+      "Sciences économiques",
+      "Gestion",
+      "Management des organisations",
+      "Tourisme",
+      "Langues étrangères appliquées"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1379,17 +1652,30 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "ISEP Thiès — tourisme & entrepreneuriat",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route Nationale, Thiès",
+    "description": "Établissement public inauguré en 2021, premier Institut Supérieur d'Enseignement Professionnel du Sénégal habilité par l'ANAQ-Sup, accrédité CAMES. Formation en alternance école-entreprise menant au Diplôme de Technicien Supérieur (DiSEP, Bac+2). Pôle tourisme & entrepreneuriat : management de produits touristiques et de loisirs, gestion des affaires administratives, gestion immobilière.",
     "siteOfficiel": "https://www.isep-thies.sn/",
     "telephone": null,
-    "email": null,
+    "email": "isep@isep.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Tourisme",
+      "Entrepreneuriat",
+      "Gestion administrative",
+      "Gestion immobilière"
+    ],
+    "filieres": [
+      "Tourisme",
+      "Entrepreneuriat",
+      "Gestion administrative",
+      "Gestion immobilière"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)",
+      "Certificat de compétence professionnelle"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1433,17 +1719,28 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Université Iba Der Thiam de Thiès (UIDT)",
-    "sigle": null,
+    "sigle": "UIDT",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route de Mbour, BP A320, Thiès",
+    "description": "Pôle santé de l'Université Iba Der Thiam de Thiès (UFR Sciences de la Santé) : formation initiale des médecins et spécialisations (DES d'urologie, de gynécologie...).",
     "siteOfficiel": "https://www.uidt.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Médecine",
+      "Spécialisations médicales"
+    ],
+    "filieres": [
+      "Médecine",
+      "Spécialisations médicales"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "DES",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1479,17 +1776,30 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "ISEP Thiès — agro-business",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route Nationale, Thiès",
+    "description": "Établissement public inauguré en 2021, premier Institut Supérieur d'Enseignement Professionnel du Sénégal habilité par l'ANAQ-Sup, accrédité CAMES. Formation en alternance école-entreprise menant au Diplôme de Technicien Supérieur (DiSEP, Bac+2). Pôle agro-business : production animale, conseil agricole, énergie-environnement.",
     "siteOfficiel": "https://www.isep-thies.sn/",
     "telephone": null,
-    "email": null,
+    "email": "isep@isep.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Agro-business",
+      "Production animale",
+      "Conseil agricole",
+      "Énergie-environnement"
+    ],
+    "filieres": [
+      "Agro-business",
+      "Production animale",
+      "Conseil agricole",
+      "Énergie-environnement"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)",
+      "Certificat de compétence professionnelle"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1502,17 +1812,28 @@ window.ECOLES_DATA = [
     "domaine": "creatif",
     "type": "public",
     "nom": "ISEP Thiès — industries culturelles et artisanat d'art",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route Nationale, Thiès",
+    "description": "Établissement public inauguré en 2021, premier Institut Supérieur d'Enseignement Professionnel du Sénégal habilité par l'ANAQ-Sup, accrédité CAMES. Formation en alternance école-entreprise menant au Diplôme de Technicien Supérieur (DiSEP, Bac+2). Pôle industries culturelles et artisanat d'art : création et management de produits multimédia, métiers d'art.",
     "siteOfficiel": "https://www.isep-thies.sn/",
     "telephone": null,
-    "email": null,
+    "email": "isep@isep.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Industries culturelles",
+      "Artisanat d'art",
+      "Création multimédia"
+    ],
+    "filieres": [
+      "Industries culturelles",
+      "Artisanat d'art",
+      "Création multimédia"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)",
+      "Certificat de compétence professionnelle"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1525,17 +1846,28 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "privé",
     "nom": "Institut Supérieur d'Informatique (ISI Kaolack)",
-    "sigle": null,
+    "sigle": "ISI",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Kaolack",
+    "description": "Campus de Kaolack du Groupe ISI, institut privé fondé en 1994, agréé par le Ministère de l'Enseignement Supérieur et accrédité ANAQ-Sup. Fait partie du réseau de 9 campus ISI au Sénégal et en Mauritanie.",
     "siteOfficiel": "https://www.groupeisi.com/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Génie logiciel",
+      "Réseaux et télécommunications",
+      "Informatique de gestion"
+    ],
+    "filieres": [
+      "Génie logiciel",
+      "Réseaux et télécommunications",
+      "Informatique de gestion"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1551,17 +1883,29 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "privé",
     "nom": "Institut Supérieur de Management (ISM Kaolack)",
-    "sigle": null,
+    "sigle": "ISM",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Kaolack",
+    "description": "Campus de Kaolack du Groupe ISM (Institut Supérieur de Management), proposant des formations post-bac de la licence au master/MBA en management, droit et gestion de projets.",
     "siteOfficiel": "https://www.groupeism.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Management",
+      "Droit",
+      "Gestion de projets"
+    ],
+    "filieres": [
+      "Management",
+      "Droit",
+      "Gestion de projets"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "MBA"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1577,17 +1921,28 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "Université du Sine Saloum El Hadji Ibrahima Niass (USSEIN)",
-    "sigle": null,
+    "sigle": "USSEIN",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Kaolack",
+    "description": "Université publique créée en 2013, rectorat à Kaolack, ouverte en 2019. Première université thématique du Sénégal spécialisée dans l'agriculture et les métiers connexes à la sécurité alimentaire, implantée dans le bassin arachidier (Kaolack, Fatick, Kaffrine). 36 licences professionnalisantes réparties en 4 UFR. UFR Sciences Économiques, Juridiques et Tourisme (siège, Kaolack).",
     "siteOfficiel": "https://ussein.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences économiques",
+      "Droit",
+      "Tourisme"
+    ],
+    "filieres": [
+      "Sciences économiques",
+      "Droit",
+      "Tourisme"
+    ],
+    "diplomes": [
+      "Licence professionnalisante",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1603,17 +1958,26 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Université du Sine Saloum El Hadji Ibrahima Niass (USSEIN)",
-    "sigle": null,
+    "sigle": "USSEIN",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Kaolack",
+    "description": "Université publique créée en 2013, rectorat à Kaolack, ouverte en 2019. Première université thématique du Sénégal spécialisée dans l'agriculture et les métiers connexes à la sécurité alimentaire, implantée dans le bassin arachidier (Kaolack, Fatick, Kaffrine). 36 licences professionnalisantes réparties en 4 UFR. UFR Sciences Sociales et Environnementales (siège, Kaolack).",
     "siteOfficiel": "https://ussein.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences sociales",
+      "Environnement"
+    ],
+    "filieres": [
+      "Sciences sociales",
+      "Environnement"
+    ],
+    "diplomes": [
+      "Licence professionnalisante",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1629,17 +1993,29 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "Université Gaston Berger (UGB) — UFR Sciences appliquées et technologie",
-    "sigle": null,
+    "sigle": "UGB — UFR SAT",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route de Ngallèle, BP 234, Saint-Louis",
+    "description": "Université publique fondée en 1990 à Saint-Louis, deuxième université du Sénégal. L'UFR Sciences Appliquées et Technologie (ex-Mathématiques Appliquées et Informatique) forme en mathématiques, informatique et physique appliquées.",
     "siteOfficiel": "https://www.ugb.sn/",
-    "telephone": null,
+    "telephone": "+221 33 961 23 60",
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Mathématiques appliquées",
+      "Informatique",
+      "Physique appliquée"
+    ],
+    "filieres": [
+      "Mathématiques appliquées",
+      "Informatique",
+      "Physique appliquée"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1652,17 +2028,31 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "Université Gaston Berger (UGB) — UFR Sciences économiques et de gestion",
-    "sigle": null,
+    "sigle": "UGB — UFR SEG",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route de Ngallèle, BP 234, Saint-Louis",
+    "description": "UFR Sciences Économiques et de Gestion de l'Université Gaston Berger, formant en économie, gestion, management, comptabilité et entrepreneuriat.",
     "siteOfficiel": "https://www.ugb.sn/",
-    "telephone": null,
+    "telephone": "+221 33 961 23 60",
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences économiques",
+      "Gestion",
+      "Comptabilité",
+      "Entrepreneuriat"
+    ],
+    "filieres": [
+      "Sciences économiques",
+      "Gestion",
+      "Comptabilité",
+      "Entrepreneuriat"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1675,17 +2065,34 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Université Gaston Berger (UGB) — UFR Lettres et sciences humaines, Santé",
-    "sigle": null,
+    "sigle": "UGB — UFR LSH / Santé",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route de Ngallèle, BP 234, Saint-Louis",
+    "description": "Regroupe l'UFR Lettres et Sciences Humaines (anglais, français, géographie, sociologie, langues étrangères appliquées) et l'UFR des Sciences de la Santé de l'Université Gaston Berger.",
     "siteOfficiel": "https://www.ugb.sn/",
-    "telephone": null,
+    "telephone": "+221 33 961 23 60",
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Lettres",
+      "Langues",
+      "Géographie",
+      "Sociologie",
+      "Sciences de la santé"
+    ],
+    "filieres": [
+      "Lettres",
+      "Langues",
+      "Géographie",
+      "Sociologie",
+      "Sciences de la santé"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat",
+      "DES"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1698,17 +2105,30 @@ window.ECOLES_DATA = [
     "domaine": "creatif",
     "type": "public",
     "nom": "Université Gaston Berger (UGB) — Arts et Lettres",
-    "sigle": null,
+    "sigle": "UGB — UFR CRAC",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Route de Ngallèle, BP 234, Saint-Louis",
+    "description": "UFR Civilisations, Religions, Arts et Communication de l'Université Gaston Berger : communication, infographie, langues et cultures africaines, patrimoine culturel.",
     "siteOfficiel": "https://www.ugb.sn/",
-    "telephone": null,
+    "telephone": "+221 33 961 23 60",
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Communication",
+      "Infographie",
+      "Civilisations et cultures africaines",
+      "Patrimoine"
+    ],
+    "filieres": [
+      "Communication",
+      "Infographie",
+      "Civilisations et cultures africaines",
+      "Patrimoine"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1721,17 +2141,27 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "Université Assane Seck de Ziguinchor (UASZ) — Sciences et technologies",
-    "sigle": null,
+    "sigle": "UASZ",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://uasz.sn/",
+    "adresse": "Quartier Diabir, Ziguinchor",
+    "description": "Université publique fondée en 2007 dans la région naturelle de Casamance, renommée en 2013 en hommage à Assane Seck, universitaire et homme politique sénégalais. Structurée en 4 UFR. UFR Sciences et Technologies.",
+    "siteOfficiel": "https://www.univ-zig.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences",
+      "Technologies"
+    ],
+    "filieres": [
+      "Sciences",
+      "Technologies"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1744,17 +2174,27 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "Université Assane Seck de Ziguinchor (UASZ) — Sciences économiques et de gestion",
-    "sigle": null,
+    "sigle": "UASZ",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://uasz.sn/",
+    "adresse": "Quartier Diabir, Ziguinchor",
+    "description": "Université publique fondée en 2007 dans la région naturelle de Casamance, renommée en 2013 en hommage à Assane Seck, universitaire et homme politique sénégalais. Structurée en 4 UFR. UFR Sciences Économiques et Sociales.",
+    "siteOfficiel": "https://www.univ-zig.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences économiques",
+      "Gestion"
+    ],
+    "filieres": [
+      "Sciences économiques",
+      "Gestion"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1799,17 +2239,29 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Université Assane Seck de Ziguinchor (UASZ) — Santé, Sciences humaines",
-    "sigle": null,
+    "sigle": "UASZ",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://uasz.sn/",
+    "adresse": "Quartier Diabir, Ziguinchor",
+    "description": "Université publique fondée en 2007 dans la région naturelle de Casamance, renommée en 2013 en hommage à Assane Seck, universitaire et homme politique sénégalais. Structurée en 4 UFR. Regroupe l'UFR Lettres, Arts et Sciences Humaines (lettres modernes, langues étrangères appliquées) et l'UFR des Sciences de la Santé.",
+    "siteOfficiel": "https://www.univ-zig.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Lettres",
+      "Langues",
+      "Sciences de la santé"
+    ],
+    "filieres": [
+      "Lettres",
+      "Langues",
+      "Sciences de la santé"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1822,17 +2274,27 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "Université Alioune Diop de Bambey (UADB) — Sciences et technologies",
-    "sigle": null,
+    "sigle": "UADB",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Bambey",
+    "description": "Née du Centre universitaire régional de Bambey créé en 2004, ouvert en 2007, érigée en université de plein exercice en 2009 et baptisée Université Alioune Diop en 2011. Sites à Bambey, Diourbel et Ngoundiane. UFR Sciences Appliquées et Technologies de l'Information et de la Communication (SATIC), site de Ngoundiane.",
     "siteOfficiel": "https://uadb.edu.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences appliquées",
+      "TIC"
+    ],
+    "filieres": [
+      "Sciences appliquées",
+      "TIC"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1845,17 +2307,29 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "Université Alioune Diop de Bambey (UADB) — Sciences économiques et de gestion",
-    "sigle": null,
+    "sigle": "UADB",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Bambey",
+    "description": "Née du Centre universitaire régional de Bambey créé en 2004, ouvert en 2007, érigée en université de plein exercice en 2009 et baptisée Université Alioune Diop en 2011. Sites à Bambey, Diourbel et Ngoundiane. UFR Économie, Management et Ingénierie Juridique (ECOMIJ), au siège de Bambey.",
     "siteOfficiel": "https://uadb.edu.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Économie",
+      "Management",
+      "Droit"
+    ],
+    "filieres": [
+      "Économie",
+      "Management",
+      "Droit"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1868,17 +2342,29 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Université Alioune Diop de Bambey (UADB) — Agronomie, Sciences humaines",
-    "sigle": null,
+    "sigle": "UADB",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Bambey",
+    "description": "Née du Centre universitaire régional de Bambey créé en 2004, ouvert en 2007, érigée en université de plein exercice en 2009 et baptisée Université Alioune Diop en 2011. Sites à Bambey, Diourbel et Ngoundiane. UFR Santé et Développement Durable (siège à Diourbel : médecine, santé communautaire, développement durable).",
     "siteOfficiel": "https://uadb.edu.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Médecine",
+      "Santé communautaire",
+      "Développement durable"
+    ],
+    "filieres": [
+      "Médecine",
+      "Santé communautaire",
+      "Développement durable"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Doctorat"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1891,17 +2377,26 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "ISFAR — Institut Supérieur de Formation Agricole et Rurale (UADB)",
-    "sigle": null,
+    "sigle": "ISFAR",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": "https://uadb.edu.sn/ufr-et-instituts/institut-superieur-de-formation-agricole-et-rural",
+    "adresse": "Bambey",
+    "description": "Ex-École Nationale des Cadres Ruraux (ENCR) créée en 1960, rattachée à l'Université Alioune Diop de Bambey en 2019. Institut spécialisé dans la formation aux métiers de l'agriculture et du monde rural, sur un site de 50 hectares à Bambey.",
+    "siteOfficiel": "https://uadb.edu.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Agriculture",
+      "Développement rural"
+    ],
+    "filieres": [
+      "Agriculture",
+      "Développement rural"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1914,17 +2409,25 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "ISEP Amadou Trawaré de Diamniadio — TIC & automobile",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Diamniadio",
+    "description": "Établissement public rattaché au Ministère de l'Enseignement Supérieur, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise, sur le modèle du premier ISEP de Thiès. ISEP Amadou Trawaré de Diamniadio, pôle TIC et automobile.",
     "siteOfficiel": "https://isepdiamniadio.com/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "TIC",
+      "Maintenance automobile"
+    ],
+    "filieres": [
+      "TIC",
+      "Maintenance automobile"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1937,17 +2440,31 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "Université Amadou Mahtar Mbow (UAMM)",
-    "sigle": null,
+    "sigle": "UAM",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Rue 21x20, 2e Arrondissement, Pôle Urbain de Diamniadio, BP 45927 Dakar",
+    "description": "Université publique inaugurée le 1er décembre 2022 dans le pôle urbain de Diamniadio, en hommage à Amadou Mahtar Mbow, ancien directeur général de l'UNESCO. Forte orientation professionnelle, système LMD, TIC et entrepreneuriat. Polytech Diamniadio et UFR Sciences, Technologies, Ingénierie et Mathématiques (STIM/TECNA).",
     "siteOfficiel": "https://uam.sn/",
-    "telephone": null,
-    "email": null,
+    "telephone": "+221 33 867 30 92",
+    "email": "uam@uam.edu.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences",
+      "Technologies",
+      "Ingénierie",
+      "Mathématiques"
+    ],
+    "filieres": [
+      "Sciences",
+      "Technologies",
+      "Ingénierie",
+      "Mathématiques"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Diplôme d'ingénieur"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -1983,17 +2500,26 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "Université Amadou Mahtar Mbow (UAMM) — Sciences sociales et communication",
-    "sigle": null,
+    "sigle": "UAM",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Rue 21x20, 2e Arrondissement, Pôle Urbain de Diamniadio, BP 45927 Dakar",
+    "description": "Université publique inaugurée le 1er décembre 2022 dans le pôle urbain de Diamniadio, en hommage à Amadou Mahtar Mbow, ancien directeur général de l'UNESCO. Forte orientation professionnelle, système LMD, TIC et entrepreneuriat. UFR Sciences Économiques et de Gestion (SEG).",
     "siteOfficiel": "https://uam.sn/",
-    "telephone": null,
-    "email": null,
+    "telephone": "+221 33 867 30 92",
+    "email": "uam@uam.edu.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences économiques",
+      "Gestion"
+    ],
+    "filieres": [
+      "Sciences économiques",
+      "Gestion"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2006,17 +2532,28 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Université Amadou Mahtar Mbow (UAMM) — Urbanisme et développement territorial",
-    "sigle": null,
+    "sigle": "UAM",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Rue 21x20, 2e Arrondissement, Pôle Urbain de Diamniadio, BP 45927 Dakar",
+    "description": "Université publique inaugurée le 1er décembre 2022 dans le pôle urbain de Diamniadio, en hommage à Amadou Mahtar Mbow, ancien directeur général de l'UNESCO. Forte orientation professionnelle, système LMD, TIC et entrepreneuriat. UFR Sciences et Technologies de l'Aménagement (STA) : urbanisme et développement territorial.",
     "siteOfficiel": "https://uam.sn/",
-    "telephone": null,
-    "email": null,
+    "telephone": "+221 33 867 30 92",
+    "email": "uam@uam.edu.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Urbanisme",
+      "Aménagement du territoire",
+      "Développement territorial"
+    ],
+    "filieres": [
+      "Urbanisme",
+      "Aménagement du territoire",
+      "Développement territorial"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2029,17 +2566,26 @@ window.ECOLES_DATA = [
     "domaine": "creatif",
     "type": "public",
     "nom": "Université Amadou Mahtar Mbow (UAMM) — Communication",
-    "sigle": null,
+    "sigle": "UAM",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Rue 21x20, 2e Arrondissement, Pôle Urbain de Diamniadio, BP 45927 Dakar",
+    "description": "Université publique inaugurée le 1er décembre 2022 dans le pôle urbain de Diamniadio, en hommage à Amadou Mahtar Mbow, ancien directeur général de l'UNESCO. Forte orientation professionnelle, système LMD, TIC et entrepreneuriat. Filière Sciences sociales et Communication.",
     "siteOfficiel": "https://uam.sn/",
-    "telephone": null,
-    "email": null,
+    "telephone": "+221 33 867 30 92",
+    "email": "uam@uam.edu.sn",
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Communication",
+      "Sciences sociales"
+    ],
+    "filieres": [
+      "Communication",
+      "Sciences sociales"
+    ],
+    "diplomes": [
+      "Licence",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2052,17 +2598,23 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "ISEP Mbacké",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Mbacké",
+    "description": "Établissement public rattaché au Ministère de l'Enseignement Supérieur, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise, sur le modèle du premier ISEP de Thiès. ISEP Mbacké.",
     "siteOfficiel": "https://isepmbacke.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Formation professionnelle technique"
+    ],
+    "filieres": [
+      "Formation professionnelle technique"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2075,17 +2627,23 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "ISEP Mbacké — entrepreneuriat local",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Mbacké",
+    "description": "Établissement public rattaché au Ministère de l'Enseignement Supérieur, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise, sur le modèle du premier ISEP de Thiès. ISEP Mbacké, pôle entrepreneuriat local.",
     "siteOfficiel": "https://isepmbacke.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Entrepreneuriat"
+    ],
+    "filieres": [
+      "Entrepreneuriat"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2098,17 +2656,25 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "ISEP Richard-Toll — agro-industrie & logistique",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Richard-Toll",
+    "description": "Établissement public rattaché au Ministère de l'Enseignement Supérieur, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise, sur le modèle du premier ISEP de Thiès. ISEP Richard-Toll, pôle agro-industrie et logistique.",
     "siteOfficiel": "https://iseprichardtoll.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Agro-industrie",
+      "Logistique"
+    ],
+    "filieres": [
+      "Agro-industrie",
+      "Logistique"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2121,17 +2687,31 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "ISEP Richard-Toll — agriculture, élevage, aquaculture, agroalimentaire, tourisme",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Richard-Toll",
+    "description": "Établissement public rattaché au Ministère de l'Enseignement Supérieur, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise, sur le modèle du premier ISEP de Thiès. ISEP Richard-Toll, pôle agriculture, élevage, aquaculture, agroalimentaire et tourisme.",
     "siteOfficiel": "https://iseprichardtoll.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Agriculture",
+      "Élevage",
+      "Aquaculture",
+      "Agroalimentaire",
+      "Tourisme"
+    ],
+    "filieres": [
+      "Agriculture",
+      "Élevage",
+      "Aquaculture",
+      "Agroalimentaire",
+      "Tourisme"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2144,17 +2724,27 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "ISEP Bignona",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Bignona",
+    "description": "Établissement public d'enseignement supérieur professionnel, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise selon l'Approche Par Compétences, en lien avec les besoins socio-économiques de la région. ISEP Bignona, formations en lien avec les potentialités de la région de Ziguinchor (agroforesterie, énergies renouvelables, gestion des écosystèmes).",
     "siteOfficiel": "https://isepbignona.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Agroforesterie",
+      "Énergies renouvelables",
+      "Gestion des écosystèmes naturels"
+    ],
+    "filieres": [
+      "Agroforesterie",
+      "Énergies renouvelables",
+      "Gestion des écosystèmes naturels"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2167,17 +2757,23 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "ISEP Bignona — filières entrepreneuriales",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Bignona",
+    "description": "Établissement public d'enseignement supérieur professionnel, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise selon l'Approche Par Compétences, en lien avec les besoins socio-économiques de la région. ISEP Bignona, pôle filières entrepreneuriales.",
     "siteOfficiel": "https://isepbignona.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Entrepreneuriat"
+    ],
+    "filieres": [
+      "Entrepreneuriat"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2190,17 +2786,29 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "ISEP Bignona — filières agro-environnementales",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Bignona",
+    "description": "Établissement public d'enseignement supérieur professionnel, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise selon l'Approche Par Compétences, en lien avec les besoins socio-économiques de la région. ISEP Bignona, pôle agro-environnemental (transformation agroalimentaire, métiers verts, métiers de l'eau, agriculture et élevage).",
     "siteOfficiel": "https://isepbignona.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Transformation agroalimentaire",
+      "Métiers verts",
+      "Métiers de l'eau",
+      "Agriculture et élevage"
+    ],
+    "filieres": [
+      "Transformation agroalimentaire",
+      "Métiers verts",
+      "Métiers de l'eau",
+      "Agriculture et élevage"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2213,17 +2821,23 @@ window.ECOLES_DATA = [
     "domaine": "technologie",
     "type": "public",
     "nom": "ISEP Matam",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Matam",
+    "description": "Établissement public d'enseignement supérieur professionnel, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise selon l'Approche Par Compétences, en lien avec les besoins socio-économiques de la région. ISEP Matam, créé par décret présidentiel n° 2016-811 du 14 juin 2016.",
     "siteOfficiel": "https://isepmatam.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Formation professionnelle technique"
+    ],
+    "filieres": [
+      "Formation professionnelle technique"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2236,17 +2850,23 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "ISEP Matam — développement territorial",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Matam",
+    "description": "Établissement public d'enseignement supérieur professionnel, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise selon l'Approche Par Compétences, en lien avec les besoins socio-économiques de la région. ISEP Matam, pôle développement territorial.",
     "siteOfficiel": "https://isepmatam.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Développement territorial"
+    ],
+    "filieres": [
+      "Développement territorial"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2259,17 +2879,25 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "ISEP Matam — filières santé et environnement",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Matam",
+    "description": "Établissement public d'enseignement supérieur professionnel, formant des techniciens supérieurs (DiSEP, Bac+2) en alternance école-entreprise selon l'Approche Par Compétences, en lien avec les besoins socio-économiques de la région. ISEP Matam, pôle santé et environnement.",
     "siteOfficiel": "https://isepmatam.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Santé",
+      "Environnement"
+    ],
+    "filieres": [
+      "Santé",
+      "Environnement"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2282,10 +2910,10 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Université du Sénégal Oriental (USO) — ouverture prévue en 2026",
-    "sigle": null,
+    "sigle": "USO",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Tambacounda",
+    "description": "Future université publique de Tambacounda, première université de la région, actuellement en chantier (visité par le président de la République en février 2026). Ouverture prévue en octobre 2026.",
     "siteOfficiel": null,
     "telephone": null,
     "email": null,
@@ -2305,17 +2933,32 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Université du Sine Saloum El Hadji Ibrahima Niass (USSEIN) — Campus de Fatick, sciences agronomiques",
-    "sigle": null,
+    "sigle": "USSEIN",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Fatick",
+    "description": "Université publique créée en 2013, rectorat à Kaolack, ouverte en 2019. Première université thématique du Sénégal spécialisée dans l'agriculture et les métiers connexes à la sécurité alimentaire, implantée dans le bassin arachidier (Kaolack, Fatick, Kaffrine). 36 licences professionnalisantes réparties en 4 UFR. UFR Sciences Agronomiques, Élevage, Pêche, Aquaculture et Nutrition (SAEPAN), campus de Fatick.",
     "siteOfficiel": "https://ussein.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Agronomie",
+      "Élevage",
+      "Pêche",
+      "Aquaculture",
+      "Nutrition"
+    ],
+    "filieres": [
+      "Agronomie",
+      "Élevage",
+      "Pêche",
+      "Aquaculture",
+      "Nutrition"
+    ],
+    "diplomes": [
+      "Licence professionnalisante",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2331,17 +2974,28 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "Université du Sine Saloum El Hadji Ibrahima Niass (USSEIN) — Campus de Fatick, sciences économiques et de gestion",
-    "sigle": null,
+    "sigle": "USSEIN",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Fatick",
+    "description": "Université publique créée en 2013, rectorat à Kaolack, ouverte en 2019. Première université thématique du Sénégal spécialisée dans l'agriculture et les métiers connexes à la sécurité alimentaire, implantée dans le bassin arachidier (Kaolack, Fatick, Kaffrine). 36 licences professionnalisantes réparties en 4 UFR. UFR Sciences Économiques, Juridiques et Tourisme, campus de Fatick.",
     "siteOfficiel": "https://ussein.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences économiques",
+      "Gestion",
+      "Tourisme"
+    ],
+    "filieres": [
+      "Sciences économiques",
+      "Gestion",
+      "Tourisme"
+    ],
+    "diplomes": [
+      "Licence professionnalisante",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2357,17 +3011,26 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "Université du Sine Saloum El Hadji Ibrahima Niass (USSEIN) — Campus de Kaffrine, agronomie & élevage",
-    "sigle": null,
+    "sigle": "USSEIN",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Kaffrine",
+    "description": "Université publique créée en 2013, rectorat à Kaolack, ouverte en 2019. Première université thématique du Sénégal spécialisée dans l'agriculture et les métiers connexes à la sécurité alimentaire, implantée dans le bassin arachidier (Kaolack, Fatick, Kaffrine). 36 licences professionnalisantes réparties en 4 UFR. UFR Sciences Agronomiques, Élevage, Pêche, Aquaculture et Nutrition (SAEPAN), campus de Kaffrine.",
     "siteOfficiel": "https://ussein.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Agronomie",
+      "Élevage"
+    ],
+    "filieres": [
+      "Agronomie",
+      "Élevage"
+    ],
+    "diplomes": [
+      "Licence professionnalisante",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2383,17 +3046,26 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "Université du Sine Saloum El Hadji Ibrahima Niass (USSEIN) — Campus de Kaffrine, sciences économiques et de gestion",
-    "sigle": null,
+    "sigle": "USSEIN",
     "logo": null,
-    "adresse": null,
-    "description": null,
+    "adresse": "Kaffrine",
+    "description": "Université publique créée en 2013, rectorat à Kaolack, ouverte en 2019. Première université thématique du Sénégal spécialisée dans l'agriculture et les métiers connexes à la sécurité alimentaire, implantée dans le bassin arachidier (Kaolack, Fatick, Kaffrine). 36 licences professionnalisantes réparties en 4 UFR. UFR Sciences Économiques, Juridiques et Tourisme, campus de Kaffrine.",
     "siteOfficiel": "https://ussein.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Sciences économiques",
+      "Gestion"
+    ],
+    "filieres": [
+      "Sciences économiques",
+      "Gestion"
+    ],
+    "diplomes": [
+      "Licence professionnalisante",
+      "Master"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2432,17 +3104,24 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "ISEP Kolda — en cours de déploiement (projet ESPOIR-Jeunes)",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": null,
+    "adresse": "Kolda",
+    "description": "Institut Supérieur d'Enseignement Professionnel en cours de déploiement dans le cadre du projet ESPOIR-Jeunes (Enseignement Supérieur Professionnel Orienté Insertion et Réussite des Jeunes), financé par la Banque Mondiale et l'AFD à hauteur de 205 millions de dollars. Le projet prévoit 8 nouveaux ISEP et la formation de 17 000 apprenants par an à travers le pays, avec un accent sur l'inclusion des femmes.",
+    "siteOfficiel": "https://espoirjeunes.3fpt.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Formation professionnelle technique"
+    ],
+    "filieres": [
+      "Formation professionnelle technique"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)",
+      "Certificat de compétence professionnelle"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2478,17 +3157,24 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "ISEP Louga — en cours de déploiement (projet ESPOIR-Jeunes)",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": null,
+    "adresse": "Louga",
+    "description": "Institut Supérieur d'Enseignement Professionnel en cours de déploiement dans le cadre du projet ESPOIR-Jeunes (Enseignement Supérieur Professionnel Orienté Insertion et Réussite des Jeunes), financé par la Banque Mondiale et l'AFD à hauteur de 205 millions de dollars. Le projet prévoit 8 nouveaux ISEP et la formation de 17 000 apprenants par an à travers le pays, avec un accent sur l'inclusion des femmes.",
+    "siteOfficiel": "https://espoirjeunes.3fpt.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Formation professionnelle technique"
+    ],
+    "filieres": [
+      "Formation professionnelle technique"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)",
+      "Certificat de compétence professionnelle"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2524,17 +3210,24 @@ window.ECOLES_DATA = [
     "domaine": "gestion",
     "type": "public",
     "nom": "ISEP Kédougou — en cours de déploiement (projet ESPOIR-Jeunes)",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": null,
+    "adresse": "Kédougou",
+    "description": "Institut Supérieur d'Enseignement Professionnel en cours de déploiement dans le cadre du projet ESPOIR-Jeunes (Enseignement Supérieur Professionnel Orienté Insertion et Réussite des Jeunes), financé par la Banque Mondiale et l'AFD à hauteur de 205 millions de dollars. Le projet prévoit 8 nouveaux ISEP et la formation de 17 000 apprenants par an à travers le pays, avec un accent sur l'inclusion des femmes.",
+    "siteOfficiel": "https://espoirjeunes.3fpt.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Formation professionnelle technique"
+    ],
+    "filieres": [
+      "Formation professionnelle technique"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)",
+      "Certificat de compétence professionnelle"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -2570,17 +3263,24 @@ window.ECOLES_DATA = [
     "domaine": "social",
     "type": "public",
     "nom": "ISEP Sédhiou — en cours de déploiement (projet ESPOIR-Jeunes)",
-    "sigle": null,
+    "sigle": "ISEP",
     "logo": null,
-    "adresse": null,
-    "description": null,
-    "siteOfficiel": null,
+    "adresse": "Sédhiou",
+    "description": "Institut Supérieur d'Enseignement Professionnel en cours de déploiement dans le cadre du projet ESPOIR-Jeunes (Enseignement Supérieur Professionnel Orienté Insertion et Réussite des Jeunes), financé par la Banque Mondiale et l'AFD à hauteur de 205 millions de dollars. Le projet prévoit 8 nouveaux ISEP et la formation de 17 000 apprenants par an à travers le pays, avec un accent sur l'inclusion des femmes.",
+    "siteOfficiel": "https://espoirjeunes.3fpt.sn/",
     "telephone": null,
     "email": null,
     "reseaux": {},
-    "secteurs": [],
-    "filieres": [],
-    "diplomes": [],
+    "secteurs": [
+      "Formation professionnelle technique"
+    ],
+    "filieres": [
+      "Formation professionnelle technique"
+    ],
+    "diplomes": [
+      "DiSEP (Bac+2)",
+      "Certificat de compétence professionnelle"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -3826,25 +4526,29 @@ window.ECOLES_DATA = [
     "domaine": "creatif",
     "type": "public",
     "nom": "Université Amadou Mahtar Mbow (UAM) — École Supérieure d'Urbanisme, d'Architecture et d'Aménagement du Territoire (ESU2A)",
-    "sigle": null,
+    "sigle": "ESU2A",
     "logo": null,
-    "adresse": null,
-    "description": "École de l'UAM formant aux métiers de l'urbanisme, de l'architecture et de l'aménagement du territoire, avec une orientation développement urbain durable.",
+    "adresse": "Rue 21x20, 2e Arrondissement, Pôle Urbain de Diamniadio, BP 45927 Dakar",
+    "description": "Université publique inaugurée le 1er décembre 2022 dans le pôle urbain de Diamniadio, en hommage à Amadou Mahtar Mbow, ancien directeur général de l'UNESCO. Forte orientation professionnelle, système LMD, TIC et entrepreneuriat. École Supérieure d'Urbanisme, d'Architecture et d'Aménagement du Territoire (ESU2A), l'une des écoles fondatrices de l'UAM regroupées au sein de Polytech Diamniadio.",
     "siteOfficiel": "https://uam.sn/",
-    "telephone": null,
-    "email": null,
+    "telephone": "+221 33 867 30 92",
+    "email": "uam@uam.edu.sn",
     "reseaux": {},
     "secteurs": [
-      "architecture",
-      "urbanisme",
-      "aménagement du territoire"
+      "Architecture",
+      "Urbanisme",
+      "Aménagement du territoire"
     ],
     "filieres": [
-      "architecture",
-      "urbanisme",
-      "aménagement du territoire"
+      "Architecture",
+      "Urbanisme",
+      "Aménagement du territoire"
     ],
-    "diplomes": [],
+    "diplomes": [
+      "Licence",
+      "Master",
+      "Diplôme d'architecte"
+    ],
     "niveauAccepte": [
       "Après BAC"
     ],
@@ -6453,21 +7157,23 @@ window.ECOLES_DATA = [
     "nom": "CFMPL — Centre de Formation aux Métiers Portuaires et à la Logistique",
     "sigle": "CFMPL",
     "logo": null,
-    "adresse": "Rocade Fann Bel Air, Dakar",
-    "description": "Centre créé avec les acteurs portuaires de Dakar pour former aux métiers du transport, de la logistique et de l'inter-modalité.",
-    "siteOfficiel": null,
+    "adresse": "Rocade Fann-Bel Air, près du CNQP, BP 32395, Dakar-Ponty",
+    "description": "Créé en 2011 à l'initiative de la Communauté des Acteurs Portuaires de Dakar (CAP DAKAR), financé par l'Agence Française de Développement. Premier et unique centre d'Afrique subsaharienne à dispenser des formations basées sur l'Approche Par Compétences dans les métiers portuaires, la logistique et le transport.",
+    "siteOfficiel": "https://www.cfmpl.sn/",
     "telephone": "+221 33 832 89 77",
     "email": "cfmpl@cfmpl.sn",
     "reseaux": {},
     "secteurs": [
-      "Transport",
+      "Métiers portuaires",
       "Logistique",
-      "Métiers portuaires"
+      "Transport",
+      "Manutention"
     ],
     "filieres": [
-      "Transport",
+      "Métiers portuaires",
       "Logistique",
-      "Métiers portuaires"
+      "Transport",
+      "Manutention"
     ],
     "diplomes": [
       "BTS"
