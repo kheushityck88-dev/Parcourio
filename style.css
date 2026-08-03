@@ -498,6 +498,11 @@ a { color: inherit; }
     font-size: 0.62rem;
     padding: 4px 9px;
   }
+
+  /* Sur mobile, le P déborde toujours dans le coin bas-gauche de la photo :
+     on écarte juste les deux pins qui tombaient dans cette zone. */
+  .hero-pin.p5 { top: 46%; left: 10%; }
+  .hero-pin.p7.more { bottom: 6%; left: 40%; }
 }
 
 @media (max-width: 560px) {
@@ -2685,8 +2690,6 @@ body.modal-open {
   .hero-compass {
     width: 130px;
     height: 130px;
-    right: 5%;
-    bottom: 6%;
     padding: 18px;
   }
 }
