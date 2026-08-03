@@ -494,7 +494,22 @@ a { color: inherit; }
 }
 
 @media (max-width: 1000px) {
-  .hero-pin { display: none; }
+  .hero-pin {
+    font-size: 0.62rem;
+    padding: 4px 9px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-pin {
+    font-size: 0.56rem;
+    padding: 3px 8px;
+    gap: 5px;
+  }
+  .hero-pin span {
+    width: 5px;
+    height: 5px;
+  }
 }
 
 @keyframes spin {
@@ -512,16 +527,26 @@ a { color: inherit; }
   .hero-pin { animation: none; }
 }
 
-/* ---------- Result actions (refaire le test) ---------- */
+/* ---------- Result actions (partager, refaire le test) ---------- */
 .result-actions {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
   margin-top: 32px;
 }
 
 .result-actions .btn-secondary {
   cursor: pointer;
   font-family: inherit;
+}
+
+.result-share-status {
+  text-align: center;
+  color: var(--gold-400);
+  font-size: 0.85rem;
+  margin-top: 12px;
+  min-height: 1em;
 }
 
 /* ---------- Buttons ---------- */
@@ -1672,6 +1697,8 @@ a { color: inherit; }
   border-color: var(--blue-500);
   color: var(--ink-100);
 }
+
+
 
 .directory-niveaux {
   margin-top: -4px;
