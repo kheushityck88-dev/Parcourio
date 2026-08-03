@@ -134,11 +134,27 @@
   </div>
 </main>
 
+<button type="button" id="backToTop" class="back-to-top" aria-label="Retour en haut de la page"><svg class="icon icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg></button>
+
 <footer class="footer">
   <span class="logo-badge footer-badge"><img src="assets/img/logo-icon.png" alt="Parcourio" class="footer-mark" /></span>
   <p>© 2026 Parcourio — Plateforme d'orientation et de formation au Sénégal</p>
   <p class="footer-links"><a href="index.html">Retour à l'accueil</a></p>
 </footer>
 
+
+<script>
+  var backToTopBtn = document.getElementById('backToTop');
+  if (backToTopBtn) {
+    var toggleBackToTop = function () {
+      backToTopBtn.classList.toggle('is-visible', window.scrollY > 500);
+    };
+    window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    toggleBackToTop();
+    backToTopBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
 </body>
 </html>

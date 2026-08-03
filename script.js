@@ -129,7 +129,7 @@ function choisirParcours(parcoursId) {
   if (parcoursId === 'apres_diplome') {
     diplomeChipsEl.innerHTML = DIPLOMES.map(d => `<button type="button" class="diplome-chip" data-diplome="${d.value}">${d.label}</button>`).join('');
     etapeDiplome.hidden = false;
-    etapeDiplome.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    etapeDiplome.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else {
     etapeMetierIntro.hidden = false;
     construireEtLancerFormulaire();
@@ -154,7 +154,7 @@ diplomeChipsEl.addEventListener('click', (e) => {
   const objectifs = OBJECTIFS_PAR_DIPLOME[etatParcours.diplome] || [];
   objectifChipsEl.innerHTML = objectifs.map(o => `<button type="button" class="objectif-chip" data-objectif="${o.value}">${o.label}</button>`).join('');
   objectifDiplomeWrap.hidden = false;
-  objectifDiplomeWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  objectifDiplomeWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 objectifChipsEl.addEventListener('click', (e) => {
@@ -1204,5 +1204,18 @@ if (contactForm) {
       submitBtn.disabled = false;
       submitBtn.textContent = texteOriginal;
     }
+  });
+}
+
+/* ---------- Bouton retour en haut ---------- */
+const backToTopBtn = document.getElementById('backToTop');
+if (backToTopBtn) {
+  const toggleBackToTop = () => {
+    backToTopBtn.classList.toggle('is-visible', window.scrollY > 500);
+  };
+  window.addEventListener('scroll', toggleBackToTop, { passive: true });
+  toggleBackToTop();
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }

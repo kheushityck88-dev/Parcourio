@@ -4983,6 +4983,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5013,6 +5014,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5043,6 +5045,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5073,6 +5076,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5103,6 +5107,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5133,6 +5138,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5203,6 +5209,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC",
       "BTS"
     ],
@@ -6626,7 +6633,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": "Formations qualifiantes et diplômantes ouvertes aux jeunes dès le niveau BFEM.",
     "region": "Tambacounda",
@@ -6655,7 +6663,8 @@ window.ECOLES_DATA = [
     ],
     "diplomes": [],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": "Formation professionnelle accessible dès le BFEM, orientée vers un public de jeunes filles.",
     "region": "Tambacounda",
@@ -6688,7 +6697,8 @@ window.ECOLES_DATA = [
     ],
     "diplomes": [],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": "Formation professionnelle accessible dès le BFEM.",
     "region": "Sédhiou",
@@ -6721,7 +6731,8 @@ window.ECOLES_DATA = [
     ],
     "diplomes": [],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": "Formation en alternance (dual), accessible dès le BFEM.",
     "region": "Sédhiou",
@@ -6753,6 +6764,7 @@ window.ECOLES_DATA = [
     "diplomes": [],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": "Formation gratuite et professionnalisante, sélection sur motivation, sans condition stricte de diplôme.",
@@ -6824,6 +6836,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC",
       "BTS",
       "Licence"
@@ -6904,7 +6917,8 @@ window.ECOLES_DATA = [
       "Certificat professionnel"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Dakar",
@@ -6938,7 +6952,8 @@ window.ECOLES_DATA = [
       "Certificat professionnel"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Dakar",
@@ -6972,7 +6987,8 @@ window.ECOLES_DATA = [
       "Certificat professionnel"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Dakar",
@@ -7006,7 +7022,8 @@ window.ECOLES_DATA = [
       "Certificat professionnel"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Dakar",
@@ -7108,6 +7125,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -7142,6 +7160,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC",
       "BTS"
     ],
@@ -7221,6 +7240,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -7260,7 +7280,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kaolack",
@@ -7293,7 +7314,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kaffrine",
@@ -7324,7 +7346,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7355,7 +7378,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7386,7 +7410,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kédougou",
@@ -7423,7 +7448,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Sédhiou",
@@ -7456,7 +7482,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Sédhiou",
@@ -7491,7 +7518,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Tambacounda",
@@ -7527,6 +7555,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -7558,7 +7587,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kaolack",
@@ -7589,7 +7619,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Diourbel",
@@ -7620,7 +7651,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Diourbel",
@@ -7653,7 +7685,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Tambacounda",
@@ -7684,7 +7717,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Tambacounda",
@@ -7718,6 +7752,7 @@ window.ECOLES_DATA = [
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -7749,7 +7784,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7780,7 +7816,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7811,7 +7848,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7844,7 +7882,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kaolack",
@@ -7875,7 +7914,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -7906,7 +7946,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -7939,7 +7980,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -7970,7 +8012,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -8001,7 +8044,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -8040,7 +8084,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Ziguinchor",
@@ -8073,7 +8118,8 @@ window.ECOLES_DATA = [
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kolda",
@@ -8530,7 +8576,8 @@ window.ECOLES_DATA = [
       "Baccalauréat"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Thiès",

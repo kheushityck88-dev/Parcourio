@@ -4982,6 +4982,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5012,6 +5013,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5042,6 +5044,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5072,6 +5075,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5102,6 +5106,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5132,6 +5137,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -5202,6 +5208,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC",
       "BTS"
     ],
@@ -6625,7 +6632,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": "Formations qualifiantes et diplômantes ouvertes aux jeunes dès le niveau BFEM.",
     "region": "Tambacounda",
@@ -6654,7 +6662,8 @@
     ],
     "diplomes": [],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": "Formation professionnelle accessible dès le BFEM, orientée vers un public de jeunes filles.",
     "region": "Tambacounda",
@@ -6687,7 +6696,8 @@
     ],
     "diplomes": [],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": "Formation professionnelle accessible dès le BFEM.",
     "region": "Sédhiou",
@@ -6720,7 +6730,8 @@
     ],
     "diplomes": [],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": "Formation en alternance (dual), accessible dès le BFEM.",
     "region": "Sédhiou",
@@ -6752,6 +6763,7 @@
     "diplomes": [],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": "Formation gratuite et professionnalisante, sélection sur motivation, sans condition stricte de diplôme.",
@@ -6823,6 +6835,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC",
       "BTS",
       "Licence"
@@ -6903,7 +6916,8 @@
       "Certificat professionnel"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Dakar",
@@ -6937,7 +6951,8 @@
       "Certificat professionnel"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Dakar",
@@ -6971,7 +6986,8 @@
       "Certificat professionnel"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Dakar",
@@ -7005,7 +7021,8 @@
       "Certificat professionnel"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Dakar",
@@ -7107,6 +7124,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -7141,6 +7159,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC",
       "BTS"
     ],
@@ -7220,6 +7239,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -7259,7 +7279,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kaolack",
@@ -7292,7 +7313,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kaffrine",
@@ -7323,7 +7345,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7354,7 +7377,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7385,7 +7409,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kédougou",
@@ -7422,7 +7447,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Sédhiou",
@@ -7455,7 +7481,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Sédhiou",
@@ -7490,7 +7517,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Tambacounda",
@@ -7526,6 +7554,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -7557,7 +7586,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kaolack",
@@ -7588,7 +7618,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Diourbel",
@@ -7619,7 +7650,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Diourbel",
@@ -7652,7 +7684,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Tambacounda",
@@ -7683,7 +7716,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Tambacounda",
@@ -7717,6 +7751,7 @@
     ],
     "niveauAccepte": [
       "BFEM",
+      "BT",
       "Après BAC"
     ],
     "admission": null,
@@ -7748,7 +7783,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7779,7 +7815,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7810,7 +7847,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Fatick",
@@ -7843,7 +7881,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kaolack",
@@ -7874,7 +7913,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -7905,7 +7945,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -7938,7 +7979,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -7969,7 +8011,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -8000,7 +8043,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Louga",
@@ -8039,7 +8083,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Ziguinchor",
@@ -8072,7 +8117,8 @@
       "BEP"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Kolda",
@@ -8529,7 +8575,8 @@
       "Baccalauréat"
     ],
     "niveauAccepte": [
-      "BFEM"
+      "BFEM",
+      "BT"
     ],
     "admission": null,
     "region": "Thiès",

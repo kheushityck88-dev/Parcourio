@@ -639,6 +639,16 @@
   function construireQuestionnaireMetier() {
     return [
       {
+        id: "niveau_actuel_metier", meta: true, type: "select", categorie: "Ton niveau",
+        label: "Ton niveau actuel", required: true,
+        options: [
+          { value: "aucun", label: "Aucun diplôme pour l'instant" },
+          { value: "bfem", label: "BFEM" },
+          { value: "bt", label: "BT (Brevet de Technicien)" },
+          { value: "bac", label: "BAC" }
+        ]
+      },
+      {
         id: "secteur_metier_interet", type: "single", poids: 4, categorie: "Ton métier",
         label: "Le secteur qui t'intéresse le plus", required: true,
         options: BANQUE_SECTEUR_METIER

@@ -553,6 +553,23 @@
      niveau BFEM accepté, ou un nom d'établissement typiquement associé
      à la formation professionnelle (CFP, CFPT, Don Bosco…) — puisque
      l'objectif ici est une insertion rapide, pas un parcours long. */
+  /* Compare le niveau déjà atteint par la personne (aucun / BFEM / BT /
+     BAC) aux niveaux d'admission déclarés par l'école, pour ne
+     valoriser l'accessibilité que si elle est réellement acquise :
+     un BT ou un BAC couvrent le seuil "BFEM", mais "Après BAC" exige
+     le BAC lui-même. */
+  const ORDRE_NIVEAU_METIER = { aucun: 0, bfem: 1, bt: 2, bac: 3 };
+  const LABEL_NIVEAU_METIER = { aucun: "aucun diplôme", bfem: "BFEM", bt: "BT", bac: "BAC" };
+
+  function niveauSuffisant(niveauUtilisateur, niveauxAcceptes) {
+    if (!niveauxAcceptes || !niveauxAcceptes.length) return false;
+    const rangUtilisateur = ORDRE_NIVEAU_METIER[niveauUtilisateur] || 0;
+    if (rangUtilisateur === 0) return false;
+    if (niveauxAcceptes.includes("Après BAC")) return rangUtilisateur >= ORDRE_NIVEAU_METIER.bac;
+    if (niveauxAcceptes.includes("BFEM")) return rangUtilisateur >= ORDRE_NIVEAU_METIER.bfem;
+    return false;
+  }
+
   function selectionnerEcolesMetier(ecolesBrutes, metier, contexte, limite) {
     limite = limite || 4;
     const ville = contexte.ville || "";
@@ -600,7 +617,10 @@
         }
       }
 
-      if (e.niveauAccepte && e.niveauAccepte.includes("BFEM")) {
+      if (niveauSuffisant(contexte.niveau_actuel_metier, e.niveauAccepte)) {
+        s += PTS_ACCESSIBLE;
+        raisons.push(`Accessible avec ton niveau actuel (${LABEL_NIVEAU_METIER[contexte.niveau_actuel_metier] || contexte.niveau_actuel_metier})`);
+      } else if (e.niveauAccepte && e.niveauAccepte.includes("BFEM")) {
         s += PTS_ACCESSIBLE;
         raisons.push("Accessible dès le BFEM, sans attendre le BAC");
       }
