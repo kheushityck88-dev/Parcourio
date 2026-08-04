@@ -1,5 +1,4 @@
-/* Données des écoles, générées à partir de ecoles.json. */
-window.ECOLES_DATA = [
+[
   {
     "ville": "Dakar",
     "domaine": "technologie",
@@ -9144,4 +9143,4 @@ window.ECOLES_DATA = [
     "region": "Dakar",
     "id": "dakar-epita-dakar-ecole-pour-l-informatique-et-les-techniques-avancees"
   }
-];
+]

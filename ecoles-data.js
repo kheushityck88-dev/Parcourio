@@ -33,7 +33,7 @@
       id: "info_num",
       macro: "technologie",
       nom: "Informatique & Numérique",
-      icone: "💻",
+      icone: "laptop",
       couleur: "#175EFF",
       description: "Tu raisonnes de façon logique et tu aimes comprendre comment fonctionnent les outils numériques. Les filières informatiques (développement, réseaux, data, intelligence artificielle) te permettront de construire des solutions concrètes et très recherchées sur le marché de l'emploi.",
       metiers: ["Développeur·se logiciel / web", "Data analyst ou data scientist", "Administrateur systèmes & réseaux", "Ingénieur·e en intelligence artificielle", "Cybersécurité"],
@@ -50,7 +50,7 @@
       id: "ingenierie",
       macro: "technologie",
       nom: "Ingénierie & Sciences appliquées",
-      icone: "⚙️",
+      icone: "settings",
       couleur: "#3B82F6",
       description: "Tu aimes comprendre comment les choses sont construites et résoudre des problèmes concrets sur le terrain ou en atelier. Les filières d'ingénierie (génie civil, mécanique, électrique, industriel) mènent à des métiers très demandés dans les infrastructures et l'industrie au Sénégal.",
       metiers: ["Ingénieur·e génie civil / BTP", "Technicien·ne ou ingénieur·e en génie électrique", "Ingénieur·e génie mécanique", "Responsable QHSE", "Ingénieur·e agronome ou environnement"],
@@ -67,7 +67,7 @@
       id: "creation_design",
       macro: "creatif",
       nom: "Création & Design",
-      icone: "🎨",
+      icone: "palette",
       couleur: "#FDD400",
       description: "Tu exprimes tes idées par l'image, la forme ou l'esthétique. Les filières de design, mode, arts visuels ou audiovisuel te permettent de transformer ta sensibilité créative en un métier et un style reconnaissable.",
       metiers: ["Designer graphique / UI-UX", "Styliste / créateur·rice de mode", "Photographe / vidéaste", "Illustrateur·rice / artiste plasticien·ne", "Décorateur·rice / architecte d'intérieur"],
@@ -84,7 +84,7 @@
       id: "communication_medias",
       macro: "creatif",
       nom: "Communication & Médias",
-      icone: "📣",
+      icone: "megaphone",
       couleur: "#F59E0B",
       description: "Tu aimes t'exprimer, convaincre et raconter des histoires. Les filières de communication, journalisme, marketing digital ou langues appliquées mènent à des métiers où le relationnel et les mots sont les outils principaux.",
       metiers: ["Chargé·e de communication / community manager", "Journaliste / rédacteur·rice", "Chargé·e de marketing digital", "Interprète / traducteur·rice", "Chargé·e de relations publiques"],
@@ -101,12 +101,12 @@
       id: "sante_social",
       macro: "social",
       nom: "Santé & Soin",
-      icone: "🩺",
+      icone: "stethoscope",
       couleur: "#2DD9B9",
       description: "Tu es attiré·e par le soin et l'accompagnement des personnes. Les filières de santé (médecine, soins infirmiers, pharmacie) demandent de la rigueur et de l'empathie, pour un impact direct sur la vie des gens.",
       metiers: ["Médecin généraliste ou spécialiste", "Infirmier·ère", "Pharmacien·ne", "Sage-femme", "Technicien·ne de laboratoire médical"],
       filieresTypes: ["Médecine", "Soins infirmiers", "Pharmacie", "Chirurgie dentaire", "Biologie médicale"],
-      motsClefsSecteurs: ["Médecine", "Infirmier", "Pharmacie", "Chirurgie dentaire", "Odontologie", "Biologie médicale", "Délégué médical", "Sage-femme", "Santé", "Sciences infirmières", "Santé publique", "Médecine vétérinaire", "Santé animale", "Productions animales"],
+      motsClefsSecteurs: ["Médecine", "Infirmier", "Pharmacie", "Chirurgie dentaire", "Odontologie", "Biologie médicale", "Délégué médical", "Sage-femme", "Santé", "Sciences infirmières", "Santé publique", "Médecine vétérinaire", "Santé animale", "Productions animales", "Agriculture", "Agronomie", "Élevage", "Agroalimentaire", "Pêche", "Foresterie"],
       conseil: {
         "Collège": "Renforce les sciences (SVT, physique-chimie) qui sont indispensables pour les filières de santé, et observe les métiers médicaux autour de toi.",
         "Lycée": "Vise une série scientifique solide, et si possible fais du bénévolat ou une immersion dans un centre de santé.",
@@ -118,7 +118,7 @@
       id: "education_humaines",
       macro: "social",
       nom: "Éducation & Sciences humaines",
-      icone: "📚",
+      icone: "book-open",
       couleur: "#22C1A6",
       description: "Tu aimes comprendre les sociétés, transmettre un savoir ou accompagner le développement des autres. Les filières d'éducation, sciences sociales, psychologie ou développement communautaire te permettent d'avoir un impact durable et humain.",
       metiers: ["Enseignant·e", "Éducateur·rice spécialisé·e", "Psychologue", "Travailleur·se social·e", "Chargé·e de projet ONG / développement communautaire"],
@@ -135,7 +135,7 @@
       id: "commerce_gestion",
       macro: "gestion",
       nom: "Commerce & Gestion",
-      icone: "📊",
+      icone: "bar-chart-3",
       couleur: "#A78BFA",
       description: "Tu aimes organiser, négocier et faire avancer des projets concrets. Les filières de gestion, commerce, marketing ou finance mènent à des métiers d'entreprise variés, du commerce à l'entrepreneuriat.",
       metiers: ["Chargé·e de marketing / commercial·e", "Comptable / auditeur·rice", "Chef·fe de projet / entrepreneur·e", "Gestionnaire en hôtellerie", "Chargé·e de clientèle bancaire"],
@@ -152,7 +152,7 @@
       id: "droit_admin",
       macro: "gestion",
       nom: "Droit & Administration",
-      icone: "⚖️",
+      icone: "scale",
       couleur: "#8B5CF6",
       description: "Tu aimes la rigueur, l'argumentation et les règles qui organisent la société. Les filières de droit, administration publique ou ressources humaines mènent à des métiers d'analyse, de gestion des règles et de service public.",
       metiers: ["Juriste / avocat·e", "Magistrat·e", "Cadre de l'administration publique", "Responsable ressources humaines", "Huissier / notaire"],
@@ -170,10 +170,10 @@
   /* Style visuel par macro-domaine, repris tel quel de l'ancienne version
      pour ne pas casser la mise en page (radar chart, couleurs, etc.) */
   const MACRO_STYLE = {
-    technologie: { icone: "💻", couleur: "#175EFF", label: "Technologie" },
-    creatif: { icone: "🎨", couleur: "#FDD400", label: "Créatif" },
-    social: { icone: "🤝", couleur: "#2DD9B9", label: "Social" },
-    gestion: { icone: "📊", couleur: "#A78BFA", label: "Gestion" }
+    technologie: { icone: "laptop", couleur: "#175EFF", label: "Technologie" },
+    creatif: { icone: "palette", couleur: "#FDD400", label: "Créatif" },
+    social: { icone: "handshake", couleur: "#2DD9B9", label: "Social" },
+    gestion: { icone: "bar-chart-3", couleur: "#A78BFA", label: "Gestion" }
   };
 
   /* ---------------------------------------------------------------
@@ -190,7 +190,7 @@
     batiment_industrie: {
       id: "batiment_industrie", macro: "technologie",
       nom: "Bâtiment, Électricité & Industrie",
-      icone: "🧱", couleur: "#3B82F6",
+      icone: "brick-wall", couleur: "#3B82F6",
       description: "Tu aimes travailler de tes mains, construire, réparer ou installer. Les métiers du bâtiment et de l'industrie recrutent fortement au Sénégal et permettent une insertion rapide, avec de vraies possibilités d'évolution vers le statut de technicien ou de chef d'équipe.",
       metiers: ["Électricien·ne", "Maçon·ne / Chef·fe de chantier", "Soudeur·se", "Technicien·ne froid-climatisation", "Mécanicien·ne auto"],
       motsClefsSecteurs: ["Électricité", "Génie civil", "Froid-climatisation", "Plomberie", "Mécanique auto", "Bâtiment et travaux publics", "Génie mécanique", "Machinisme agricole"],
@@ -200,7 +200,7 @@
     numerique_pratique: {
       id: "numerique_pratique", macro: "technologie",
       nom: "Numérique & Métiers du digital",
-      icone: "💻", couleur: "#175EFF",
+      icone: "laptop", couleur: "#175EFF",
       description: "Tu es à l'aise avec un ordinateur ou un smartphone et tu apprends vite les outils numériques. Les métiers techniques du digital (maintenance, réseaux, community management) sont très demandés et accessibles sans long parcours universitaire.",
       metiers: ["Technicien·ne maintenance informatique", "Développeur·se web junior", "Community manager", "Opérateur·rice de saisie", "Technicien·ne réseaux"],
       motsClefsSecteurs: ["Informatique", "Réseaux et télécommunications", "Développement web", "Marketing digital", "Informatique de gestion"],
@@ -210,7 +210,7 @@
     hotellerie_restauration: {
       id: "hotellerie_restauration", macro: "gestion",
       nom: "Hôtellerie, Restauration & Tourisme",
-      icone: "🍽️", couleur: "#A78BFA",
+      icone: "utensils", couleur: "#A78BFA",
       description: "Tu aimes accueillir, cuisiner ou organiser un service. L'hôtellerie-restauration-tourisme est un secteur historique et en croissance au Sénégal, avec des formations reconnues et une forte demande, y compris à l'international.",
       metiers: ["Cuisinier·ère", "Serveur·se / Réceptionniste", "Guide touristique", "Pâtissier·ère", "Barman / Barmaid"],
       motsClefsSecteurs: ["Hôtellerie", "Restauration", "Tourisme", "Gastronomie", "Hôtellerie-tourisme", "Gestion hôtelière"],
@@ -220,7 +220,7 @@
     mode_artisanat: {
       id: "mode_artisanat", macro: "creatif",
       nom: "Mode, Couture & Artisanat d'art",
-      icone: "🧵", couleur: "#FDD400",
+      icone: "shirt", couleur: "#FDD400",
       description: "Tu as le sens du geste, du détail et de l'esthétique. La mode, la couture et l'artisanat d'art sont des filières où le savoir-faire prime, avec une vraie possibilité de créer ta propre activité par la suite.",
       metiers: ["Couturier·ère / Styliste", "Modéliste", "Coiffeur·se / Esthéticien·ne", "Artisan·e d'art", "Bijoutier·ère"],
       motsClefsSecteurs: ["mode", "stylisme", "modélisme", "couture", "Design", "Infographie"],
@@ -230,7 +230,7 @@
     audiovisuel_creation: {
       id: "audiovisuel_creation", macro: "creatif",
       nom: "Audiovisuel, Image & Création numérique",
-      icone: "🎬", couleur: "#F59E0B",
+      icone: "clapperboard", couleur: "#F59E0B",
       description: "Tu aimes filmer, monter, photographier ou créer du contenu pour les réseaux sociaux. Le secteur audiovisuel sénégalais est en pleine croissance et de plus en plus de formations gratuites ou courtes permettent d'y entrer sans diplôme préalable.",
       metiers: ["Monteur·se vidéo", "Photographe", "Opérateur·rice prise de son", "Infographiste", "Créateur·rice de contenu"],
       motsClefsSecteurs: ["audiovisuel", "Design UX/UI", "Webdesign", "Photographie", "cinéma", "Production multimédia", "Infographie"],
@@ -240,7 +240,7 @@
     sante_aide_personne: {
       id: "sante_aide_personne", macro: "social",
       nom: "Santé, Social & Aide à la personne",
-      icone: "🩺", couleur: "#2DD9B9",
+      icone: "stethoscope", couleur: "#2DD9B9",
       description: "Tu aimes prendre soin des autres et tu as le sens du contact. Les métiers d'aide à la personne et de santé de premier niveau sont fortement recherchés, avec des formations plus courtes que médecine ou pharmacie.",
       metiers: ["Aide-soignant·e", "Auxiliaire de puériculture", "Assistant·e dentaire", "Agent·e de santé communautaire", "Aide à domicile"],
       motsClefsSecteurs: ["Infirmier", "Santé", "Sciences infirmières", "Biologie médicale"],
@@ -250,7 +250,7 @@
     commerce_vente_gestion: {
       id: "commerce_vente_gestion", macro: "gestion",
       nom: "Commerce, Vente & Gestion pratique",
-      icone: "🛒", couleur: "#A78BFA",
+      icone: "shopping-cart", couleur: "#A78BFA",
       description: "Tu aimes vendre, conseiller ou organiser. Les métiers du commerce et de la gestion pratique s'apprennent vite et ouvrent la voie à l'entrepreneuriat, très valorisé au Sénégal.",
       metiers: ["Vendeur·se / Commercial·e", "Caissier·ère / Agent·e de comptoir", "Secrétaire / Assistant·e administratif", "Agent·e de saisie comptable", "Auto-entrepreneur·se"],
       motsClefsSecteurs: ["Commerce", "Gestion commerciale", "Comptabilité", "Gestion des entreprises", "Marketing"],
@@ -260,7 +260,7 @@
     agriculture_environnement: {
       id: "agriculture_environnement", macro: "technologie",
       nom: "Agriculture, Élevage & Environnement",
-      icone: "🌱", couleur: "#22C1A6",
+      icone: "sprout", couleur: "#22C1A6",
       description: "Tu aimes le plein air, la nature ou le travail de la terre. L'agriculture, l'élevage et les métiers verts sont stratégiques pour le Sénégal et bénéficient d'un vrai soutien de l'État et des bailleurs.",
       metiers: ["Technicien·ne agricole", "Éleveur·se / Agent·e d'élevage", "Agent·e forestier", "Technicien·ne agroalimentaire", "Éco-guide"],
       motsClefsSecteurs: ["Agriculture", "Environnement", "Productions animales", "Gestion forestière"],
@@ -270,7 +270,7 @@
     transport_securite: {
       id: "transport_securite", macro: "technologie",
       nom: "Transport, Logistique & Sécurité",
-      icone: "🚚", couleur: "#8B5CF6",
+      icone: "truck", couleur: "#8B5CF6",
       description: "Tu aimes bouger, organiser des flux ou veiller à la sécurité des autres. Les métiers du transport, de la logistique et de la sécurité recrutent en continu, avec des formations courtes et un accès à l'emploi rapide.",
       metiers: ["Chauffeur·se professionnel·le", "Agent·e logistique", "Agent·e de sécurité", "Marin / Agent·e maritime", "Magasinier·ère"],
       motsClefsSecteurs: ["Transport-logistique", "Navigation maritime", "Sécurité", "Mécanique navale"],
@@ -297,7 +297,7 @@
     { value: "s1", label: "S1 — Sciences exactes (maths, physique-chimie)", scores: { info_num: 3, ingenierie: 3 } },
     { value: "s2", label: "S2 — Sciences expérimentales (SVT, physique-chimie)", scores: { sante_social: 3, ingenierie: 1 } },
     { value: "s3", label: "S3 — Sciences et techniques / agronomie", scores: { ingenierie: 2, sante_social: 1 } },
-    { value: "l1_l1a", label: "L1 / L1a — Lettres, langues et civilisations", scores: { communication_medias: 2, education_humaines: 2 } },
+    { value: "l1_l1a", label: "L1 / L1a — Lettres, langues et civilisations", scores: { communication_medias: 2, education_humaines: 2, creation_design: 1 } },
     { value: "l2", label: "L2 — Sciences sociales et humaines", scores: { education_humaines: 2, droit_admin: 2, communication_medias: 1 } },
     { value: "g", label: "G — Gestion (comptabilité, action commerciale, administratif)", scores: { commerce_gestion: 3 } },
     { value: "t1_t2", label: "T1 / T2 — Techniques industrielles (mécanique, électrotechnique)", scores: { ingenierie: 3 } },
@@ -317,13 +317,13 @@
     {
       id: "apres_diplome",
       titre: "Je souhaite m'orienter après un diplôme",
-      icone: "🎓",
+      icone: "graduation-cap",
       description: "Tu as déjà un BAC, un BTS, un DUT, une Licence, un Master, un Doctorat ou un autre diplôme reconnu, et tu veux poursuivre, te spécialiser, changer de filière ou te réorienter."
     },
     {
       id: "apprendre_metier",
       titre: "Je souhaite apprendre un métier",
-      icone: "🛠️",
+      icone: "wrench",
       description: "Tu n'as pas encore de diplôme, ou tu ne veux pas d'un parcours universitaire classique : tu cherches une formation qualifiante, une certification et une insertion rapide sur le marché du travail."
     }
   ];
@@ -390,6 +390,26 @@
     ]
   };
 
+  /* Banque des "projets après [diplôme]" : regroupe, sous une seule
+     clé plate, TOUTES les valeurs "objectif" possibles utilisées dans
+     OBJECTIFS_PAR_DIPLOME (tous niveaux confondus). Chaque entrée porte
+     un libellé lisible pour l'affichage du résultat, ainsi qu'un
+     "biaisMemeDomaine" (0 à 3) qui indique à quel point ce choix
+     renforce le domaine actuel de la personne (utilisé dans
+     script.js/afficherResultatsApresDiplome pour donner plus de poids
+     au domaine déjà en cours quand la personne veut clairement y
+     rester ou s'y spécialiser, et aucun bonus quand elle veut changer
+     de filière). */
+  const BANQUE_PROJET_APRES = {
+    poursuivre: { label: "Choisir ma première orientation après le BAC", biaisMemeDomaine: 0 },
+    competences: { label: "Découvrir ou développer mes compétences", biaisMemeDomaine: 1 },
+    niveau_superieur: { label: "Poursuivre vers un niveau supérieur", biaisMemeDomaine: 2 },
+    specialisation: { label: "Me spécialiser dans mon domaine actuel", biaisMemeDomaine: 3 },
+    changer_filiere: { label: "Changer de filière / me réorienter", biaisMemeDomaine: 0 },
+    insertion: { label: "Entrer directement sur le marché du travail", biaisMemeDomaine: 1 },
+    carriere_academique: { label: "Poursuivre une carrière académique / la recherche", biaisMemeDomaine: 2 }
+  };
+
   /* Le "niveau d'études visé" proposé après le test change selon le
      diplôme déjà en poche : on ne propose pas "Master" à quelqu'un qui
      vient d'obtenir un Master, ni "BTS" à un titulaire de Doctorat. */
@@ -447,38 +467,28 @@
      (rester dans le même domaine renforce son score ; se réorienter
      laisse la suite du questionnaire — secteurs, compétences,
      objectifs — décider). */
-  const BANQUE_PROJET_APRES = {
-    niveau_superieur: { label: "Continuer et me spécialiser dans mon domaine actuel", biaisMemeDomaine: 3 },
-    specialisation: { label: "Me spécialiser encore davantage dans mon domaine actuel", biaisMemeDomaine: 3 },
-    insertion: { label: "Trouver un emploi rapidement dans mon domaine actuel", biaisMemeDomaine: 2 },
-    changer_filiere: { label: "Changer complètement de filière", biaisMemeDomaine: 0 },
-    competences: { label: "Développer de nouvelles compétences sans changer de domaine", biaisMemeDomaine: 2 },
-    carriere_academique: { label: "Poursuivre dans la recherche / l'enseignement supérieur", biaisMemeDomaine: 3 }
-  };
-
-
   const BANQUE_MATIERES = [
     { value: "maths_info", label: "Mathématiques / Informatique", scores: { info_num: 3, ingenierie: 2 } },
     { value: "physique_techno", label: "Physique / Technologie", scores: { ingenierie: 3, info_num: 1 } },
     { value: "svt", label: "SVT / Biologie", scores: { sante_social: 3, ingenierie: 1 } },
     { value: "arts", label: "Arts plastiques / Musique", scores: { creation_design: 3 } },
-    { value: "francais_lettres", label: "Français / Littérature", scores: { communication_medias: 2, education_humaines: 2 } },
+    { value: "francais_lettres", label: "Français / Littérature", scores: { communication_medias: 2, education_humaines: 2, creation_design: 1 } },
     { value: "langues", label: "Langues vivantes", scores: { communication_medias: 3 } },
     { value: "histoire_geo", label: "Histoire-Géographie / Éducation civique", scores: { droit_admin: 2, education_humaines: 2 } },
     { value: "eco_gestion", label: "Économie / Gestion", scores: { commerce_gestion: 3 } },
     { value: "philo", label: "Philosophie", scores: { education_humaines: 2, droit_admin: 2, communication_medias: 1 } },
-    { value: "eps", label: "Sport / EPS", scores: { sante_social: 1, commerce_gestion: 1 } }
+    { value: "eps", label: "Sport / EPS", scores: { sante_social: 2 } }
   ];
 
   const BANQUE_COMPETENCES = [
     { value: "logique", label: "Résoudre des problèmes logiques ou mathématiques", scores: { info_num: 3, ingenierie: 2 } },
     { value: "manuel", label: "Bricoler, réparer, construire de mes mains", scores: { ingenierie: 3 } },
     { value: "artistique", label: "Dessiner, créer, avoir le sens esthétique", scores: { creation_design: 3 } },
-    { value: "expression", label: "M'exprimer à l'écrit ou à l'oral", scores: { communication_medias: 3 } },
+    { value: "expression", label: "M'exprimer à l'écrit ou à l'oral", scores: { communication_medias: 3, creation_design: 1 } },
     { value: "ecoute", label: "Écouter et comprendre les émotions des autres", scores: { sante_social: 2, education_humaines: 2 } },
     { value: "soin", label: "Prendre soin, rassurer, aider concrètement", scores: { sante_social: 3 } },
     { value: "organisation", label: "Organiser, planifier, gérer un budget", scores: { commerce_gestion: 3 } },
-    { value: "negociation", label: "Négocier, convaincre, vendre une idée", scores: { commerce_gestion: 2, droit_admin: 1 } },
+    { value: "negociation", label: "Négocier, convaincre, vendre une idée", scores: { commerce_gestion: 2, droit_admin: 1, communication_medias: 1 } },
     { value: "analyse", label: "Analyser des règles, des textes, des situations complexes", scores: { droit_admin: 3 } },
     { value: "leadership", label: "Motiver et diriger un groupe", scores: { commerce_gestion: 2, droit_admin: 1 } }
   ];
@@ -488,14 +498,14 @@
     { value: "terrain", label: "Sur le terrain, au contact direct des gens ou de l'environnement", scores: { sante_social: 2, education_humaines: 2, ingenierie: 1 } },
     { value: "laboratoire", label: "En laboratoire ou en environnement scientifique", scores: { sante_social: 2, ingenierie: 2, info_num: 1 } },
     { value: "teletravail", label: "En télétravail ou à distance, en autonomie", scores: { info_num: 3, communication_medias: 2 } },
-    { value: "atelier", label: "En atelier, sur un chantier ou en production", scores: { ingenierie: 3, creation_design: 1 } }
+    { value: "atelier", label: "En atelier, sur un chantier ou en production", scores: { ingenierie: 3, creation_design: 2 } }
   ];
 
   const BANQUE_OBJECTIFS_CARRIERE = [
     { value: "stable", label: "Avoir un emploi stable et sécurisant (fonction publique, grande entreprise…)", scores: { droit_admin: 2, sante_social: 2, commerce_gestion: 1 } },
     { value: "entreprendre", label: "Créer ou diriger ma propre entreprise", scores: { commerce_gestion: 3, info_num: 1, creation_design: 1 } },
     { value: "expertise", label: "Devenir un·e expert·e technique reconnu·e", scores: { info_num: 2, ingenierie: 2 } },
-    { value: "impact_social", label: "Avoir un impact social ou humain concret", scores: { sante_social: 2, education_humaines: 2 } },
+    { value: "impact_social", label: "Avoir un impact social ou humain concret", scores: { sante_social: 2, education_humaines: 2, communication_medias: 1 } },
     { value: "creation", label: "Créer une œuvre, une marque ou un univers artistique", scores: { creation_design: 3, communication_medias: 1 } },
     { value: "responsabilite", label: "Occuper un poste à responsabilité, gérer des équipes", scores: { commerce_gestion: 2, droit_admin: 2 } }
   ];
@@ -506,10 +516,10 @@
     { value: "sante", label: "Santé", scores: { sante_social: 3 } },
     { value: "education", label: "Éducation / Social", scores: { education_humaines: 3 } },
     { value: "art_culture", label: "Art / Culture / Design", scores: { creation_design: 3 } },
-    { value: "medias", label: "Médias / Communication", scores: { communication_medias: 3 } },
+    { value: "medias", label: "Médias / Communication", scores: { communication_medias: 3, creation_design: 1 } },
     { value: "business", label: "Commerce / Business / Finance", scores: { commerce_gestion: 3 } },
     { value: "droit_public", label: "Droit / Administration / Fonction publique", scores: { droit_admin: 3 } },
-    { value: "agri_env", label: "Agriculture / Environnement", scores: { ingenierie: 2, education_humaines: 1 } }
+    { value: "agri_env", label: "Agriculture / Environnement", scores: { sante_social: 2, ingenierie: 1, education_humaines: 1 } }
   ];
 
   const BANQUE_VALEURS = [
@@ -526,7 +536,7 @@
     { value: "empathie", label: "Empathie", scores: { sante_social: 2, education_humaines: 2 } },
     { value: "creativite_qual", label: "Créativité", scores: { creation_design: 2, communication_medias: 1 } },
     { value: "leadership_qual", label: "Leadership", scores: { commerce_gestion: 2, droit_admin: 1 } },
-    { value: "curiosite", label: "Curiosité", scores: { info_num: 1, ingenierie: 1, communication_medias: 1 } },
+    { value: "curiosite", label: "Curiosité", scores: { info_num: 1, ingenierie: 1, communication_medias: 1, creation_design: 1 } },
     { value: "patience", label: "Patience", scores: { sante_social: 1, education_humaines: 2 } },
     { value: "sens_pratique", label: "Sens pratique", scores: { ingenierie: 2, commerce_gestion: 1 } },
     { value: "esprit_analyse", label: "Esprit d'analyse", scores: { info_num: 1, droit_admin: 2 } },
@@ -539,7 +549,7 @@
     { value: "sciences_int", label: "Sciences, expériences, nature", scores: { ingenierie: 1, sante_social: 1 } },
     { value: "sante_int", label: "Santé, bien-être, médecine", scores: { sante_social: 2 } },
     { value: "art_int", label: "Dessin, mode, photographie, musique", scores: { creation_design: 2 } },
-    { value: "sport_int", label: "Sport et compétition", scores: { sante_social: 1, commerce_gestion: 1 } },
+    { value: "sport_int", label: "Sport et compétition", scores: { sante_social: 2 } },
     { value: "voyages_langues_int", label: "Voyages et langues étrangères", scores: { communication_medias: 2 } },
     { value: "societe_int", label: "Actualité, politique, société", scores: { droit_admin: 2, education_humaines: 1 } },
     { value: "business_int", label: "Business, argent, entrepreneuriat", scores: { commerce_gestion: 2 } },
@@ -547,24 +557,6 @@
     { value: "enseignement_int", label: "Enseignement, transmission de savoir", scores: { education_humaines: 2 } },
     { value: "aide_int", label: "Bénévolat, aide communautaire", scores: { sante_social: 1, education_humaines: 2 } },
     { value: "medias_int", label: "Réseaux sociaux, médias, création de contenu", scores: { communication_medias: 2 } }
-  ];
-
-  const BANQUE_ACTIVITES = [
-    { value: "club_tech", label: "Club informatique / robotique", scores: { info_num: 2, ingenierie: 1 } },
-    { value: "club_art", label: "Théâtre, musique, arts plastiques", scores: { creation_design: 2, communication_medias: 1 } },
-    { value: "club_sport", label: "Sport en club ou compétition", scores: { sante_social: 1, commerce_gestion: 1 } },
-    { value: "benevolat", label: "Bénévolat / engagement associatif", scores: { sante_social: 1, education_humaines: 2 } },
-    { value: "junior_entreprise", label: "Junior-entreprise / petit commerce / business", scores: { commerce_gestion: 2 } },
-    { value: "debat", label: "Club de débat / journal scolaire", scores: { droit_admin: 1, communication_medias: 2 } },
-    { value: "soutien_scolaire", label: "Soutien scolaire à d'autres élèves", scores: { education_humaines: 2 } },
-    { value: "aucune_activite", label: "Aucune activité régulière pour l'instant", scores: {} }
-  ];
-
-  const BANQUE_RESOLUTION = [
-    { value: "logique_methodique", label: "De façon logique et méthodique, étape par étape", scores: { info_num: 2, ingenierie: 2, droit_admin: 1 } },
-    { value: "creative_intuitive", label: "De façon créative et intuitive, en testant des idées", scores: { creation_design: 2, communication_medias: 1 } },
-    { value: "collaborative", label: "En échangeant avec d'autres pour trouver un consensus", scores: { sante_social: 1, education_humaines: 1, commerce_gestion: 1 } },
-    { value: "pragmatique", label: "En testant directement sur le terrain, par la pratique", scores: { ingenierie: 2, sante_social: 1 } }
   ];
 
   /* Échelles (curseurs / échelles de préférence) : 5 positions, chacune
@@ -583,38 +575,14 @@
   };
 
   const ECHELLE_STABILITE_INNOVATION = {
-    poleGauche: "Stabilité et règles claires",
-    poleDroite: "Innovation et prise de risque",
+    poleGauche: "Des règles claires",
+    poleDroite: "Inventer de nouvelles solutions",
     positions: [
       { value: "1", scores: { droit_admin: 2, sante_social: 1 } },
       { value: "2", scores: { droit_admin: 1, commerce_gestion: 1 } },
       { value: "3", scores: {} },
       { value: "4", scores: { commerce_gestion: 1, ingenierie: 1 } },
       { value: "5", scores: { info_num: 2, creation_design: 1 } }
-    ]
-  };
-
-  const ECHELLE_INTROVERTI_EXTRAVERTI = {
-    poleGauche: "Plutôt introverti·e",
-    poleDroite: "Plutôt extraverti·e",
-    positions: [
-      { value: "1", scores: { info_num: 1, ingenierie: 1 } },
-      { value: "2", scores: { sante_social: 1 } },
-      { value: "3", scores: {} },
-      { value: "4", scores: { education_humaines: 1 } },
-      { value: "5", scores: { communication_medias: 2, commerce_gestion: 1 } }
-    ]
-  };
-
-  const ECHELLE_REFLECHI_SPONTANE = {
-    poleGauche: "Réfléchi·e et méthodique",
-    poleDroite: "Spontané·e et créatif·ve",
-    positions: [
-      { value: "1", scores: { droit_admin: 1, ingenierie: 1 } },
-      { value: "2", scores: { info_num: 1 } },
-      { value: "3", scores: {} },
-      { value: "4", scores: { communication_medias: 1 } },
-      { value: "5", scores: { creation_design: 2 } }
     ]
   };
 
@@ -691,6 +659,16 @@
   function construireQuestionnaireMetier() {
     return [
       {
+        id: "niveau_actuel_metier", meta: true, type: "select", categorie: "Ton niveau",
+        label: "Ton niveau actuel", required: true,
+        options: [
+          { value: "aucun", label: "Aucun diplôme pour l'instant" },
+          { value: "bfem", label: "BFEM" },
+          { value: "bt", label: "BT (Brevet de Technicien)" },
+          { value: "bac", label: "BAC" }
+        ]
+      },
+      {
         id: "secteur_metier_interet", type: "single", poids: 4, categorie: "Ton métier",
         label: "Le secteur qui t'intéresse le plus", required: true,
         options: BANQUE_SECTEUR_METIER
@@ -761,21 +739,16 @@
           label: "Ta série actuelle ou celle de ton bac", required: false, options: BANQUE_SERIE_BAC },
         { id: "matieres_preferees", type: "multi", max: 3, poids: 2.2, categorie: "Matières & compétences",
           label: "Tes matières préférées (jusqu'à 3)", required: true, options: BANQUE_MATIERES },
-        { id: "matieres_moins_aimees", type: "multi", max: 2, poids: -1.8, categorie: "Matières & compétences",
-          label: "Tes matières les moins appréciées (jusqu'à 2)", required: false,
-          aide: "Ces matières réduisent légèrement le score des filières associées.", options: BANQUE_MATIERES },
         { id: "competences_naturelles", type: "multi", max: 3, poids: 2, categorie: "Matières & compétences",
           label: "Tes compétences naturelles (jusqu'à 3)", required: true, options: BANQUE_COMPETENCES },
-        { id: "resolution_problemes", type: "single", poids: 2, categorie: "Matières & compétences",
-          label: "Face à un problème compliqué, tu réagis plutôt…", required: true, options: BANQUE_RESOLUTION },
         { id: "centres_interet", type: "multi", max: 4, poids: 1.4, categorie: "Intérêts & passions",
           label: "Tes centres d'intérêt (jusqu'à 4)", required: true, options: BANQUE_INTERETS },
         { id: "type_travail", type: "single", poids: 2, categorie: "Environnement de travail",
           label: "Ton environnement de travail idéal", required: true, options: BANQUE_TYPE_TRAVAIL },
         { id: "mode_travail", type: "scale", poids: 1.5, categorie: "Environnement de travail",
-          label: "Seul·e ou en équipe ?", required: true, echelle: ECHELLE_MODE_TRAVAIL },
+          label: "Tu préfères travailler seul·e ou en équipe ?", required: true, echelle: ECHELLE_MODE_TRAVAIL },
         { id: "stabilite_innovation", type: "scale", poids: 1.5, categorie: "Environnement de travail",
-          label: "Tu préfères plutôt…", required: true, echelle: ECHELLE_STABILITE_INNOVATION },
+          label: "Tu préfères un travail avec des règles claires, ou un travail où tu inventes de nouvelles façons de faire ?", required: true, echelle: ECHELLE_STABILITE_INNOVATION },
         { id: "qualites_personnelles", type: "multi", max: 3, poids: 2, categorie: "Personnalité",
           label: "Tes qualités personnelles (jusqu'à 3)", required: true, options: BANQUE_QUALITES },
         { id: "niveau_informatique", type: "single", poids: 2, categorie: "Compétences techniques",
@@ -820,6 +793,20 @@
           label: diplome === "doctorat" ? "Après ce doctorat, tu te vois plutôt en…" : "Après ce Master, tu te vois plutôt en…",
           required: true, options: optionsRecherchePro
         });
+      } else if (["bts", "dut", "licence", "autre"].includes(diplome)) {
+        questions.push({
+          id: "orientation_pro_diplome", type: "single", poids: 2, categorie: "Ta situation actuelle",
+          label: `Après ce ${infoDiplome.label || "diplôme"}, tu voudrais plutôt…`,
+          required: true,
+          options: [
+            { value: "poursuivre_etudes", label: "Poursuivre des études plus poussées (licence, master…)", scores: { education_humaines: 1 } },
+            { value: "insertion_rapide", label: "Trouver un emploi rapidement", scores: {} },
+            { value: "creation_entreprise", label: "Créer ma propre activité / entreprendre", scores: { commerce_gestion: 3 } },
+            { value: "expertise_technique", label: "Devenir un·e expert·e technique très pointu·e", scores: { info_num: 2, ingenierie: 2 } },
+            { value: "enseignement_transmission", label: "Enseigner / transmettre mes compétences", scores: { education_humaines: 3 } },
+            { value: "conseil_independant", label: "Devenir consultant·e / travailler en indépendant·e", scores: { commerce_gestion: 2, droit_admin: 1 } }
+          ]
+        });
       }
     }
 
@@ -829,8 +816,8 @@
         label: "Ce qui te ferait le plus vibrer dans 10 ans", required: true, options: BANQUE_OBJECTIFS_CARRIERE },
       { id: "secteurs_attirants", type: "multi", max: 3, poids: 2.2, categorie: "Objectifs de carrière",
         label: "Les secteurs professionnels qui t'attirent (jusqu'à 3)", required: true, options: BANQUE_SECTEURS },
-      { id: "valeurs_importantes", type: "rank", max: 3, categorie: "Objectifs de carrière",
-        label: "Classe les 3 valeurs les plus importantes pour toi, dans l'ordre", required: true, options: BANQUE_VALEURS }
+      { id: "valeurs_importantes", type: "multi", max: 3, poids: 2, categorie: "Objectifs de carrière",
+        label: "Les valeurs les plus importantes pour toi (jusqu'à 3)", required: true, options: BANQUE_VALEURS }
     );
 
     // --- Tronc commun : études et logistique ---
