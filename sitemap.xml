@@ -1,32 +1,8 @@
-{
-  "name": "Parcourio — Trouve ta route vers la bonne formation",
-  "short_name": "Parcourio",
-  "description": "Parcourio aide les jeunes du Sénégal à choisir une formation adaptée à leur profil, leur niveau et leur ville.",
-  "start_url": "/index.html",
-  "scope": "/",
-  "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#030B1E",
-  "theme_color": "#FFFFFF",
-  "lang": "fr-SN",
-  "icons": [
-    {
-      "src": "assets/img/favicon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/img/favicon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/img/maskable-icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.parcourio.com/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

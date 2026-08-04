@@ -390,6 +390,26 @@
     ]
   };
 
+  /* Banque des "projets après [diplôme]" : regroupe, sous une seule
+     clé plate, TOUTES les valeurs "objectif" possibles utilisées dans
+     OBJECTIFS_PAR_DIPLOME (tous niveaux confondus). Chaque entrée porte
+     un libellé lisible pour l'affichage du résultat, ainsi qu'un
+     "biaisMemeDomaine" (0 à 3) qui indique à quel point ce choix
+     renforce le domaine actuel de la personne (utilisé dans
+     script.js/afficherResultatsApresDiplome pour donner plus de poids
+     au domaine déjà en cours quand la personne veut clairement y
+     rester ou s'y spécialiser, et aucun bonus quand elle veut changer
+     de filière). */
+  const BANQUE_PROJET_APRES = {
+    poursuivre: { label: "Choisir ma première orientation après le BAC", biaisMemeDomaine: 0 },
+    competences: { label: "Découvrir ou développer mes compétences", biaisMemeDomaine: 1 },
+    niveau_superieur: { label: "Poursuivre vers un niveau supérieur", biaisMemeDomaine: 2 },
+    specialisation: { label: "Me spécialiser dans mon domaine actuel", biaisMemeDomaine: 3 },
+    changer_filiere: { label: "Changer de filière / me réorienter", biaisMemeDomaine: 0 },
+    insertion: { label: "Entrer directement sur le marché du travail", biaisMemeDomaine: 1 },
+    carriere_academique: { label: "Poursuivre une carrière académique / la recherche", biaisMemeDomaine: 2 }
+  };
+
   /* Le "niveau d'études visé" proposé après le test change selon le
      diplôme déjà en poche : on ne propose pas "Master" à quelqu'un qui
      vient d'obtenir un Master, ni "BTS" à un titulaire de Doctorat. */
@@ -833,6 +853,7 @@
     PARCOURS,
     DIPLOMES,
     OBJECTIFS_PAR_DIPLOME,
+    BANQUE_PROJET_APRES,
     VILLES_SENEGAL,
     REGIONS_SENEGAL,
     construireQuestionnaireApresDiplome,

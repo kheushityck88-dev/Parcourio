@@ -1,339 +1,1251 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Parcourio | Trouve ta route vers la bonne formation</title>
-<meta name="description" content="Parcourio aide les jeunes du Sénégal à choisir une formation adaptée à leur profil, leur niveau et leur ville." />
+/* ---------- Menu mobile ---------- */
+const navToggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('.header nav');
+navToggle.addEventListener('click', () => {
+  const isOpen = nav.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', String(isOpen));
+});
+nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  nav.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+}));
 
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Parcourio" />
-<meta property="og:title" content="Parcourio | Trouve ta route vers la bonne formation" />
-<meta property="og:description" content="Parcourio aide les jeunes du Sénégal à choisir une formation adaptée à leur profil, leur niveau et leur ville." />
-<meta property="og:image" content="https://www.parcourio.com/assets/img/logo-full.png" />
-<meta property="og:url" content="https://www.parcourio.com/" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Parcourio | Trouve ta route vers la bonne formation" />
-<meta name="twitter:description" content="Parcourio aide les jeunes du Sénégal à choisir une formation adaptée à leur profil, leur niveau et leur ville." />
-<meta name="twitter:image" content="https://www.parcourio.com/assets/img/logo-full.png" />
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZZS6RJXGF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-ZZZS6RJXGF');
-</script>
-
-<link rel="icon" href="favicon.ico" sizes="any" />
-<link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
-<link rel="icon" type="image/png" sizes="48x48" href="assets/img/favicon-48.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96.png" />
-<link rel="icon" type="image/png" sizes="144x144" href="assets/img/favicon-144.png" />
-<link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#FFFFFF" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Parcourio" />
-<link rel="stylesheet" href="style.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://www.parcourio.com/#organization",
-      "name": "Parcourio",
-      "url": "https://www.parcourio.com/",
-      "logo": "https://www.parcourio.com/assets/img/logo-full.png",
-      "description": "Parcourio aide les jeunes du Sénégal à choisir une formation adaptée à leur profil, leur niveau et leur ville.",
-      "email": "contact0parcourio@gmail.com",
-      "areaServed": {
-        "@type": "Country",
-        "name": "Sénégal"
-      }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://www.parcourio.com/#website",
-      "name": "Parcourio",
-      "url": "https://www.parcourio.com/",
-      "inLanguage": "fr-SN",
-      "publisher": { "@id": "https://www.parcourio.com/#organization" }
+/* ---------- Révélation des cartes au scroll ---------- */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const siblings = Array.from(entry.target.parentElement.children);
+      const index = siblings.indexOf(entry.target);
+      setTimeout(() => entry.target.classList.add('visible'), index * 120);
+      revealObserver.unobserve(entry.target);
     }
-  ]
+  });
+}, { threshold: 0.15 });
+
+function observeCards(root = document) {
+  root.querySelectorAll('.card:not(.visible)').forEach(card => revealObserver.observe(card));
 }
-</script>
-</head>
-<body>
+observeCards();
 
-<header class="header">
-  <div class="logo-lockup">
-    <span class="logo-badge"><img src="assets/img/logo-icon.png" alt="Parcourio" class="logo-mark" width="242" height="295" /></span>
-    <span class="logo-text">
-      <span class="logo-name">PARCOURIO<span class="beta-badge">Bêta</span></span>
-      <span class="logo-slogan">Trouvez la bonne école, construisez votre avenir</span>
-    </span>
-  </div>
-  <nav id="mainNav">
-    <a href="#concept"><span class="nav-index">01</span>Concept</a>
-    <a href="#test"><span class="nav-index">02</span>Orientation</a>
-    <a href="#ecoles"><span class="nav-index">03</span>Écoles</a>
-    <a href="#contact"><span class="nav-index">04</span>Contact</a>
-  </nav>
-  <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mainNav">
-    <span></span><span></span><span></span>
+/* ---------- Section active dans la navigation ---------- */
+const navLinks = Array.from(document.querySelectorAll('#mainNav a[href^="#"]'));
+const navSections = navLinks
+  .map(a => document.querySelector(a.getAttribute('href')))
+  .filter(Boolean);
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === `#${id}`));
+    }
+  });
+}, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+navSections.forEach(section => navObserver.observe(section));
+
+/* ---------- Parcours d'orientation dynamique ----------
+   Le contenu (assets/data/orientation-data.js) et le moteur de rendu/
+   scoring (assets/js/orientation-engine.js) sont totalement séparés de
+   ce fichier. Deux parcours possibles :
+   - "apres_diplome" : diplôme (BAC/BTS/DUT/Licence/Master/Doctorat/
+     Autre) puis objectif, chacun changeant le questionnaire généré par
+     construireQuestionnaireApresDiplome().
+   - "apprendre_metier" : questionnaire unique et compact, généré par
+     construireQuestionnaireMetier(), qui recommande des métiers et des
+     centres de formation professionnelle plutôt que des filières
+     longues. */
+const { PROFILS, METIERS, PARCOURS, DIPLOMES, OBJECTIFS_PAR_DIPLOME, BANQUE_PROJET_APRES,
+        construireQuestionnaireApresDiplome, construireQuestionnaireMetier } = window.OrientationData;
+const Moteur = window.OrientationEngine;
+
+const parcoursPicker = document.getElementById('parcoursPicker');
+const etapeDiplome = document.getElementById('etapeDiplome');
+const etapeMetierIntro = document.getElementById('etapeMetierIntro');
+const diplomeChipsEl = document.getElementById('diplomeChips');
+const objectifDiplomeWrap = document.getElementById('objectifDiplomeWrap');
+const objectifChipsEl = document.getElementById('objectifChips');
+const formDynamique = document.getElementById('formDynamique');
+
+let etatParcours = { parcours: null, diplome: null, objectif: null, questions: null };
+
+/* --- Rendu des deux grandes cartes de parcours --- */
+parcoursPicker.innerHTML = PARCOURS.map(p => `
+  <button type="button" class="parcours-card" data-parcours="${p.id}">
+    <span class="parcours-icon">${Icons.svg(p.icone)}</span>
+    <h3>${p.titre}</h3>
+    <p>${p.description}</p>
   </button>
-</header>
+`).join('');
 
-<section class="hero">
-  <div class="hero-content">
-    <p class="eyebrow">Orientation & formation · Sénégal</p>
-    <h1>Trouve ta <span>route</span> vers la formation qui te ressemble.</h1>
-    <p class="hero-lede">Parcourio lit ton profil, ton niveau et ta ville comme des coordonnées, et trace un parcours clair jusqu'à l'école qui te correspond.</p>
-    <div class="hero-actions">
-      <a href="#test" class="btn-primary" data-preselect-parcours="apres_diplome">Après un diplôme</a>
-      <a href="#test" class="btn-secondary" data-preselect-parcours="apprendre_metier">Apprendre un métier</a>
-    </div>
-    <p class="hero-free-note"><span class="hero-free-dot"></span>100% gratuit — aucune inscription requise</p>
-    <div class="hero-stats">
-      <div class="hero-stat"><b id="heroStatEcoles">252</b><span>Écoles référencées</span></div>
-      <div class="hero-stat"><b id="heroStatRegions">14</b><span>Régions couvertes</span></div>
-      <div class="hero-stat"><b>2</b><span>Parcours d'orientation</span></div>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-photo-frame">
-      <img src="assets/img/hero-photo.jpg" alt="" width="1920" height="1080" />
-      <span class="hero-pin p1"><span></span>Dakar</span>
-      <span class="hero-pin p2"><span></span>Thiès</span>
-      <span class="hero-pin p3"><span></span>Saint-Louis</span>
-      <span class="hero-pin p4"><span></span>Kaolack</span>
-      <span class="hero-pin p5"><span></span>Ziguinchor</span>
-      <span class="hero-pin p6"><span></span>Mbour</span>
-      <span class="hero-pin p7 more"><span></span>+ d'autres villes</span>
-    </div>
-    <div class="hero-compass" aria-hidden="true">
-      <img src="assets/img/logo-icon.png" alt="" width="242" height="295" />
-    </div>
-  </div>
-</section>
+function masquerToutesLesEtapes() {
+  etapeDiplome.hidden = true;
+  etapeMetierIntro.hidden = true;
+  const barreProgression = formDynamique.previousElementSibling;
+  if (barreProgression && barreProgression.classList.contains('quiz-progress')) {
+    barreProgression.remove();
+  }
+  formDynamique.hidden = true;
+  formDynamique.innerHTML = '';
+  objectifDiplomeWrap.hidden = true;
+  objectifChipsEl.innerHTML = '';
+}
 
-<section id="concept" class="section waypoint">
-  <div class="waypoint-marker">
-    <span class="waypoint-num">01</span>
-    <span class="waypoint-line"></span>
-  </div>
-  <div class="waypoint-body">
-    <p class="eyebrow">Point de départ</p>
-    <h2>Pourquoi Parcourio ?</h2>
-    <p class="section-intro">
-      Beaucoup de personnes choisissent une formation sans vraie orientation.
-      Parcourio pose les bonnes questions avant de tracer le chemin, pour un choix réfléchi et adapté à qui tu es.
-    </p>
-    <div class="cards">
-      <div class="card">
-        <span class="card-pin"><svg class="icon icon-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg></span>
-        <h3>Analyse ton profil</h3>
-        <hr class="card-stub-line" aria-hidden="true" />
-        <p>Nous prenons en compte ton niveau, tes intérêts et tes objectifs réels.</p>
+function revenirAuChoixParcours() {
+  etatParcours = { parcours: null, diplome: null, objectif: null, questions: null };
+  masquerToutesLesEtapes();
+  parcoursPicker.hidden = false;
+  document.querySelectorAll('.parcours-card').forEach(c => c.classList.remove('is-active'));
+}
+
+function construireEtLancerFormulaire() {
+  let questions, boutonLabel, formId;
+  if (etatParcours.parcours === 'apres_diplome') {
+    questions = construireQuestionnaireApresDiplome(etatParcours.diplome, etatParcours.objectif);
+    boutonLabel = 'Voir mon orientation';
+    formId = 'apres_diplome';
+  } else {
+    questions = construireQuestionnaireMetier();
+    boutonLabel = 'Voir mes recommandations';
+    formId = 'apprendre_metier';
+  }
+  etatParcours.questions = questions;
+  formDynamique.dataset.formId = formId;
+  Moteur.rendreFormulaire(formDynamique, questions, { formId, boutonLabel, onRetour: revenirAuChoixParcours });
+  formDynamique.hidden = false;
+  const barreProgression = formDynamique.previousElementSibling;
+  const cibleScroll = (barreProgression && barreProgression.classList.contains('quiz-progress'))
+    ? barreProgression
+    : formDynamique;
+  cibleScroll.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function choisirParcours(parcoursId) {
+  etatParcours = { parcours: parcoursId, diplome: null, objectif: null, questions: null };
+  masquerToutesLesEtapes();
+  parcoursPicker.hidden = true;
+  document.querySelectorAll('.parcours-card').forEach(c => c.classList.toggle('is-active', c.dataset.parcours === parcoursId));
+
+  if (parcoursId === 'apres_diplome') {
+    diplomeChipsEl.innerHTML = DIPLOMES.map(d => `<button type="button" class="diplome-chip" data-diplome="${d.value}">${d.label}</button>`).join('');
+    etapeDiplome.hidden = false;
+    etapeDiplome.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else {
+    etapeMetierIntro.hidden = false;
+    construireEtLancerFormulaire();
+  }
+}
+
+parcoursPicker.addEventListener('click', (e) => {
+  const carte = e.target.closest('.parcours-card');
+  if (carte) choisirParcours(carte.dataset.parcours);
+});
+
+document.getElementById('retourParcours1').addEventListener('click', revenirAuChoixParcours);
+document.getElementById('retourParcours2').addEventListener('click', revenirAuChoixParcours);
+
+diplomeChipsEl.addEventListener('click', (e) => {
+  const chip = e.target.closest('.diplome-chip');
+  if (!chip) return;
+  etatParcours.diplome = chip.dataset.diplome;
+  etatParcours.objectif = null;
+  document.querySelectorAll('.diplome-chip').forEach(c => c.classList.toggle('is-active', c === chip));
+
+  const objectifs = OBJECTIFS_PAR_DIPLOME[etatParcours.diplome] || [];
+  objectifChipsEl.innerHTML = objectifs.map(o => `<button type="button" class="objectif-chip" data-objectif="${o.value}">${o.label}</button>`).join('');
+  objectifDiplomeWrap.hidden = false;
+  objectifDiplomeWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+objectifChipsEl.addEventListener('click', (e) => {
+  const chip = e.target.closest('.objectif-chip');
+  if (!chip) return;
+  etatParcours.objectif = chip.dataset.objectif;
+  document.querySelectorAll('.objectif-chip').forEach(c => c.classList.toggle('is-active', c === chip));
+  construireEtLancerFormulaire();
+});
+
+/* Boutons du hero : présélectionnent un parcours et font défiler jusqu'à
+   la section, sans attendre un clic supplémentaire sur la carte. */
+document.querySelectorAll('[data-preselect-parcours]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('test').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    choisirParcours(a.dataset.preselectParcours);
+  });
+});
+
+/* ---------- Base d'écoles sénégalaises ----------
+   Les écoles sont chargées de façon asynchrone depuis
+   assets/data/ecoles.json via fetch(), pour ne plus bloquer le
+   rendu initial avec un <script> classique de 260 Ko. Le reste du
+   site (menu, formulaires, etc.) reste utilisable pendant que la
+   base d'écoles finit de charger en arrière-plan.
+   Pour ajouter une école : ouvrir ce fichier JSON et ajouter une entrée
+   { "ville": "...", "domaine": "technologie|gestion|social|creatif", "nom": "..." }
+   Aucune autre modification du code n'est nécessaire.
+   Remarque : fetch() ne fonctionne pas en ouvrant index.html en
+   double-clic (protocole file://) — il faut un vrai serveur (Vercel,
+   ou "npx serve" / "python -m http.server" en local). window.ECOLES_DATA
+   reste disponible comme filet de sécurité si jamais assets/data/ecoles-data.js
+   est réintroduit dans la page. */
+const rawEcolesPromise = (window.ECOLES_DATA && window.ECOLES_DATA.length)
+  ? Promise.resolve(window.ECOLES_DATA)
+  : fetch('assets/data/ecoles.json')
+      .then(r => {
+        if (!r.ok) throw new Error('Réponse HTTP ' + r.status);
+        return r.json();
+      })
+      .catch(err => {
+        console.error(
+          "Impossible de charger la base d'écoles depuis assets/data/ecoles.json. " +
+          "Vérifie que le site tourne bien sur un vrai serveur http(s) (fetch() ne " +
+          "fonctionne pas en ouvrant le fichier en double-clic, protocole file://).",
+          err
+        );
+        return [];
+      });
+
+/* --- Résultats du parcours "Je souhaite m'orienter après un diplôme" ---
+   Réutilise le registre PROFILS (les 4 grands domaines x 2 filières)
+   déjà connecté à assets/data/ecoles.json. Le domaine actuel choisi par
+   les diplômés BTS/Licence/Master/Doctorat/Autre (question
+   "domaine_filiere_actuelle") reçoit un bonus de score supplémentaire
+   quand leur objectif est de rester ou se spécialiser dans ce domaine
+   (voir BANQUE_PROJET_APRES), pour que "rester dans mon domaine" ait un
+   vrai poids dans le résultat final. */
+function afficherResultatsApresDiplome(ecoles) {
+  const { reponses, contexte } = Moteur.collecterReponses(formDynamique, etatParcours.questions, formDynamique.dataset.formId);
+  const { scores, contributions, pourcentages } = Moteur.calculerScores(etatParcours.questions, reponses, PROFILS);
+
+  // Bonus "je veux rester/me spécialiser dans mon domaine actuel"
+  const domaineActuel = reponses.domaine_filiere_actuelle;
+  const objectifInfo = etatParcours.objectif ? BANQUE_PROJET_APRES[etatParcours.objectif] : null;
+  if (domaineActuel && domaineActuel !== 'autre_domaine' && objectifInfo && objectifInfo.biaisMemeDomaine) {
+    Object.values(PROFILS).filter(p => p.macro === domaineActuel).forEach(p => {
+      pourcentages[p.id] = Math.max(0, Math.min(100, pourcentages[p.id] + objectifInfo.biaisMemeDomaine * 4));
+    });
+  }
+
+  const classement = Moteur.classerProfils(pourcentages);
+  const principal = classement[0];
+  const secondaire = classement[1] && classement[1].pct >= 40 ? classement[1] : null;
+
+  const profilPrincipal = PROFILS[principal.id];
+  const profilSecondaire = secondaire ? PROFILS[secondaire.id] : null;
+
+  const ville = contexte.ville || '';
+  const explication = Moteur.genererExplication(principal.id, contributions, 4);
+
+  // Le conseil est indexé par les anciennes clés Collège/Lycée/Bac/Études
+  // supérieures : un diplôme autre que "bac" correspond toujours à
+  // "Études supérieures" (déjà au-delà du bac).
+  const niveauConseil = etatParcours.diplome === 'bac' ? 'Bac' : 'Études supérieures';
+  let conseil = profilPrincipal.conseil[niveauConseil] || profilPrincipal.conseil['Bac'];
+
+  const objectifLabel = objectifInfo ? objectifInfo.label : '';
+  if (objectifLabel) conseil += ` Objectif choisi : "${objectifLabel.toLowerCase()}".`;
+  if (contexte.filiere_actuelle) conseil += ` Filière actuelle : ${contexte.filiere_actuelle}.`;
+
+  let parcoursTexte = profilPrincipal.description;
+  if (profilSecondaire) {
+    parcoursTexte += ` Tu montres aussi une vraie affinité pour le profil ${profilSecondaire.nom} : garde cette double casquette en tête au moment de choisir tes options ou une spécialisation complémentaire.`;
+  }
+
+  const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcoles(ecoles, profilPrincipal, contexte, 4);
+
+  const diplomeLabel = (DIPLOMES.find(d => d.value === etatParcours.diplome) || {}).label || '';
+  const enteteExtra = diplomeLabel ? `<p><strong>Diplôme actuel :</strong> ${diplomeLabel}</p>` : '';
+
+  afficherCarteResultat({
+    parcoursClasse: `result-${profilPrincipal.macro}`,
+    icone: profilPrincipal.icone,
+    couleur: profilPrincipal.couleur,
+    titre: profilPrincipal.nom,
+    correspondance: `${principal.pct}% aligné avec ce profil${profilSecondaire ? `, ${secondaire.pct}% avec ${profilSecondaire.nom}` : ''}`,
+    enteteExtra,
+    ville,
+    description: parcoursTexte,
+    conseil,
+    metiers: profilPrincipal.metiers,
+    explication,
+    ecolesRecommandees,
+    fallbackUtilise,
+    titreEcoles: `Écoles recommandées${ville ? ` à ${ville}` : ''}`,
+    radar: { registre: PROFILS, pourcentages, couleur: profilPrincipal.couleur }
+  });
+}
+
+/* --- Résultats du parcours "Je souhaite apprendre un métier" ---
+   Même mécanique de scoring générique (Moteur.calculerScores accepte
+   n'importe quel registre de profils), mais avec le registre METIERS et
+   la sélection d'écoles orientée insertion rapide/accessibilité. */
+function afficherResultatsMetier(ecoles) {
+  const questions = etatParcours.questions;
+  const { reponses, contexte } = Moteur.collecterReponses(formDynamique, questions, formDynamique.dataset.formId);
+  const { contributions, pourcentages } = Moteur.calculerScores(questions, reponses, METIERS);
+  const classement = Moteur.classerProfils(pourcentages);
+
+  const principal = classement[0];
+  const metierPrincipal = METIERS[principal.id];
+  const ville = contexte.ville || '';
+  const explication = Moteur.genererExplication(principal.id, contributions, 4);
+
+  let conseil = metierPrincipal.conseil;
+  const objectifLabels = {
+    emploi_rapide: "trouver un emploi salarié rapidement",
+    independant: "créer ta propre activité",
+    certification: "obtenir une certification reconnue"
+  };
+  if (contexte.objectif_pro_metier && objectifLabels[contexte.objectif_pro_metier]) {
+    conseil += ` Ton objectif — ${objectifLabels[contexte.objectif_pro_metier]} — est tout à fait accessible avec ce métier au Sénégal.`;
+  }
+  if (contexte.experience_metier) {
+    conseil += ` Expérience mentionnée : ${contexte.experience_metier}.`;
+  }
+
+  const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcolesMetier(ecoles, metierPrincipal, contexte, 4);
+
+  afficherCarteResultat({
+    parcoursClasse: `result-${metierPrincipal.macro}`,
+    icone: metierPrincipal.icone,
+    couleur: metierPrincipal.couleur,
+    titre: metierPrincipal.nom,
+    correspondance: `${principal.pct}% aligné avec ce métier`,
+    enteteExtra: '',
+    ville,
+    description: metierPrincipal.description,
+    conseil,
+    metiers: metierPrincipal.metiers,
+    explication,
+    ecolesRecommandees,
+    fallbackUtilise,
+    titreEcoles: `Centres de formation recommandés${ville ? ` à ${ville}` : ''}`,
+    radar: null
+  });
+}
+
+/* --- Rendu commun de la carte de résultat (partagé par les deux parcours) --- */
+function afficherCarteResultat(d) {
+  let ecolesHTML;
+  if (d.ecolesRecommandees.length > 0) {
+    ecolesHTML = '<div class="ecoles-reco-liste">' + d.ecolesRecommandees.map(e => `
+      <div class="ecole-reco-item" data-id="${e.id || ''}">
+        <div class="ecole-reco-entete">
+          <span class="ecole-reco-nom">${e.nom}${e.ville ? ` <span class="note">(${e.ville})</span>` : ''}</span>
+          <span class="ecole-reco-score">${e.compatibilite}% compatible</span>
+        </div>
+        <div class="ecole-reco-barre"><div class="ecole-reco-barre-remplie" style="width:${e.compatibilite}%"></div></div>
+        ${e.raisonsCompatibilite && e.raisonsCompatibilite.length ? `<ul class="ecole-reco-raisons">${e.raisonsCompatibilite.map(r => `<li>${Icons.svg('check', { class: 'icon-inline' })} ${r}</li>`).join('')}</ul>` : ''}
+        ${e.id ? `<button type="button" class="ecole-reco-lien">Voir les filières et infos complètes ${Icons.svg('arrow-right', { class: 'icon-inline' })}</button>` : ''}
       </div>
-      <div class="card">
-        <span class="card-pin"><svg class="icon icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /></svg></span>
-        <h3>Parcours personnalisé</h3>
-        <hr class="card-stub-line" aria-hidden="true" />
-        <p>Un chemin clair et logique pour atteindre ton projet professionnel.</p>
+    `).join('') + '</div>';
+    if (d.fallbackUtilise) {
+      ecolesHTML = `<p class="note">Aucun établissement encore référencé près de ${d.ville || 'ta ville'} pour ce profil : voici des options nationales de référence.</p>` + ecolesHTML;
+    }
+  } else {
+    ecolesHTML = '<p class="note">Base en cours d\'enrichissement — reviens bientôt pour ce profil.</p>';
+  }
+
+  const metiersHTML = d.metiers && d.metiers.length
+    ? `<h4 class="ecole-modal-subtitle">Exemples de métiers</h4><p>${d.metiers.join(' · ')}</p>`
+    : '';
+  const explicationHTML = d.explication.length
+    ? `<h4 class="ecole-modal-subtitle">Pourquoi cette recommandation ?</h4><ul>${d.explication.map(e => `<li>${e}</li>`).join('')}</ul>`
+    : '';
+
+  const resultSection = document.querySelector('.result-section') || document.createElement('section');
+  resultSection.className = `section result-section waypoint destination ${d.parcoursClasse}`;
+  resultSection.innerHTML = `
+    <div class="waypoint-marker">
+      <span class="waypoint-num">${Icons.svg('check')}</span>
+      <span class="waypoint-line short"></span>
+    </div>
+    <div class="waypoint-body">
+      <p class="eyebrow">Arrivée</p>
+      <h2>Ton orientation personnalisée</h2>
+      <div class="cards">
+        <div class="card result-profile-card" style="--profile-color:${d.couleur}; border-color:${d.couleur}66;">
+          <span class="result-profile-icon">${Icons.svg(d.icone)}</span>
+          <h3>${d.titre}</h3>
+          <p><strong>Correspondance :</strong> ${d.correspondance}</p>
+          ${d.enteteExtra}
+          ${d.ville ? `<p><strong>Ville :</strong> ${d.ville}</p>` : ''}
+          <p>${d.description}</p>
+          <p><strong>Pourquoi c'est la bonne décision :</strong> ${d.conseil}</p>
+          ${metiersHTML}
+          ${explicationHTML}
+        </div>
+        <div class="card">
+          <h3>${d.titreEcoles}</h3>
+          ${ecolesHTML}
+        </div>
       </div>
-      <div class="card">
-        <span class="card-pin"><svg class="icon icon-graduation-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" /><path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg></span>
-        <h3>Écoles au Sénégal</h3>
-        <hr class="card-stub-line" aria-hidden="true" />
-        <p>Découvre les écoles et centres de formation, ville par ville.</p>
+      ${d.radar ? '<canvas id="profilRadar"></canvas>' : ''}
+      <div class="result-actions">
+        <button type="button" class="btn-secondary" id="partagerResultat">${Icons.svg('share-2', { class: 'icon-inline' })} Partager mon résultat</button>
+        <button type="button" class="btn-secondary" id="refaireLeTest">${Icons.svg('rotate-ccw', { class: 'icon-inline' })} Refaire le test</button>
       </div>
+      <p class="result-share-status" id="partagerStatus" role="status" aria-live="polite"></p>
     </div>
-  </div>
-</section>
+  `;
 
-<section id="test" class="section alt waypoint">
-  <div class="waypoint-marker">
-    <span class="waypoint-num">02</span>
-    <span class="waypoint-line"></span>
-  </div>
-  <div class="waypoint-body">
-    <p class="eyebrow">Point de départ</p>
-    <h2>Ton orientation, en deux parcours</h2>
-    <p class="section-intro">
-      Choisis ta situation : chaque parcours pose des questions différentes, dans un ordre différent, pour une recommandation vraiment adaptée à toi.
-    </p>
+  if (!document.body.contains(resultSection)) {
+    document.body.insertBefore(resultSection, document.querySelector('.footer'));
+  }
 
-    <div class="parcours-picker" id="parcoursPicker">
-      <!-- Généré dynamiquement par script.js à partir de OrientationData.PARCOURS -->
+  resultSection.querySelectorAll('.ecole-reco-item').forEach(item => {
+    const ecole = d.ecolesRecommandees.find(r => r.id === item.dataset.id);
+    if (!ecole) return;
+    const lien = item.querySelector('.ecole-reco-lien');
+    if (lien) lien.addEventListener('click', () => ouvrirModaleEcole(ecole));
+  });
+
+  const boutonPartager = resultSection.querySelector('#partagerResultat');
+  const partagerStatus = resultSection.querySelector('#partagerStatus');
+  if (boutonPartager) {
+    boutonPartager.addEventListener('click', async () => {
+      const texte = `Mon orientation sur Parcourio : ${d.titre} (${d.correspondance}). Découvre la tienne, c'est gratuit :`;
+      const url = 'https://www.parcourio.com/';
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: 'Mon orientation Parcourio', text: texte, url });
+        } catch (err) {
+          /* Partage annulé par la personne : rien à faire */
+        }
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(`${texte} ${url}`);
+        if (partagerStatus) {
+          partagerStatus.textContent = 'Lien copié — tu peux le coller où tu veux !';
+          setTimeout(() => { partagerStatus.textContent = ''; }, 4000);
+        }
+      } catch (err) {
+        if (partagerStatus) partagerStatus.textContent = url;
+      }
+    });
+  }
+
+  const boutonRefaire = resultSection.querySelector('#refaireLeTest');
+  if (boutonRefaire) {
+    boutonRefaire.addEventListener('click', () => {
+      resultSection.remove();
+      if (window._parcourioChart) {
+        window._parcourioChart.destroy();
+        window._parcourioChart = null;
+      }
+      revenirAuChoixParcours();
+      document.getElementById('test').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  const cards = resultSection.querySelectorAll('.card');
+  cards.forEach(card => card.classList.remove('visible'));
+  observeCards(resultSection);
+
+  resultSection.scrollIntoView({ behavior: 'smooth' });
+
+  if (d.radar && window.Chart) {
+    const macros = ["technologie", "creatif", "social", "gestion"];
+    const macroScores = {};
+    macros.forEach(m => {
+      const profilsDuMacro = Object.values(d.radar.registre).filter(p => p.macro === m).map(p => d.radar.pourcentages[p.id]);
+      macroScores[m] = profilsDuMacro.length ? Math.round(profilsDuMacro.reduce((a, b) => a + b, 0) / profilsDuMacro.length) : 0;
+    });
+    const ctx = document.getElementById('profilRadar').getContext('2d');
+    if (window._parcourioChart) window._parcourioChart.destroy();
+    window._parcourioChart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ["Technologie", "Créatif", "Social", "Gestion"],
+        datasets: [{
+          label: "Ton profil",
+          data: macros.map(m => macroScores[m]),
+          backgroundColor: d.radar.couleur + '40',
+          borderColor: d.radar.couleur,
+          pointBackgroundColor: '#FDD400',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        scales: {
+          r: {
+            min: 0, max: 100,
+            ticks: { stepSize: 25, color: '#8a93b3', backdropColor: 'transparent' },
+            grid: { color: 'rgba(255,255,255,0.08)' },
+            angleLines: { color: 'rgba(255,255,255,0.08)' },
+            pointLabels: { color: '#eef1f8' }
+          }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+  }
+}
+
+formDynamique.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const submitBtn = formDynamique.querySelector('button[type="submit"]');
+  const texteOriginal = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Chargement…";
+  const ecoles = await rawEcolesPromise;
+  submitBtn.disabled = false;
+  submitBtn.textContent = texteOriginal;
+
+  if (etatParcours.parcours === 'apres_diplome') {
+    afficherResultatsApresDiplome(ecoles);
+  } else {
+    afficherResultatsMetier(ecoles);
+  }
+});
+
+/* ---------- Annuaire des écoles (filtrable) ----------
+   Chaque école du JSON peut porter des champs enrichis optionnels :
+   region, adresse, description, siteOfficiel, telephone, email, reseaux,
+   secteurs (tags de filière fine), diplomes, niveauAccepte, admission.
+   Tous ces champs sont facultatifs : une école sans ces infos s'affiche
+   quand même, simplement avec une fiche plus courte. */
+const domaineLabels = {
+  technologie: "Technologie",
+  creatif: "Créatif",
+  social: "Social",
+  gestion: "Gestion"
+};
+
+const typeLabels = {
+  public: "Publique",
+  "privé": "Privée"
+};
+
+const implantationLabels = {
+  siege: "Siège",
+  campus: "Campus"
+};
+
+function normaliser(texte) {
+  return texte
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+/* ---------- Favoris (localStorage) ----------
+   Liste des identifiants d'écoles mises en favori par la personne,
+   conservée d'une visite à l'autre sur cet appareil. */
+const FAVORIS_KEY = 'parcourio_favoris_ecoles';
+const HISTORIQUE_KEY = 'parcourio_historique_recherche';
+const HISTORIQUE_MAX = 6;
+
+function lireFavoris() {
+  try {
+    const brut = localStorage.getItem(FAVORIS_KEY);
+    const liste = brut ? JSON.parse(brut) : [];
+    return Array.isArray(liste) ? liste : [];
+  } catch (err) {
+    console.warn('Favoris illisibles, réinitialisation.', err);
+    return [];
+  }
+}
+
+function ecrireFavoris(liste) {
+  try {
+    localStorage.setItem(FAVORIS_KEY, JSON.stringify(liste));
+  } catch (err) {
+    console.warn("Impossible d'enregistrer les favoris (stockage local indisponible).", err);
+  }
+}
+
+function estFavori(id) {
+  return lireFavoris().includes(id);
+}
+
+function basculerFavori(id) {
+  const liste = lireFavoris();
+  const index = liste.indexOf(id);
+  if (index === -1) {
+    liste.push(id);
+  } else {
+    liste.splice(index, 1);
+  }
+  ecrireFavoris(liste);
+  return liste.includes(id);
+}
+
+/* ---------- Historique de recherche (localStorage) ---------- */
+function lireHistorique() {
+  try {
+    const brut = localStorage.getItem(HISTORIQUE_KEY);
+    const liste = brut ? JSON.parse(brut) : [];
+    return Array.isArray(liste) ? liste : [];
+  } catch (err) {
+    return [];
+  }
+}
+
+function ajouterHistorique(terme) {
+  const propre = terme.trim();
+  if (!propre) return;
+  let liste = lireHistorique().filter(t => normaliser(t) !== normaliser(propre));
+  liste.unshift(propre);
+  liste = liste.slice(0, HISTORIQUE_MAX);
+  try {
+    localStorage.setItem(HISTORIQUE_KEY, JSON.stringify(liste));
+  } catch (err) {
+    console.warn("Impossible d'enregistrer l'historique de recherche.", err);
+  }
+}
+
+function effacerHistorique() {
+  try {
+    localStorage.removeItem(HISTORIQUE_KEY);
+  } catch (err) { /* pas grave */ }
+}
+
+function fermerModaleEcole() {
+  const modale = document.getElementById('ecoleModal');
+  if (!modale) return;
+  modale.classList.remove('is-open');
+  document.body.classList.remove('modal-open');
+}
+
+function ouvrirModaleEcole(e) {
+  const modale = document.getElementById('ecoleModal');
+  const contenu = document.getElementById('ecoleModalContent');
+  if (!modale || !contenu) return;
+
+  const lignesInfo = [];
+  if (e.adresse) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.adresse}</p>`);
+  if (!e.adresse && e.ville) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.ville}${e.region && e.region !== e.ville ? ` — région de ${e.region}` : ''}</p>`);
+  if (e.telephone) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('phone', { class: 'icon-inline' })} ${e.telephone}</p>`);
+  if (e.email) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('mail', { class: 'icon-inline' })} ${e.email}</p>`);
+
+  const reseaux = e.reseaux && typeof e.reseaux === 'object' ? Object.entries(e.reseaux).filter(([, v]) => v) : [];
+  const reseauxHTML = reseaux.length
+    ? `<p class="ecole-modal-line">${Icons.svg('link', { class: 'icon-inline' })} ${reseaux.map(([nom, url]) => `<a href="${url}" target="_blank" rel="noopener">${nom}</a>`).join(' · ')}</p>`
+    : '';
+
+  const tags = (liste) => (liste && liste.length)
+    ? `<div class="ecole-modal-tags">${liste.map(t => `<span class="ecole-modal-tag">${t}</span>`).join('')}</div>`
+    : '';
+
+  /* Établissements ayant plusieurs implantations : on retrouve les fiches
+     sœurs (même groupeId) pour permettre de basculer d'un campus à l'autre
+     sans confusion sur laquelle on consulte. */
+  const autresImplantations = e.groupeId
+    ? Object.values(ecolesIndex)
+        .filter(autre => autre.groupeId === e.groupeId && autre.id !== e.id)
+        .sort((a, b) => (a.implantation === 'siege' ? -1 : 1) - (b.implantation === 'siege' ? -1 : 1))
+    : [];
+
+  const implantationHTML = autresImplantations.length
+    ? `<div class="ecole-modal-implantations">
+        <h4 class="ecole-modal-subtitle">Autres implantations de ${e.groupeNom || 'cet établissement'}</h4>
+        <div class="ecole-modal-implantations-list">
+          ${autresImplantations.map(autre => `
+            <button type="button" class="ecole-modal-implantation-btn" data-implantation-id="${autre.id}">
+              ${Icons.svg(autre.implantation === 'siege' ? 'landmark' : 'map-pin', { class: 'icon-inline' })}
+              <span>${autre.ville}</span>
+              <span class="ecole-modal-implantation-tag">${implantationLabels[autre.implantation] || ''}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>`
+    : '';
+
+  contenu.innerHTML = `
+    <div class="ecole-badges">
+      <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
+      ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${Icons.svg(e.type === 'public' ? 'landmark' : 'school', { class: 'icon-inline' })} ${typeLabels[e.type] || e.type}</span>` : ''}
+      ${e.implantation ? `<span class="implantation-badge is-${e.implantation}">${Icons.svg(e.implantation === 'siege' ? 'landmark' : 'map-pin', { class: 'icon-inline' })} ${implantationLabels[e.implantation]}</span>` : ''}
     </div>
-
-    <div class="parcours-etape" id="etapeDiplome" hidden>
-      <button type="button" class="parcours-retour" id="retourParcours1"><svg class="icon icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg> Changer de parcours</button>
-      <h3>Quel diplôme as-tu déjà ?</h3>
-      <div class="diplome-chips" id="diplomeChips"></div>
-      <div class="parcours-sous-bloc" id="objectifDiplomeWrap" hidden>
-        <h3>Quel est ton objectif ?</h3>
-        <div class="objectif-chips" id="objectifChips"></div>
-      </div>
-    </div>
-
-    <div class="parcours-etape" id="etapeMetierIntro" hidden>
-      <button type="button" class="parcours-retour" id="retourParcours2"><svg class="icon icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg> Changer de parcours</button>
-      <p class="note">9 questions courtes sur tes compétences, tes centres d'intérêt et tes objectifs, pour te proposer des formations qualifiantes et des métiers accessibles rapidement.</p>
-    </div>
-
-    <form class="test-form" id="formDynamique" data-form-id="dyn" hidden>
-      <!-- Généré dynamiquement par script.js via OrientationEngine.rendreFormulaire,
-           à partir de OrientationData.construireQuestionnaireApresDiplome(diplome, objectif)
-           ou OrientationData.construireQuestionnaireMetier(). -->
-    </form>
-  </div>
-</section>
-
-<section id="ecoles" class="section waypoint">
-  <div class="waypoint-marker">
-    <span class="waypoint-num">03</span>
-    <span class="waypoint-line"></span>
-  </div>
-  <div class="waypoint-body">
-    <p class="eyebrow">Étapes sur la carte</p>
-    <h2>Écoles & centres de formation</h2>
-    <p class="section-intro" id="ecolesSectionIntro">
-<span id="ecolesSectionIntroCount">252</span> écoles et centres de formation référencés au Sénégal, publics et privés, dans les <span id="ecolesSectionIntroRegions">14</span> régions du pays. Cherche par nom, sigle ou filière, filtre par région, ville, domaine ou statut, mets tes établissements préférés en favoris <svg class="icon icon-star icon-inline" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>, puis ouvre une fiche pour voir tous les détails.
-    </p>
-
-    <div class="directory-controls">
-      <input type="search" id="ecoleSearch" class="directory-search" placeholder="Rechercher une école, un sigle, une filière…" aria-label="Rechercher une école par nom" />
-      <button type="button" class="favoris-toggle" id="favorisToggle" aria-pressed="false">
-        <span class="favoris-toggle-icon"><svg class="icon icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg></span> Mes favoris <span class="favoris-toggle-count" id="favorisCount" hidden>0</span>
+    <h3>${e.nom}${e.sigle ? ` <span class="ecole-modal-sigle">(${e.sigle})</span>` : ''}</h3>
+    ${e.groupeNom ? `<p class="ecole-modal-groupe-note">${implantationLabels[e.implantation] || ''} de ${e.groupeNom} — les informations ci-dessous concernent uniquement l'implantation de ${e.ville}.</p>` : ''}
+    ${e.description ? `<p class="ecole-modal-desc">${e.description}</p>` : '<p class="ecole-modal-desc ecole-modal-desc-empty">Pas encore de description détaillée pour cet établissement — écris-nous si tu peux nous aider à la compléter.</p>'}
+    ${lignesInfo.join('')}
+    ${reseauxHTML}
+    ${implantationHTML}
+    ${e.secteurs && e.secteurs.length ? `<h4 class="ecole-modal-subtitle">Filières / secteurs</h4>${tags(e.secteurs)}` : ''}
+    ${e.diplomes && e.diplomes.length ? `<h4 class="ecole-modal-subtitle">Diplômes délivrés</h4>${tags(e.diplomes)}` : ''}
+    ${e.niveauAccepte && e.niveauAccepte.length ? `<h4 class="ecole-modal-subtitle">Niveau d'admission</h4>${tags(e.niveauAccepte)}` : ''}
+    ${e.admission ? `<h4 class="ecole-modal-subtitle">Conditions d'admission</h4><p class="ecole-modal-desc">${e.admission}</p>` : ''}
+    <div class="ecole-modal-actions">
+      <button type="button" class="ecole-modal-favori${e.id && estFavori(e.id) ? ' is-favori' : ''}" id="ecoleModalFavoriBtn" data-id="${e.id || ''}" aria-pressed="${e.id && estFavori(e.id) ? 'true' : 'false'}">
+        <span class="ecole-modal-favori-icon">${Icons.svg('star', { filled: e.id && estFavori(e.id) })}</span> ${e.id && estFavori(e.id) ? 'Dans mes favoris' : 'Ajouter aux favoris'}
       </button>
-      <label class="directory-select-wrap" for="ecoleRegionFilter">
-        <span class="visually-hidden">Filtrer par région</span>
-        <select id="ecoleRegionFilter" aria-label="Filtrer par région">
-          <option value="">Toutes les régions</option>
-        </select>
-      </label>
-      <label class="directory-select-wrap" for="ecoleVilleFilter">
-        <span class="visually-hidden">Filtrer par ville</span>
-        <select id="ecoleVilleFilter" aria-label="Filtrer par ville">
-          <option value="">Toutes les villes</option>
-        </select>
-      </label>
+      ${e.siteOfficiel ? `<a class="btn-primary" href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter le site officiel</a>` : '<span class="ecole-modal-nosite">Site officiel non référencé pour le moment</span>'}
     </div>
+  `;
 
-    <div class="directory-recherches" id="derniereRecherches" hidden>
-      <span class="directory-recherches-label">Recherches récentes :</span>
-      <span class="directory-recherches-chips" id="derniereRecherchesChips"></span>
-      <button type="button" class="directory-recherches-clear" id="derniereRecherchesClear">Effacer</button>
+  contenu.querySelectorAll('.ecole-modal-implantation-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const autre = ecolesIndex[btn.dataset.implantationId];
+      if (autre) ouvrirModaleEcole(autre);
+    });
+  });
+
+  const favoriBtn = document.getElementById('ecoleModalFavoriBtn');
+  if (favoriBtn && e.id) {
+    favoriBtn.addEventListener('click', () => {
+      const actif = basculerFavori(e.id);
+      favoriBtn.classList.toggle('is-favori', actif);
+      favoriBtn.setAttribute('aria-pressed', String(actif));
+      favoriBtn.querySelector('.ecole-modal-favori-icon').innerHTML = Icons.svg('star', { filled: actif });
+      favoriBtn.lastChild.textContent = actif ? ' Dans mes favoris' : ' Ajouter aux favoris';
+      const carte = document.querySelector(`.ecole-card[data-id="${CSS.escape(e.id)}"]`);
+      if (carte) {
+        const btnCarte = carte.querySelector('.ecole-card-favori');
+        if (btnCarte) {
+          btnCarte.classList.toggle('is-favori', actif);
+          btnCarte.setAttribute('aria-pressed', String(actif));
+          btnCarte.innerHTML = Icons.svg('star', { filled: actif });
+        }
+      }
+      if (typeof mettreAJourCompteurFavoris === 'function') mettreAJourCompteurFavoris();
+      if (typeof etatDirectoire !== 'undefined' && etatDirectoire.favorisSeuls) {
+        rendreEcolesDirectoire();
+      }
+    });
+  }
+  modale.classList.add('is-open');
+  document.body.classList.add('modal-open');
+}
+
+/* ---------- Comparateur d'écoles (en mémoire, limité à 3) ---------- */
+const COMPARE_MAX = 3;
+let compareSelection = [];
+let ecolesIndex = {}; // id -> école, rempli une fois la base chargée
+
+function mettreAJourBarreComparateur() {
+  const barre = document.getElementById('comparateurBar');
+  const compteEl = document.getElementById('comparateurCount');
+  const voirBtn = document.getElementById('comparateurVoirBtn');
+  if (!barre || !compteEl || !voirBtn) return;
+  const n = compareSelection.length;
+  compteEl.textContent = String(n);
+  barre.hidden = n === 0;
+  voirBtn.disabled = n < 2;
+}
+
+function basculerComparaison(id, carte) {
+  const index = compareSelection.indexOf(id);
+  if (index !== -1) {
+    compareSelection.splice(index, 1);
+  } else {
+    if (compareSelection.length >= COMPARE_MAX) {
+      alert(`Tu peux comparer ${COMPARE_MAX} écoles à la fois. Retire-en une avant d'en ajouter une nouvelle.`);
+      return;
+    }
+    compareSelection.push(id);
+  }
+  const actif = compareSelection.includes(id);
+  document.querySelectorAll(`.ecole-card-compare[data-compare-id="${CSS.escape(id)}"]`).forEach(btn => {
+    btn.classList.toggle('is-selected', actif);
+    btn.setAttribute('aria-pressed', String(actif));
+  });
+  mettreAJourBarreComparateur();
+}
+
+function celluleListe(valeurs) {
+  if (!valeurs || valeurs.length === 0) return '<span class="note">Non précisé</span>';
+  return valeurs.join(', ');
+}
+
+function rendreComparateur() {
+  const contenu = document.getElementById('comparateurModalContent');
+  if (!contenu) return;
+  const items = compareSelection.map(id => ecolesIndex[id]).filter(Boolean);
+  if (items.length === 0) {
+    contenu.innerHTML = `<h3>Comparateur d'écoles</h3><p class="comparateur-empty">Sélectionne au moins deux écoles (bouton ${Icons.svg('scale', { class: 'icon-inline' })} sur chaque fiche) pour les comparer côte à côte.</p>`;
+    return;
+  }
+  const lignes = [
+    { label: 'Ville / Région', rendu: e => `${e.ville || '—'}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}` },
+    { label: 'Statut', rendu: e => e.type === 'public' ? `${Icons.svg('landmark', { class: 'icon-inline' })} Public` : (e.type === 'privé' ? `${Icons.svg('school', { class: 'icon-inline' })} Privé` : '—') },
+    { label: 'Domaine', rendu: e => domaineLabels[e.domaine] || e.domaine || '—' },
+    { label: 'Niveaux acceptés', rendu: e => celluleListe(e.niveauAccepte) },
+    { label: 'Diplômes', rendu: e => celluleListe(e.diplomes) },
+    { label: 'Secteurs / filières', rendu: e => celluleListe(e.secteurs) },
+    { label: 'Admission', rendu: e => e.admission || '<span class="note">Non précisé</span>' },
+    { label: 'Site officiel', rendu: e => e.siteOfficiel ? `<a href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter ${Icons.svg('arrow-right', { class: 'icon-inline' })}</a>` : '<span class="note">Non référencé</span>' },
+  ];
+
+  contenu.innerHTML = `
+    <h3>Comparateur d'écoles</h3>
+    <p class="note">${items.length} école${items.length > 1 ? 's' : ''} comparée${items.length > 1 ? 's' : ''}.</p>
+    <div class="comparateur-table-wrap">
+      <table class="comparateur-table">
+        <thead>
+          <tr>
+            <th>Critère</th>
+            ${items.map(e => `<td class="comparateur-ecole-nom">${e.nom}<button type="button" class="comparateur-retirer" data-retirer-id="${e.id}">Retirer</button></td>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${lignes.map(l => `
+            <tr>
+              <th>${l.label}</th>
+              ${items.map(e => `<td>${l.rendu(e)}</td>`).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
     </div>
+  `;
 
-    <div class="directory-domaines" role="group" aria-label="Filtrer par domaine">
-      <button type="button" class="domaine-chip is-active" data-domaine="">Tous</button>
-      <button type="button" class="domaine-chip" data-domaine="technologie"><svg class="icon icon-laptop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z" /><path d="M20.054 15.987H3.946" /></svg> Technologie</button>
-      <button type="button" class="domaine-chip" data-domaine="creatif"><svg class="icon icon-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" /><circle cx="13.5" cy="6.5" r=".5" fill="currentColor" /><circle cx="17.5" cy="10.5" r=".5" fill="currentColor" /><circle cx="6.5" cy="12.5" r=".5" fill="currentColor" /><circle cx="8.5" cy="7.5" r=".5" fill="currentColor" /></svg> Créatif</button>
-      <button type="button" class="domaine-chip" data-domaine="social"><svg class="icon icon-handshake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m11 17 2 2a1 1 0 1 0 3-3" /><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" /><path d="m21 3 1 11h-2" /><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" /><path d="M3 4h8" /></svg> Social</button>
-      <button type="button" class="domaine-chip" data-domaine="gestion"><svg class="icon icon-bar-chart-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="M18 17V9" /><path d="M13 17V5" /><path d="M8 17v-3" /></svg> Gestion</button>
-    </div>
+  contenu.querySelectorAll('.comparateur-retirer').forEach(btn => {
+    btn.addEventListener('click', () => {
+      basculerComparaison(btn.dataset.retirerId, null);
+      rendreComparateur();
+      if (rendreEcolesDirectoire) rendreEcolesDirectoire();
+      if (compareSelection.length === 0) fermerComparateur();
+    });
+  });
+}
 
-    <div class="directory-domaines directory-types" role="group" aria-label="Filtrer par statut public ou privé">
-      <button type="button" class="type-chip is-active" data-type="">Public & privé</button>
-      <button type="button" class="type-chip" data-type="public"><svg class="icon icon-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7" /><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" /></svg> Publique</button>
-      <button type="button" class="type-chip" data-type="privé"><svg class="icon icon-school" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 21v-3a2 2 0 0 0-4 0v3" /><path d="M18 4.933V21" /><path d="m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6" /><path d="m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11" /><path d="M6 4.933V21" /><circle cx="12" cy="9" r="2" /></svg> Privée</button>
-    </div>
+function ouvrirComparateur() {
+  rendreComparateur();
+  const modale = document.getElementById('comparateurModal');
+  if (modale) modale.classList.add('is-open');
+  document.body.classList.add('modal-open');
+}
+
+function fermerComparateur() {
+  const modale = document.getElementById('comparateurModal');
+  if (modale) modale.classList.remove('is-open');
+  document.body.classList.remove('modal-open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const voirBtn = document.getElementById('comparateurVoirBtn');
+  const viderBtn = document.getElementById('comparateurViderBtn');
+  const closeBtn = document.getElementById('comparateurModalClose');
+  const backdrop = document.querySelector('#comparateurModal .comparateur-modal-backdrop');
+  if (voirBtn) voirBtn.addEventListener('click', ouvrirComparateur);
+  if (viderBtn) viderBtn.addEventListener('click', () => {
+    compareSelection.slice().forEach(id => basculerComparaison(id, null));
+    if (rendreEcolesDirectoire) rendreEcolesDirectoire();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', fermerComparateur);
+  if (backdrop) backdrop.addEventListener('click', fermerComparateur);
+});
+
+let etatDirectoire = null;
+let rendreEcolesDirectoire = null;
+
+function mettreAJourCompteurFavoris() {
+  const compteEl = document.getElementById('favorisCount');
+  const toggle = document.getElementById('favorisToggle');
+  if (!compteEl || !toggle) return;
+  const n = lireFavoris().length;
+  compteEl.textContent = String(n);
+  compteEl.hidden = n === 0;
+}
+
+function rendreHistoriqueRecherche() {
+  const conteneur = document.getElementById('derniereRecherches');
+  const chipsEl = document.getElementById('derniereRecherchesChips');
+  if (!conteneur || !chipsEl) return;
+  const historique = lireHistorique();
+  if (historique.length === 0) {
+    conteneur.hidden = true;
+    chipsEl.innerHTML = '';
+    return;
+  }
+  conteneur.hidden = false;
+  chipsEl.innerHTML = historique
+    .map(terme => `<button type="button" class="recherche-chip" data-terme="${terme.replace(/"/g, '&quot;')}">${terme}</button>`)
+    .join('');
+  chipsEl.querySelectorAll('.recherche-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const searchInput = document.getElementById('ecoleSearch');
+      if (!searchInput || !etatDirectoire || !rendreEcolesDirectoire) return;
+      searchInput.value = btn.dataset.terme;
+      etatDirectoire.recherche = btn.dataset.terme;
+      rendreEcolesDirectoire();
+    });
+  });
+}
+
+rawEcolesPromise.then(liste => {
+  const grid = document.getElementById('ecoleDirectoryGrid');
+  const countEl = document.getElementById('ecoleCount');
+  const searchInput = document.getElementById('ecoleSearch');
+  const villeSelect = document.getElementById('ecoleVilleFilter');
+  const regionSelect = document.getElementById('ecoleRegionFilter');
+  const chips = document.querySelectorAll('.domaine-chip');
+  const typeChips = document.querySelectorAll('.type-chip');
+  const niveauChips = document.querySelectorAll('.niveau-chip');
+  const favorisToggle = document.getElementById('favorisToggle');
+  const toggleBtn = document.getElementById('ecolesToggleBtn');
+
+  if (!grid || !countEl || !searchInput || !villeSelect) return;
+
+  const ecoles = liste.filter(e => e.ville && e.domaine && e.nom);
+  ecoles.forEach(e => { if (e.id) ecolesIndex[e.id] = e; });
+
+  /* Chiffres du hero et de la phrase d'intro de la section Écoles :
+     recalculés à partir du nombre réel d'entrées dans ecoles.json, pour ne
+     jamais afficher un total figé (ex. "206") qui deviendrait faux dès
+     qu'on ajoute ou retire une école du fichier. */
+  const nbEcoles = ecoles.length;
+  const nbRegions = new Set(ecoles.map(e => e.region).filter(Boolean)).size;
+  const heroStatEcoles = document.getElementById('heroStatEcoles');
+  const heroStatRegions = document.getElementById('heroStatRegions');
+  if (heroStatEcoles) heroStatEcoles.textContent = nbEcoles;
+  if (heroStatRegions) heroStatRegions.textContent = nbRegions;
+  const introCount = document.getElementById('ecolesSectionIntroCount');
+  const introRegions = document.getElementById('ecolesSectionIntroRegions');
+  if (introCount) introCount.textContent = nbEcoles;
+  if (introRegions) introRegions.textContent = nbRegions;
+
+  const villes = [...new Set(ecoles.map(e => e.ville))].sort((a, b) => a.localeCompare(b, 'fr'));
+  villes.forEach(ville => {
+    const option = document.createElement('option');
+    option.value = ville;
+    option.textContent = ville;
+    villeSelect.appendChild(option);
+  });
+
+  if (regionSelect) {
+    const regions = [...new Set(ecoles.map(e => e.region).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'fr'));
+    regions.forEach(region => {
+      const option = document.createElement('option');
+      option.value = region;
+      option.textContent = region;
+      regionSelect.appendChild(option);
+    });
+  }
+
+  const etat = { recherche: '', ville: '', region: '', domaine: '', type: '', niveau: '', favorisSeuls: false, aAfficheTout: false };
+  etatDirectoire = etat;
+
+  function filtresActifs() {
+    return !!(etat.recherche || etat.ville || etat.region || etat.domaine || etat.type || etat.niveau || etat.favorisSeuls);
+  }
+
+  function reinitialiserEtMasquer() {
+    etat.recherche = '';
+    etat.ville = '';
+    etat.region = '';
+    etat.domaine = '';
+    etat.type = '';
+    etat.niveau = '';
+    etat.favorisSeuls = false;
+    etat.aAfficheTout = false;
+
+    searchInput.value = '';
+    villeSelect.value = '';
+    if (regionSelect) regionSelect.value = '';
+    chips.forEach(c => c.classList.toggle('is-active', c.dataset.domaine === ''));
+    typeChips.forEach(c => c.classList.toggle('is-active', c.dataset.type === ''));
+    niveauChips.forEach(c => c.classList.toggle('is-active', c.dataset.niveau === ''));
+    if (favorisToggle) {
+      favorisToggle.setAttribute('aria-pressed', 'false');
+      favorisToggle.querySelector('.favoris-toggle-icon').innerHTML = Icons.svg('star');
+    }
+
+    rendreEcoles();
+    document.getElementById('ecoles').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* Un seul bouton qui bascule entre « Voir les X écoles de la base » et
+     « Masquer les écoles », plutôt que deux boutons séparés qui se
+     remplaçaient visuellement l'un l'autre à des endroits différents. */
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      if (filtresActifs() || etat.aAfficheTout) {
+        reinitialiserEtMasquer();
+      } else {
+        etat.aAfficheTout = true;
+        rendreEcoles();
+      }
+    });
+  }
+
+  function rendreEcoles() {
+    // Tant qu'aucun filtre/recherche n'est actif et que la personne n'a pas
+    // explicitement demandé à tout voir, on évite d'étaler la base entière
+    // (encombrant) : on affiche une invitation à filtrer, avec un bouton
+    // pour tout afficher quand même si elle le souhaite.
+    if (!filtresActifs() && !etat.aAfficheTout) {
+      if (toggleBtn) {
+        toggleBtn.textContent = `Voir les ${ecoles.length} écoles de la base`;
+        toggleBtn.classList.remove('is-masquer');
+      }
+      countEl.textContent = `${ecoles.length} école${ecoles.length > 1 ? 's' : ''} au total`;
+      grid.innerHTML = `
+        <div class="directory-empty directory-invite">
+          <p>Utilise la recherche ou les filtres ci-dessus, ou clique sur le bouton pour voir toute la base.</p>
+        </div>
+      `;
+      return;
+    }
+
+    if (toggleBtn) {
+      toggleBtn.textContent = 'Masquer les écoles';
+      toggleBtn.classList.add('is-masquer');
+    }
+
+    const rechercheNorm = normaliser(etat.recherche);
+    const favoris = lireFavoris();
+    const resultats = ecoles.filter(e => {
+      if (etat.favorisSeuls && !favoris.includes(e.id)) return false;
+      if (etat.ville && e.ville !== etat.ville) return false;
+      if (etat.region && e.region !== etat.region) return false;
+      if (etat.domaine && e.domaine !== etat.domaine) return false;
+      if (etat.type && e.type !== etat.type) return false;
+      if (etat.niveau && !(e.niveauAccepte || []).includes(etat.niveau)) return false;
+      if (rechercheNorm) {
+        const cible = normaliser([e.nom, e.sigle || '', ...(e.secteurs || [])].join(' '));
+        if (!cible.includes(rechercheNorm)) return false;
+      }
+      return true;
+    });
+
+    countEl.textContent = resultats.length > 0
+      ? `${resultats.length} école${resultats.length > 1 ? 's' : ''} trouvée${resultats.length > 1 ? 's' : ''}`
+      : 'Chargement des écoles…';
+
+    if (resultats.length === 0) {
+      grid.innerHTML = etat.favorisSeuls
+        ? `<p class="directory-empty">Tu n'as pas encore d'école en favoris. Clique sur l'étoile ${Icons.svg('star', { class: 'icon-inline' })} d'une fiche pour l'ajouter ici.</p>`
+        : '<p class="directory-empty">Aucune école ne correspond à ta recherche. Essaie une autre ville, une autre région, un autre domaine, un autre statut, ou efface le texte recherché.</p>';
+      countEl.textContent = '0 école trouvée pour ces filtres';
+      return;
+    }
+
+    grid.innerHTML = resultats
+      .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
+      .map(e => `
+        <div class="card ecole-card visible" data-id="${e.id || ''}" data-domaine="${e.domaine || ''}" tabindex="0" role="button" aria-label="Voir la fiche de ${e.nom}">
+          <button type="button" class="ecole-card-favori${e.id && favoris.includes(e.id) ? ' is-favori' : ''}" data-fav-id="${e.id || ''}" aria-pressed="${e.id && favoris.includes(e.id) ? 'true' : 'false'}" aria-label="${e.id && favoris.includes(e.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}">${Icons.svg('star', { filled: e.id && favoris.includes(e.id) })}</button>
+          <button type="button" class="ecole-card-compare${e.id && compareSelection.includes(e.id) ? ' is-selected' : ''}" data-compare-id="${e.id || ''}" aria-pressed="${e.id && compareSelection.includes(e.id) ? 'true' : 'false'}" aria-label="Ajouter au comparateur">${Icons.svg('scale')}</button>
+          <div class="ecole-badges">
+            <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
+            ${e.type ? `<span class="type-badge ${e.type === 'public' ? 'is-public' : 'is-prive'}">${Icons.svg(e.type === 'public' ? 'landmark' : 'school', { class: 'icon-inline' })} ${typeLabels[e.type] || e.type}</span>` : ''}
+            ${e.implantation ? `<span class="implantation-badge is-${e.implantation}">${Icons.svg(e.implantation === 'siege' ? 'landmark' : 'map-pin', { class: 'icon-inline' })} ${implantationLabels[e.implantation]}</span>` : ''}
+          </div>
+          <h3>${e.nom}</h3>
+          <span class="ecole-ville">${e.ville}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}</span>
+          ${e.groupeNom ? `<span class="ecole-groupe-note">${implantationLabels[e.implantation] || ''} de ${e.groupeNom}</span>` : ''}
+          <hr class="card-stub-line" aria-hidden="true" />
+          ${e.description ? `<p class="ecole-card-excerpt">${e.description.slice(0, 110)}${e.description.length > 110 ? '…' : ''}</p>` : ''}
+          <span class="ecole-card-more">Voir la fiche ${Icons.svg('arrow-right', { class: 'icon-inline' })}</span>
+        </div>
+      `).join('');
+
+    grid.querySelectorAll('.ecole-card').forEach(carte => {
+      const ecole = resultats.find(r => r.id === carte.dataset.id);
+      if (!ecole) return;
+      const ouvrir = () => ouvrirModaleEcole(ecole);
+      carte.addEventListener('click', ouvrir);
+      carte.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Enter' || evt.key === ' ') { evt.preventDefault(); ouvrir(); }
+      });
+      const favBtn = carte.querySelector('.ecole-card-favori');
+      if (favBtn) {
+        favBtn.addEventListener('click', (evt) => {
+          evt.stopPropagation();
+          const actif = basculerFavori(favBtn.dataset.favId);
+          favBtn.classList.toggle('is-favori', actif);
+          favBtn.setAttribute('aria-pressed', String(actif));
+          favBtn.setAttribute('aria-label', actif ? 'Retirer des favoris' : 'Ajouter aux favoris');
+          favBtn.innerHTML = Icons.svg('star', { filled: actif });
+          mettreAJourCompteurFavoris();
+          if (etat.favorisSeuls) rendreEcoles();
+        });
+        favBtn.addEventListener('keydown', (evt) => evt.stopPropagation());
+      }
+      const compareBtn = carte.querySelector('.ecole-card-compare');
+      if (compareBtn) {
+        compareBtn.addEventListener('click', (evt) => {
+          evt.stopPropagation();
+          basculerComparaison(compareBtn.dataset.compareId, compareBtn);
+        });
+        compareBtn.addEventListener('keydown', (evt) => evt.stopPropagation());
+      }
+    });
+  }
+  rendreEcolesDirectoire = rendreEcoles;
+
+  let rechercheDebounce;
+  searchInput.addEventListener('input', () => {
+    etat.recherche = searchInput.value;
+    rendreEcoles();
+    clearTimeout(rechercheDebounce);
+    rechercheDebounce = setTimeout(() => {
+      if (searchInput.value.trim().length >= 2) {
+        ajouterHistorique(searchInput.value);
+        rendreHistoriqueRecherche();
+      }
+    }, 900);
+  });
+
+  villeSelect.addEventListener('change', () => {
+    etat.ville = villeSelect.value;
+    rendreEcoles();
+  });
+
+  if (regionSelect) {
+    regionSelect.addEventListener('change', () => {
+      etat.region = regionSelect.value;
+      rendreEcoles();
+    });
+  }
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      etat.domaine = chip.dataset.domaine;
+      rendreEcoles();
+    });
+  });
+
+  typeChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      typeChips.forEach(c => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      etat.type = chip.dataset.type;
+      rendreEcoles();
+    });
+  });
+
+  niveauChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      niveauChips.forEach(c => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      etat.niveau = chip.dataset.niveau;
+      rendreEcoles();
+    });
+  });
 
 
-    <div class="directory-domaines directory-niveaux" role="group" aria-label="Filtrer par niveau d'accès">
-      <button type="button" class="niveau-chip is-active" data-niveau="">Tous niveaux</button>
-      <button type="button" class="niveau-chip" data-niveau="BFEM">BFEM</button>
-      <button type="button" class="niveau-chip" data-niveau="BT">BT</button>
-      <button type="button" class="niveau-chip" data-niveau="Après BAC">Après BAC</button>
-      <button type="button" class="niveau-chip" data-niveau="BTS">BTS</button>
-      <button type="button" class="niveau-chip" data-niveau="Licence">Licence</button>
-      <button type="button" class="niveau-chip" data-niveau="Master">Master</button>
-    </div>
+  if (favorisToggle) {
+    favorisToggle.addEventListener('click', () => {
+      etat.favorisSeuls = !etat.favorisSeuls;
+      favorisToggle.setAttribute('aria-pressed', String(etat.favorisSeuls));
+      favorisToggle.querySelector('.favoris-toggle-icon').innerHTML = Icons.svg('star', { filled: etat.favorisSeuls });
+      rendreEcoles();
+    });
+  }
 
-    <p class="directory-count" id="ecoleCount" aria-live="polite">Chargement des écoles…</p>
-    <button type="button" id="ecolesToggleBtn" class="btn-secondary directory-masquer">Voir les écoles de la base</button>
-    <div class="cards ecole-directory" id="ecoleDirectoryGrid"></div>
-  </div>
-</section>
+  mettreAJourCompteurFavoris();
+  rendreHistoriqueRecherche();
 
-<div class="comparateur-bar" id="comparateurBar" hidden>
-  <span class="comparateur-bar-label"><span id="comparateurCount">0</span> école(s) sélectionnée(s) pour comparer</span>
-  <div class="comparateur-bar-actions">
-    <button type="button" class="comparateur-bar-voir" id="comparateurVoirBtn" disabled>Comparer</button>
-    <button type="button" class="comparateur-bar-vider" id="comparateurViderBtn">Vider</button>
-  </div>
-</div>
+  const clearHistBtn = document.getElementById('derniereRecherchesClear');
+  if (clearHistBtn) {
+    clearHistBtn.addEventListener('click', () => {
+      effacerHistorique();
+      rendreHistoriqueRecherche();
+    });
+  }
 
-<div class="comparateur-modal" id="comparateurModal" aria-hidden="true">
-  <div class="comparateur-modal-backdrop"></div>
-  <div class="comparateur-modal-panel" role="dialog" aria-modal="true" aria-label="Comparateur d'écoles">
-    <button type="button" class="ecole-modal-close" id="comparateurModalClose" aria-label="Fermer le comparateur"><svg class="icon icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
-    <div id="comparateurModalContent"></div>
-  </div>
-</div>
+  rendreEcoles();
+});
 
-<div class="ecole-modal" id="ecoleModal" aria-hidden="true">
-  <div class="ecole-modal-backdrop"></div>
-  <div class="ecole-modal-panel" role="dialog" aria-modal="true" aria-label="Fiche détaillée de l'école">
-    <button type="button" class="ecole-modal-close" id="ecoleModalClose" aria-label="Fermer la fiche"><svg class="icon icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
-    <div id="ecoleModalContent"></div>
-  </div>
-</div>
+/* ---------- Fermeture de la fiche détaillée d'école ---------- */
+const ecoleModal = document.getElementById('ecoleModal');
+if (ecoleModal) {
+  ecoleModal.addEventListener('click', (e) => {
+    if (e.target === ecoleModal || e.target.classList.contains('ecole-modal-backdrop')) {
+      fermerModaleEcole();
+    }
+  });
+  const closeBtn = document.getElementById('ecoleModalClose');
+  if (closeBtn) closeBtn.addEventListener('click', fermerModaleEcole);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') fermerModaleEcole();
+  });
+}
 
-<section id="contact" class="section alt waypoint destination">
-  <div class="waypoint-marker">
-    <span class="waypoint-num"><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg></span>
-    <span class="waypoint-line short"></span>
-  </div>
-  <div class="waypoint-body">
-    <p class="eyebrow">Destination</p>
-    <h2>Contact</h2>
-    <p class="section-intro">
-      Une question, une suggestion ou un partenariat ? Écris-nous.
-    </p>
-    <form class="contact-form" id="contactForm" action="https://formspree.io/f/mykqqenw" method="POST">
-      <label>Nom
-        <input type="text" name="nom" placeholder="Ton nom" required />
-      </label>
-      <label>Email
-        <input type="email" name="email" placeholder="ton@email.com" required />
-      </label>
-      <label>Message
-        <textarea name="message" placeholder="Ton message" required></textarea>
-      </label>
-      <input type="hidden" name="_subject" value="Nouveau message — Parcourio" />
-      <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <button type="submit">Envoyer</button>
-      <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
-    </form>
-  </div>
-</section>
+/* ---------- Formulaire de contact ---------- */
+const contactForm = document.getElementById('contactForm');
+const contactStatus = document.getElementById('contactStatus');
 
-<button type="button" id="backToTop" class="back-to-top" aria-label="Retour en haut de la page"><svg class="icon icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg></button>
+function echapperTexte(texte) {
+  const div = document.createElement('div');
+  div.textContent = texte;
+  return div.innerHTML;
+}
 
-<footer class="footer">
-  <span class="logo-badge footer-badge"><img src="assets/img/logo-icon.png" alt="Parcourio" class="footer-mark" width="242" height="295" /></span>
-  <p>© 2026 Parcourio — Plateforme d'orientation et de formation au Sénégal</p>
-  <p class="footer-links"><a href="mentions-legales.html">Mentions légales & confidentialité</a></p>
-</footer>
+if (contactForm) {
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-<script src="assets/js/icons.js"></script>
-<script src="assets/data/orientation-data.js"></script>
-<script src="assets/js/orientation-engine.js"></script>
-<script src="script.js"></script>
-</body>
-</html>
+    if (contactForm.action.includes('VOTRE_ID_FORMSPREE')) {
+      contactStatus.innerHTML = "Le formulaire n'est pas encore configuré (il manque l'identifiant Formspree). Écris-nous directement à contact0parcourio@gmail.com en attendant.";
+      contactStatus.classList.remove('is-success');
+      contactStatus.classList.add('is-error');
+      return;
+    }
+
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const texteOriginal = submitBtn.textContent;
+    const prenomBrut = (contactForm.querySelector('[name="nom"]').value || '').trim().split(' ')[0];
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Envoi…";
+    contactStatus.innerHTML = '';
+    contactStatus.classList.remove('is-success', 'is-error');
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        contactForm.reset();
+        const salutation = prenomBrut ? `Merci ${echapperTexte(prenomBrut)}, c'est envoyé !` : "C'est envoyé, merci !";
+        contactStatus.innerHTML = `
+          <span class="form-status-icon">${Icons.svg('check')}</span>
+          <span class="form-status-text">
+            <strong>${salutation}</strong>
+            Ton message est bien arrivé jusqu'à nous. On le lit personnellement et on te répond par email, en général sous 24 à 48h.
+          </span>
+        `;
+        contactStatus.classList.add('is-success');
+      } else {
+        throw new Error('Réponse HTTP ' + response.status);
+      }
+    } catch (err) {
+      console.error('Erreur envoi formulaire de contact', err);
+      contactStatus.innerHTML = `
+        <span class="form-status-icon">!</span>
+        <span class="form-status-text">
+          <strong>Ton message n'est pas parti.</strong>
+          Vérifie ta connexion et réessaie — ou écris-nous directement à <a href="mailto:contact0parcourio@gmail.com">contact0parcourio@gmail.com</a>, on te lira quand même.
+        </span>
+      `;
+      contactStatus.classList.add('is-error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = texteOriginal;
+    }
+  });
+}
+
+/* ---------- Bouton retour en haut ---------- */
+const backToTopBtn = document.getElementById('backToTop');
+if (backToTopBtn) {
+  const toggleBackToTop = () => {
+    backToTopBtn.classList.toggle('is-visible', window.scrollY > 500);
+  };
+  window.addEventListener('scroll', toggleBackToTop, { passive: true });
+  toggleBackToTop();
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+/* ---------- Enregistrement du service worker (PWA) ---------- */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch((err) => {
+      console.error('Échec de l\'enregistrement du service worker', err);
+    });
+  });
+}
