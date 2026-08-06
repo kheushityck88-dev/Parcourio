@@ -63,9 +63,12 @@ const parcoursPicker = document.getElementById('parcoursPicker');
 const etapeDiplome = document.getElementById('etapeDiplome');
 const etapeMetierIntro = document.getElementById('etapeMetierIntro');
 const diplomeChipsEl = document.getElementById('diplomeChips');
+const diplomeStepBlock = document.getElementById('diplomeStepBlock');
 const objectifDiplomeWrap = document.getElementById('objectifDiplomeWrap');
 const objectifChipsEl = document.getElementById('objectifChips');
 const formDynamique = document.getElementById('formDynamique');
+const parcoursResume = document.getElementById('parcoursResume');
+const parcoursResumeText = document.getElementById('parcoursResumeText');
 
 let etatParcours = { parcours: null, diplome: null, objectif: null, questions: null };
 
@@ -78,17 +81,24 @@ parcoursPicker.innerHTML = PARCOURS.map(p => `
   </button>
 `).join('');
 
-function masquerToutesLesEtapes() {
-  etapeDiplome.hidden = true;
-  etapeMetierIntro.hidden = true;
+function masquerFormulaireEtProgression() {
   const barreProgression = formDynamique.previousElementSibling;
   if (barreProgression && barreProgression.classList.contains('quiz-progress')) {
     barreProgression.remove();
   }
   formDynamique.hidden = true;
   formDynamique.innerHTML = '';
+}
+
+function masquerToutesLesEtapes() {
+  etapeDiplome.hidden = true;
+  etapeMetierIntro.hidden = true;
+  masquerFormulaireEtProgression();
   objectifDiplomeWrap.hidden = true;
   objectifChipsEl.innerHTML = '';
+  parcoursResume.hidden = true;
+  diplomeStepBlock.hidden = false;
+  document.getElementById('retourParcours1').hidden = false;
 }
 
 function revenirAuChoixParcours() {
@@ -97,6 +107,33 @@ function revenirAuChoixParcours() {
   parcoursPicker.hidden = false;
   document.querySelectorAll('.parcours-card').forEach(c => c.classList.remove('is-active'));
 }
+
+/* Une fois le diplôme + l'objectif choisis et le quiz lancé, les deux
+   grosses rangées de chips ne servent plus qu'à occuper de la place :
+   on les replie en un résumé d'une ligne avec un lien "Modifier". */
+function afficherResumeChoixDiplome() {
+  const diplomeLabel = (DIPLOMES.find(d => d.value === etatParcours.diplome) || {}).label || '';
+  const objectifs = OBJECTIFS_PAR_DIPLOME[etatParcours.diplome] || [];
+  const objectifLabel = (objectifs.find(o => o.value === etatParcours.objectif) || {}).label || '';
+  parcoursResumeText.textContent = [diplomeLabel, objectifLabel].filter(Boolean).join(' · ');
+  parcoursResume.hidden = false;
+  diplomeStepBlock.hidden = true;
+  objectifDiplomeWrap.hidden = true;
+  /* La barre de progression du quiz a déjà son propre bouton
+     "Changer de parcours" : pas besoin de le montrer deux fois. */
+  document.getElementById('retourParcours1').hidden = true;
+}
+
+function modifierChoixDiplome() {
+  masquerFormulaireEtProgression();
+  parcoursResume.hidden = true;
+  diplomeStepBlock.hidden = false;
+  if (etatParcours.diplome) objectifDiplomeWrap.hidden = false;
+  document.getElementById('retourParcours1').hidden = false;
+  diplomeStepBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+document.getElementById('modifierChoixDiplome').addEventListener('click', modifierChoixDiplome);
 
 function construireEtLancerFormulaire() {
   let questions, boutonLabel, formId;
@@ -163,6 +200,7 @@ objectifChipsEl.addEventListener('click', (e) => {
   etatParcours.objectif = chip.dataset.objectif;
   document.querySelectorAll('.objectif-chip').forEach(c => c.classList.toggle('is-active', c === chip));
   construireEtLancerFormulaire();
+  afficherResumeChoixDiplome();
 });
 
 /* Boutons du hero : présélectionnent un parcours et font défiler jusqu'à

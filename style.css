@@ -847,6 +847,10 @@ a { color: inherit; }
   margin-top: 28px;
 }
 
+.parcours-picker[hidden] {
+  display: none;
+}
+
 @media (max-width: 720px) {
   .parcours-picker { grid-template-columns: 1fr; }
 }
@@ -927,8 +931,53 @@ a { color: inherit; }
   padding: 0;
 }
 
+.parcours-retour[hidden] {
+  display: none;
+}
+
 .parcours-retour:hover {
   color: var(--ink-100);
+}
+
+.parcours-resume {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.parcours-resume[hidden] {
+  display: none;
+}
+
+.parcours-resume-text {
+  color: var(--ink-100);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.parcours-resume-modifier {
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: var(--blue-400);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.parcours-resume-modifier:hover {
+  border-color: var(--blue-400);
+  background: rgba(74, 130, 255, 0.12);
 }
 
 .parcours-etape h3 {
