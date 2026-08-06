@@ -106,9 +106,9 @@
     </div>
     <p class="hero-free-note"><span class="hero-free-dot"></span>100% gratuit — aucune inscription requise</p>
     <div class="hero-stats">
-      <div class="hero-stat"><b id="heroStatEcoles">252</b><span>Écoles référencées</span></div>
+      <div class="hero-stat"><b id="heroStatEcoles">270</b><span>Écoles référencées</span></div>
       <div class="hero-stat"><b id="heroStatRegions">14</b><span>Régions couvertes</span></div>
-      <div class="hero-stat"><b>2</b><span>Parcours d'orientation</span></div>
+      <div class="hero-stat"><b id="heroStatParcours">2</b><span>Parcours d'orientation</span></div>
     </div>
   </div>
   <div class="hero-visual">
@@ -169,7 +169,7 @@
     <span class="waypoint-line"></span>
   </div>
   <div class="waypoint-body">
-    <p class="eyebrow">Point de départ</p>
+    <p class="eyebrow">Direction à prendre</p>
     <h2>Ton orientation, en deux parcours</h2>
     <p class="section-intro">
       Choisis ta situation : chaque parcours pose des questions différentes, dans un ordre différent, pour une recommandation vraiment adaptée à toi.
@@ -211,7 +211,7 @@
     <p class="eyebrow">Étapes sur la carte</p>
     <h2>Écoles & centres de formation</h2>
     <p class="section-intro" id="ecolesSectionIntro">
-<span id="ecolesSectionIntroCount">252</span> écoles et centres de formation référencés au Sénégal, publics et privés, dans les <span id="ecolesSectionIntroRegions">14</span> régions du pays. Cherche par nom, sigle ou filière, filtre par région, ville, domaine ou statut, mets tes établissements préférés en favoris <svg class="icon icon-star icon-inline" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>, puis ouvre une fiche pour voir tous les détails.
+<span id="ecolesSectionIntroCount">270</span> écoles et centres de formation référencés au Sénégal, publics et privés, dans les <span id="ecolesSectionIntroRegions">14</span> régions du pays. Cherche par nom, sigle ou filière, filtre par région, ville, domaine ou statut, mets tes établissements préférés en favoris <svg class="icon icon-star icon-inline" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>, puis ouvre une fiche pour voir tous les détails.
     </p>
 
     <div class="directory-controls">
@@ -305,21 +305,33 @@
     <p class="section-intro">
       Une question, une suggestion ou un partenariat ? Écris-nous.
     </p>
-    <form class="contact-form" id="contactForm" action="https://formspree.io/f/mykqqenw" method="POST">
-      <label>Nom
-        <input type="text" name="nom" placeholder="Ton nom" required />
-      </label>
-      <label>Email
-        <input type="email" name="email" placeholder="ton@email.com" required />
-      </label>
-      <label>Message
-        <textarea name="message" placeholder="Ton message" required></textarea>
-      </label>
-      <input type="hidden" name="_subject" value="Nouveau message — Parcourio" />
-      <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <button type="submit">Envoyer</button>
-      <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
-    </form>
+    <div class="contact-layout">
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mykqqenw" method="POST">
+        <label>Nom
+          <input type="text" name="nom" placeholder="Ton nom" required />
+        </label>
+        <label>Email
+          <input type="email" name="email" placeholder="ton@email.com" required />
+        </label>
+        <label>Message
+          <textarea name="message" placeholder="Ton message" required></textarea>
+        </label>
+        <input type="hidden" name="_subject" value="Nouveau message — Parcourio" />
+        <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button type="submit">Envoyer</button>
+        <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+      </form>
+      <aside class="contact-panel">
+        <span class="contact-panel-compass" aria-hidden="true"><svg class="icon icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /></svg></span>
+        <p class="contact-panel-eyebrow">Bon à savoir</p>
+        <ul class="contact-panel-list">
+          <li><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg> Réponse sous 48h, souvent plus vite</li>
+          <li><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg> 100% gratuit, aucune donnée revendue</li>
+          <li><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg> Pensé pour les élèves et étudiants du Sénégal</li>
+        </ul>
+        <a class="contact-panel-email" href="mailto:contact0parcourio@gmail.com"><svg class="icon icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg> contact0parcourio@gmail.com</a>
+      </aside>
+    </div>
   </div>
 </section>
 
@@ -334,6 +346,7 @@
 <script src="assets/js/icons.js"></script>
 <script src="assets/data/orientation-data.js"></script>
 <script src="assets/js/orientation-engine.js"></script>
+<script src="assets/data/ecoles-data.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

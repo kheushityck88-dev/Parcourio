@@ -885,20 +885,26 @@ rawEcolesPromise.then(liste => {
   const ecoles = liste.filter(e => e.ville && e.domaine && e.nom);
   ecoles.forEach(e => { if (e.id) ecolesIndex[e.id] = e; });
 
+  /* Si la base est vide alors qu'on est ouvert en double-clic (protocole
+     file://), ce n'est pas "0 école" mais fetch() qui ne peut pas marcher
+     sans serveur : on l'explique clairement au lieu de laisser croire à
+     un bug du filtre. */
+  if (ecoles.length === 0 && location.protocol === 'file:') {
+    countEl.textContent = 'Base d\'écoles non chargée';
+    if (toggleBtn) toggleBtn.style.display = 'none';
+    grid.innerHTML = `<p class="directory-empty-local">
+      La liste des écoles ne peut pas se charger en ouvrant ce fichier directement (double-clic, protocole <code>file://</code>).
+      Lance un petit serveur local pour tester, par exemple <code>npx serve</code> ou <code>python -m http.server</code> dans le dossier du site, puis ouvre l'adresse affichée dans le terminal.
+    </p>`;
+    return;
+  }
+
   /* Chiffres du hero et de la phrase d'intro de la section Écoles :
-     recalculés à partir du nombre réel d'entrées dans ecoles.json, pour ne
-     jamais afficher un total figé (ex. "206") qui deviendrait faux dès
-     qu'on ajoute ou retire une école du fichier. */
-  const nbEcoles = ecoles.length;
-  const nbRegions = new Set(ecoles.map(e => e.region).filter(Boolean)).size;
-  const heroStatEcoles = document.getElementById('heroStatEcoles');
-  const heroStatRegions = document.getElementById('heroStatRegions');
-  if (heroStatEcoles) heroStatEcoles.textContent = nbEcoles;
-  if (heroStatRegions) heroStatRegions.textContent = nbRegions;
-  const introCount = document.getElementById('ecolesSectionIntroCount');
-  const introRegions = document.getElementById('ecolesSectionIntroRegions');
-  if (introCount) introCount.textContent = nbEcoles;
-  if (introRegions) introRegions.textContent = nbRegions;
+     fixes, écrits en dur dans le HTML (index.html) — plus recalculés ni
+     réécrits par le JS ici, pour éviter tout flash au chargement.
+     Si le nombre d'écoles ou de régions change dans ecoles.json, mettre
+     à jour à la main les chiffres dans index.html (ids heroStatEcoles,
+     heroStatRegions, ecolesSectionIntroCount, ecolesSectionIntroRegions). */
 
   const villes = [...new Set(ecoles.map(e => e.ville))].sort((a, b) => a.localeCompare(b, 'fr'));
   villes.forEach(ville => {
