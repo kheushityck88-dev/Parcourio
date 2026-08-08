@@ -656,7 +656,6 @@ function ouvrirModaleEcole(e) {
   const lignesInfo = [];
   if (e.adresse) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.adresse}</p>`);
   if (!e.adresse && e.ville) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.ville}${e.region && e.region !== e.ville ? ` — région de ${e.region}` : ''}</p>`);
-  if (e.telephone) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('phone', { class: 'icon-inline' })} ${e.telephone}</p>`);
   if (e.email) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('mail', { class: 'icon-inline' })} ${e.email}</p>`);
 
   const reseaux = e.reseaux && typeof e.reseaux === 'object' ? Object.entries(e.reseaux).filter(([, v]) => v) : [];

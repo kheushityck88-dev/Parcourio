@@ -122,6 +122,10 @@ a { color: inherit; }
   color: var(--ink-100);
 }
 
+.logo-io {
+  color: var(--blue-400);
+}
+
 .beta-badge {
   display: inline-block;
   vertical-align: middle;
