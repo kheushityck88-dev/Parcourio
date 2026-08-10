@@ -1,12 +1,3 @@
-/* ---------- Interrupteur abonnement / test avancé ----------
-   Wave n'est pas encore configuré (clés API pas encore ajoutées dans
-   Supabase) : tant que ABONNEMENT_ACTIF est à false, tout ce qui
-   concerne le test avancé reste invisible (upsell "🔒 débloquer",
-   bouton rapport PDF, essai gratuit, modale d'abonnement) — sans
-   supprimer le code, pour pouvoir tout réactiver d'un coup plus tard
-   en repassant simplement cette valeur à true. */
-const ABONNEMENT_ACTIF = false;
-
 /* ---------- Menu mobile ---------- */
 const navToggle = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.header nav');
@@ -150,7 +141,6 @@ function construireEtLancerFormulaire() {
     questions = construireQuestionnaireApresDiplome(etatParcours.diplome, etatParcours.objectif);
     boutonLabel = 'Voir mon orientation';
     formId = 'apres_diplome';
-    afficherResumeChoixDiplome();
   } else {
     questions = construireQuestionnaireMetier();
     boutonLabel = 'Voir mes recommandations';
@@ -210,6 +200,7 @@ objectifChipsEl.addEventListener('click', (e) => {
   etatParcours.objectif = chip.dataset.objectif;
   document.querySelectorAll('.objectif-chip').forEach(c => c.classList.toggle('is-active', c === chip));
   construireEtLancerFormulaire();
+  afficherResumeChoixDiplome();
 });
 
 /* Boutons du hero : présélectionnent un parcours et font défiler jusqu'à
@@ -261,7 +252,7 @@ const rawEcolesPromise = (window.ECOLES_DATA && window.ECOLES_DATA.length)
    quand leur objectif est de rester ou se spécialiser dans ce domaine
    (voir BANQUE_PROJET_APRES), pour que "rester dans mon domaine" ait un
    vrai poids dans le résultat final. */
-async function afficherResultatsApresDiplome(ecoles) {
+function afficherResultatsApresDiplome(ecoles) {
   const { reponses, contexte } = Moteur.collecterReponses(formDynamique, etatParcours.questions, formDynamique.dataset.formId);
   const { scores, contributions, pourcentages } = Moteur.calculerScores(etatParcours.questions, reponses, PROFILS);
 
@@ -299,29 +290,10 @@ async function afficherResultatsApresDiplome(ecoles) {
     parcoursTexte += ` Tu montres aussi une vraie affinité pour le profil ${profilSecondaire.nom} : garde cette double casquette en tête au moment de choisir tes options ou une spécialisation complémentaire.`;
   }
 
-  const accesAvance = ABONNEMENT_ACTIF && window.ParcourioAuth ? await window.ParcourioAuth.verifierAccesAvance() : false;
-  const limiteTotale = accesAvance ? 20 : (ABONNEMENT_ACTIF ? 12 : 4);
-  const limiteVisible = accesAvance ? 20 : 4;
-  const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcoles(ecoles, profilPrincipal, contexte, limiteTotale);
+  const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcoles(ecoles, profilPrincipal, contexte, 4);
 
   const diplomeLabel = (DIPLOMES.find(d => d.value === etatParcours.diplome) || {}).label || '';
   const enteteExtra = diplomeLabel ? `<p><strong>Diplôme actuel :</strong> ${diplomeLabel}</p>` : '';
-
-  if (window.ParcourioAuth) {
-    window.ParcourioAuth.enregistrerResultat({
-      parcours: 'apres_diplome',
-      typeTest: accesAvance ? 'avance' : 'rapide',
-      reponses,
-      resultat: {
-        profilId: profilPrincipal.id,
-        titre: profilPrincipal.nom,
-        pourcentage: principal.pct,
-        ville,
-        diplome: etatParcours.diplome,
-        objectif: etatParcours.objectif
-      }
-    });
-  }
 
   afficherCarteResultat({
     parcoursClasse: `result-${profilPrincipal.macro}`,
@@ -334,13 +306,9 @@ async function afficherResultatsApresDiplome(ecoles) {
     description: parcoursTexte,
     conseil,
     metiers: profilPrincipal.metiers,
-    debouches: profilPrincipal.debouches,
-    marche: profilPrincipal.marche,
     explication,
     ecolesRecommandees,
     fallbackUtilise,
-    accesAvance,
-    limiteVisible,
     titreEcoles: `Écoles recommandées${ville ? ` à ${ville}` : ''}`,
     radar: { registre: PROFILS, pourcentages, couleur: profilPrincipal.couleur }
   });
@@ -350,7 +318,7 @@ async function afficherResultatsApresDiplome(ecoles) {
    Même mécanique de scoring générique (Moteur.calculerScores accepte
    n'importe quel registre de profils), mais avec le registre METIERS et
    la sélection d'écoles orientée insertion rapide/accessibilité. */
-async function afficherResultatsMetier(ecoles) {
+function afficherResultatsMetier(ecoles) {
   const questions = etatParcours.questions;
   const { reponses, contexte } = Moteur.collecterReponses(formDynamique, questions, formDynamique.dataset.formId);
   const { contributions, pourcentages } = Moteur.calculerScores(questions, reponses, METIERS);
@@ -374,25 +342,7 @@ async function afficherResultatsMetier(ecoles) {
     conseil += ` Expérience mentionnée : ${contexte.experience_metier}.`;
   }
 
-  const accesAvance = ABONNEMENT_ACTIF && window.ParcourioAuth ? await window.ParcourioAuth.verifierAccesAvance() : false;
-  const limiteTotale = accesAvance ? 20 : (ABONNEMENT_ACTIF ? 12 : 4);
-  const limiteVisible = accesAvance ? 20 : 4;
-  const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcolesMetier(ecoles, metierPrincipal, contexte, limiteTotale);
-
-  if (window.ParcourioAuth) {
-    window.ParcourioAuth.enregistrerResultat({
-      parcours: 'apprendre_metier',
-      typeTest: accesAvance ? 'avance' : 'rapide',
-      reponses,
-      resultat: {
-        profilId: metierPrincipal.id,
-        titre: metierPrincipal.nom,
-        pourcentage: principal.pct,
-        ville,
-        niveauActuel: contexte.niveau_actuel_metier
-      }
-    });
-  }
+  const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcolesMetier(ecoles, metierPrincipal, contexte, 4);
 
   afficherCarteResultat({
     parcoursClasse: `result-${metierPrincipal.macro}`,
@@ -405,13 +355,9 @@ async function afficherResultatsMetier(ecoles) {
     description: metierPrincipal.description,
     conseil,
     metiers: metierPrincipal.metiers,
-    debouches: metierPrincipal.debouches,
-    marche: metierPrincipal.marche,
     explication,
     ecolesRecommandees,
     fallbackUtilise,
-    accesAvance,
-    limiteVisible,
     titreEcoles: `Centres de formation recommandés${ville ? ` à ${ville}` : ''}`,
     radar: null
   });
@@ -419,14 +365,9 @@ async function afficherResultatsMetier(ecoles) {
 
 /* --- Rendu commun de la carte de résultat (partagé par les deux parcours) --- */
 function afficherCarteResultat(d) {
-  window.__dernierResultatTest = d;
   let ecolesHTML;
-  const limiteVisible = d.limiteVisible || d.ecolesRecommandees.length;
-  const ecolesVisibles = d.ecolesRecommandees.slice(0, limiteVisible);
-  const nbVerrouillees = Math.max(0, d.ecolesRecommandees.length - limiteVisible);
-
-  if (ecolesVisibles.length > 0) {
-    ecolesHTML = '<div class="ecoles-reco-liste">' + ecolesVisibles.map(e => `
+  if (d.ecolesRecommandees.length > 0) {
+    ecolesHTML = '<div class="ecoles-reco-liste">' + d.ecolesRecommandees.map(e => `
       <div class="ecole-reco-item" data-id="${e.id || ''}">
         <div class="ecole-reco-entete">
           <span class="ecole-reco-nom">${e.nom}${e.ville ? ` <span class="note">(${e.ville})</span>` : ''}</span>
@@ -440,25 +381,12 @@ function afficherCarteResultat(d) {
     if (d.fallbackUtilise) {
       ecolesHTML = `<p class="note">Aucun établissement encore référencé près de ${d.ville || 'ta ville'} pour ce profil : voici des options nationales de référence.</p>` + ecolesHTML;
     }
-    if (nbVerrouillees > 0) {
-      ecolesHTML += `
-        <div class="ecoles-verrouillees">
-          <p class="ecoles-verrouillees-texte">🔒 ${nbVerrouillees} autre${nbVerrouillees > 1 ? 's' : ''} établissement${nbVerrouillees > 1 ? 's' : ''} recommandé${nbVerrouillees > 1 ? 's' : ''}, disponible${nbVerrouillees > 1 ? 's' : ''} avec le <strong>test avancé</strong>.</p>
-          <button type="button" class="btn-secondary" id="debloquerAvanceBtn">Débloquer le test avancé</button>
-        </div>`;
-    }
   } else {
     ecolesHTML = '<p class="note">Base en cours d\'enrichissement — reviens bientôt pour ce profil.</p>';
   }
 
   const metiersHTML = d.metiers && d.metiers.length
     ? `<h4 class="ecole-modal-subtitle">Exemples de métiers</h4><p>${d.metiers.join(' · ')}</p>`
-    : '';
-  const debouchesHTML = d.debouches
-    ? `<h4 class="ecole-modal-subtitle">Débouchés & perspectives d'évolution</h4><p>${d.debouches}</p>`
-    : '';
-  const marcheHTML = d.marche
-    ? `<h4 class="ecole-modal-subtitle">Marché de l'emploi au Sénégal</h4><p>${d.marche}</p><p class="note">Repère national : taux de chômage estimé à 16,9%, salaire moyen du secteur formel entre 200 000 et 300 000 FCFA/mois, très variable selon le secteur (source : ANSD, via Africarrieres/Senego, 2026).</p>`
     : '';
   const explicationHTML = d.explication.length
     ? `<h4 class="ecole-modal-subtitle">Pourquoi cette recommandation ?</h4><ul>${d.explication.map(e => `<li>${e}</li>`).join('')}</ul>`
@@ -484,8 +412,6 @@ function afficherCarteResultat(d) {
           <p>${d.description}</p>
           <p><strong>Pourquoi c'est la bonne décision :</strong> ${d.conseil}</p>
           ${metiersHTML}
-          ${marcheHTML}
-          ${debouchesHTML}
           ${explicationHTML}
         </div>
         <div class="card">
@@ -497,12 +423,8 @@ function afficherCarteResultat(d) {
       <div class="result-actions">
         <button type="button" class="btn-secondary" id="partagerResultat">${Icons.svg('share-2', { class: 'icon-inline' })} Partager mon résultat</button>
         <button type="button" class="btn-secondary" id="refaireLeTest">${Icons.svg('rotate-ccw', { class: 'icon-inline' })} Refaire le test</button>
-        ${ABONNEMENT_ACTIF ? (d.accesAvance
-          ? `<button type="button" class="btn-secondary" id="telechargerRapportBtn">${Icons.svg('file-text', { class: 'icon-inline' })} Télécharger mon rapport (PDF)</button>`
-          : `<button type="button" class="btn-secondary" id="rapportPremiumBtn">🔒 Rapport PDF (test avancé)</button>`) : ''}
       </div>
       <p class="result-share-status" id="partagerStatus" role="status" aria-live="polite"></p>
-      <p class="result-share-status" id="rapportStatus" role="status" aria-live="polite"></p>
     </div>
   `;
 
@@ -541,35 +463,6 @@ function afficherCarteResultat(d) {
         if (partagerStatus) partagerStatus.textContent = url;
       }
     });
-  }
-
-  const boutonDebloquer = resultSection.querySelector('#debloquerAvanceBtn');
-  if (boutonDebloquer && window.ParcourioAuth) {
-    boutonDebloquer.addEventListener('click', async () => {
-      const session = window.ParcourioAuth.getSession();
-      if (!session) {
-        window.ParcourioAuth.ouvrirModale({ messageContexte: "Crée un compte gratuit pour débloquer le test avancé." });
-      } else {
-        window.ParcourioAuth.ouvrirModaleAbonnement();
-      }
-    });
-  }
-
-  const boutonRapportPremium = resultSection.querySelector('#rapportPremiumBtn');
-  if (boutonRapportPremium && window.ParcourioAuth) {
-    boutonRapportPremium.addEventListener('click', () => {
-      const session = window.ParcourioAuth.getSession();
-      if (!session) {
-        window.ParcourioAuth.ouvrirModale({ messageContexte: "Crée un compte gratuit pour débloquer ton rapport PDF." });
-      } else {
-        window.ParcourioAuth.ouvrirModaleAbonnement();
-      }
-    });
-  }
-
-  const boutonTelechargerRapport = resultSection.querySelector('#telechargerRapportBtn');
-  if (boutonTelechargerRapport) {
-    boutonTelechargerRapport.addEventListener('click', () => genererRapportPDF(d));
   }
 
   const boutonRefaire = resultSection.querySelector('#refaireLeTest');
@@ -640,9 +533,9 @@ formDynamique.addEventListener('submit', async function (e) {
   submitBtn.textContent = texteOriginal;
 
   if (etatParcours.parcours === 'apres_diplome') {
-    await afficherResultatsApresDiplome(ecoles);
+    afficherResultatsApresDiplome(ecoles);
   } else {
-    await afficherResultatsMetier(ecoles);
+    afficherResultatsMetier(ecoles);
   }
 });
 
@@ -667,26 +560,6 @@ const typeLabels = {
 const implantationLabels = {
   siege: "Siège",
   campus: "Campus"
-};
-
-/* Ces deux tables décrivent le budget de scolarité et le mode
-   d'apprentissage. Les champs "budget" (une valeur) et
-   "modeApprentissage" (une liste) sont optionnels sur chaque école :
-   tant qu'ils ne sont pas renseignés dans ecoles.json, aucun badge ne
-   s'affiche et le filtre correspondant ne fait rien pour cette école
-   (voir /assets/data/ecoles.json pour ajouter ces informations, une
-   fois vérifiées, école par école). */
-const BUDGET_LABELS = {
-  moins_300k: "Moins de 300 000 FCFA / an",
-  "300k_600k": "300 000 – 600 000 FCFA / an",
-  "600k_1m": "600 000 – 1 000 000 FCFA / an",
-  plus_1m: "Plus de 1 000 000 FCFA / an"
-};
-
-const MODE_LABELS = {
-  presentiel: "Présentiel",
-  distanciel: "Distanciel",
-  alternance: "Alternance"
 };
 
 function normaliser(texte) {
@@ -783,7 +656,6 @@ function ouvrirModaleEcole(e) {
   const lignesInfo = [];
   if (e.adresse) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.adresse}</p>`);
   if (!e.adresse && e.ville) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.ville}${e.region && e.region !== e.ville ? ` — région de ${e.region}` : ''}</p>`);
-  if (e.telephone) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('phone', { class: 'icon-inline' })} ${e.telephone}</p>`);
   if (e.email) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('mail', { class: 'icon-inline' })} ${e.email}</p>`);
 
   const reseaux = e.reseaux && typeof e.reseaux === 'object' ? Object.entries(e.reseaux).filter(([, v]) => v) : [];
@@ -819,7 +691,6 @@ function ouvrirModaleEcole(e) {
       </div>`
     : '';
 
-  contenu.dataset.ecoleId = e.id || '';
   contenu.innerHTML = `
     <div class="ecole-badges">
       <span class="domaine-badge ${e.domaine}">${domaineLabels[e.domaine] || e.domaine}</span>
@@ -835,12 +706,7 @@ function ouvrirModaleEcole(e) {
     ${e.secteurs && e.secteurs.length ? `<h4 class="ecole-modal-subtitle">Filières / secteurs</h4>${tags(e.secteurs)}` : ''}
     ${e.diplomes && e.diplomes.length ? `<h4 class="ecole-modal-subtitle">Diplômes délivrés</h4>${tags(e.diplomes)}` : ''}
     ${e.niveauAccepte && e.niveauAccepte.length ? `<h4 class="ecole-modal-subtitle">Niveau d'admission</h4>${tags(e.niveauAccepte)}` : ''}
-    ${e.reconnuEtat === true ? `<p class="ecole-modal-badge-reconnu">${Icons.svg('check', { class: 'icon-inline' })} Établissement reconnu par l'État</p>` : ''}
-    ${e.budget ? `<h4 class="ecole-modal-subtitle">Budget de scolarité estimé</h4><p class="ecole-modal-desc">${BUDGET_LABELS[e.budget] || e.budget}</p>` : ''}
-    ${e.modeApprentissage && e.modeApprentissage.length ? `<h4 class="ecole-modal-subtitle">Mode d'apprentissage</h4>${tags(e.modeApprentissage.map(m => MODE_LABELS[m] || m))}` : ''}
     ${e.admission ? `<h4 class="ecole-modal-subtitle">Conditions d'admission</h4><p class="ecole-modal-desc">${e.admission}</p>` : ''}
-    <h4 class="ecole-modal-subtitle">Avis étudiants</h4>
-    <div id="avisSection" class="avis-section"><p class="note">Chargement des avis…</p></div>
     <div class="ecole-modal-actions">
       <button type="button" class="ecole-modal-favori${e.id && estFavori(e.id) ? ' is-favori' : ''}" id="ecoleModalFavoriBtn" data-id="${e.id || ''}" aria-pressed="${e.id && estFavori(e.id) ? 'true' : 'false'}">
         <span class="ecole-modal-favori-icon">${Icons.svg('star', { filled: e.id && estFavori(e.id) })}</span> ${e.id && estFavori(e.id) ? 'Dans mes favoris' : 'Ajouter aux favoris'}
@@ -881,7 +747,6 @@ function ouvrirModaleEcole(e) {
   }
   modale.classList.add('is-open');
   document.body.classList.add('modal-open');
-  if (typeof chargerAvisEcole === 'function' && e.id) chargerAvisEcole(e.id);
 }
 
 /* ---------- Comparateur d'écoles (en mémoire, limité à 3) ---------- */
@@ -935,11 +800,8 @@ function rendreComparateur() {
   const lignes = [
     { label: 'Ville / Région', rendu: e => `${e.ville || '—'}${e.region && e.region !== e.ville ? ` · ${e.region}` : ''}` },
     { label: 'Statut', rendu: e => e.type === 'public' ? `${Icons.svg('landmark', { class: 'icon-inline' })} Public` : (e.type === 'privé' ? `${Icons.svg('school', { class: 'icon-inline' })} Privé` : '—') },
-    { label: "Reconnu par l'État", rendu: e => e.reconnuEtat === true ? `${Icons.svg('check', { class: 'icon-inline' })} Oui` : '<span class="note">Non confirmé</span>' },
     { label: 'Domaine', rendu: e => domaineLabels[e.domaine] || e.domaine || '—' },
     { label: 'Niveaux acceptés', rendu: e => celluleListe(e.niveauAccepte) },
-    { label: 'Budget de scolarité', rendu: e => e.budget ? (BUDGET_LABELS[e.budget] || e.budget) : '<span class="note">Non précisé</span>' },
-    { label: "Mode d'apprentissage", rendu: e => e.modeApprentissage && e.modeApprentissage.length ? celluleListe(e.modeApprentissage.map(m => MODE_LABELS[m] || m)) : '<span class="note">Non précisé</span>' },
     { label: 'Diplômes', rendu: e => celluleListe(e.diplomes) },
     { label: 'Secteurs / filières', rendu: e => celluleListe(e.secteurs) },
     { label: 'Admission', rendu: e => e.admission || '<span class="note">Non précisé</span>' },
@@ -1052,10 +914,6 @@ rawEcolesPromise.then(liste => {
   const chips = document.querySelectorAll('.domaine-chip');
   const typeChips = document.querySelectorAll('.type-chip');
   const niveauChips = document.querySelectorAll('.niveau-chip');
-  const implantationChips = document.querySelectorAll('.implantation-chip');
-  const implantationFilterGroup = document.getElementById('implantationFilterGroup');
-  const budgetChips = document.querySelectorAll('.budget-chip');
-  const modeChips = document.querySelectorAll('.mode-chip');
   const favorisToggle = document.getElementById('favorisToggle');
   const toggleBtn = document.getElementById('ecolesToggleBtn');
 
@@ -1065,14 +923,11 @@ rawEcolesPromise.then(liste => {
   ecoles.forEach(e => { if (e.id) ecolesIndex[e.id] = e; });
 
   /* Si la base est vide alors qu'on est ouvert en double-clic (protocole
-     file://), ce n'est pas "0 école" mais un vrai problème de
-     chargement local : on l'explique clairement au lieu de laisser
-     croire à un bug du filtre. (Le fallback plus haut dans le fichier
-     couvre déjà la plupart des cas file:// — ce message ne sert que de
-     filet de sécurité si, pour une raison ou une autre, il n'a pas pu
-     s'appliquer.) */
+     file://), ce n'est pas "0 école" mais fetch() qui ne peut pas marcher
+     sans serveur : on l'explique clairement au lieu de laisser croire à
+     un bug du filtre. */
   if (ecoles.length === 0 && location.protocol === 'file:') {
-    countEl.textContent = "Base d'écoles non chargée";
+    countEl.textContent = 'Base d\'écoles non chargée';
     if (toggleBtn) toggleBtn.style.display = 'none';
     grid.innerHTML = `<p class="directory-empty-local">
       La liste des écoles ne peut pas se charger en ouvrant ce fichier directement (double-clic, protocole <code>file://</code>).
@@ -1081,27 +936,12 @@ rawEcolesPromise.then(liste => {
     return;
   }
 
-  /* Le filtre Siège / Campus n'apparaît que si le jeu de données contient
-     effectivement des établissements multi-implantations : inutile de
-     montrer ce filtre tant qu'aucune école n'a de groupeId renseigné. */
-  if (implantationFilterGroup && ecoles.some(e => e.implantation)) {
-    implantationFilterGroup.hidden = false;
-  }
-
   /* Chiffres du hero et de la phrase d'intro de la section Écoles :
-     recalculés à partir du nombre réel d'entrées dans ecoles.json, pour ne
-     jamais afficher un total figé (ex. "206") qui deviendrait faux dès
-     qu'on ajoute ou retire une école du fichier. */
-  const nbEcoles = ecoles.length;
-  const nbRegions = new Set(ecoles.map(e => e.region).filter(Boolean)).size;
-  const heroStatEcoles = document.getElementById('heroStatEcoles');
-  const heroStatRegions = document.getElementById('heroStatRegions');
-  if (heroStatEcoles) heroStatEcoles.textContent = nbEcoles;
-  if (heroStatRegions) heroStatRegions.textContent = nbRegions;
-  const introCount = document.getElementById('ecolesSectionIntroCount');
-  const introRegions = document.getElementById('ecolesSectionIntroRegions');
-  if (introCount) introCount.textContent = nbEcoles;
-  if (introRegions) introRegions.textContent = nbRegions;
+     fixes, écrits en dur dans le HTML (index.html) — plus recalculés ni
+     réécrits par le JS ici, pour éviter tout flash au chargement.
+     Si le nombre d'écoles ou de régions change dans ecoles.json, mettre
+     à jour à la main les chiffres dans index.html (ids heroStatEcoles,
+     heroStatRegions, ecolesSectionIntroCount, ecolesSectionIntroRegions). */
 
   const villes = [...new Set(ecoles.map(e => e.ville))].sort((a, b) => a.localeCompare(b, 'fr'));
   villes.forEach(ville => {
@@ -1121,11 +961,11 @@ rawEcolesPromise.then(liste => {
     });
   }
 
-  const etat = { recherche: '', ville: '', region: '', domaine: '', type: '', niveau: '', implantation: '', budget: '', mode: '', favorisSeuls: false, aAfficheTout: false };
+  const etat = { recherche: '', ville: '', region: '', domaine: '', type: '', niveau: '', favorisSeuls: false, aAfficheTout: false };
   etatDirectoire = etat;
 
   function filtresActifs() {
-    return !!(etat.recherche || etat.ville || etat.region || etat.domaine || etat.type || etat.niveau || etat.implantation || etat.budget || etat.mode || etat.favorisSeuls);
+    return !!(etat.recherche || etat.ville || etat.region || etat.domaine || etat.type || etat.niveau || etat.favorisSeuls);
   }
 
   function reinitialiserEtMasquer() {
@@ -1135,9 +975,6 @@ rawEcolesPromise.then(liste => {
     etat.domaine = '';
     etat.type = '';
     etat.niveau = '';
-    etat.implantation = '';
-    etat.budget = '';
-    etat.mode = '';
     etat.favorisSeuls = false;
     etat.aAfficheTout = false;
 
@@ -1147,9 +984,6 @@ rawEcolesPromise.then(liste => {
     chips.forEach(c => c.classList.toggle('is-active', c.dataset.domaine === ''));
     typeChips.forEach(c => c.classList.toggle('is-active', c.dataset.type === ''));
     niveauChips.forEach(c => c.classList.toggle('is-active', c.dataset.niveau === ''));
-    implantationChips.forEach(c => c.classList.toggle('is-active', c.dataset.implantation === ''));
-    budgetChips.forEach(c => c.classList.toggle('is-active', c.dataset.budget === ''));
-    modeChips.forEach(c => c.classList.toggle('is-active', c.dataset.mode === ''));
     if (favorisToggle) {
       favorisToggle.setAttribute('aria-pressed', 'false');
       favorisToggle.querySelector('.favoris-toggle-icon').innerHTML = Icons.svg('star');
@@ -1206,9 +1040,6 @@ rawEcolesPromise.then(liste => {
       if (etat.domaine && e.domaine !== etat.domaine) return false;
       if (etat.type && e.type !== etat.type) return false;
       if (etat.niveau && !(e.niveauAccepte || []).includes(etat.niveau)) return false;
-      if (etat.implantation && e.implantation !== etat.implantation) return false;
-      if (etat.budget && e.budget !== etat.budget) return false;
-      if (etat.mode && !(e.modeApprentissage || []).includes(etat.mode)) return false;
       if (rechercheNorm) {
         const cible = normaliser([e.nom, e.sigle || '', ...(e.secteurs || [])].join(' '));
         if (!cible.includes(rechercheNorm)) return false;
@@ -1334,23 +1165,6 @@ rawEcolesPromise.then(liste => {
     });
   });
 
-  budgetChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      budgetChips.forEach(c => c.classList.remove('is-active'));
-      chip.classList.add('is-active');
-      etat.budget = chip.dataset.budget;
-      rendreEcoles();
-    });
-  });
-
-  modeChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      modeChips.forEach(c => c.classList.remove('is-active'));
-      chip.classList.add('is-active');
-      etat.mode = chip.dataset.mode;
-      rendreEcoles();
-    });
-  });
 
   if (favorisToggle) {
     favorisToggle.addEventListener('click', () => {
@@ -1370,25 +1184,6 @@ rawEcolesPromise.then(liste => {
       effacerHistorique();
       rendreHistoriqueRecherche();
     });
-  }
-
-  // Pré-remplissage depuis l'URL (ex. ?ville=Kaolack&domaine=social),
-  // utilisé par les pages SEO générées (/ecoles/<ville>.html,
-  // /metiers/<id>.html) pour renvoyer directement vers l'annuaire déjà
-  // filtré plutôt que sur une liste complète non pertinente.
-  const paramsURL = new URLSearchParams(window.location.search);
-  const villeParam = paramsURL.get('ville');
-  const domaineParam = paramsURL.get('domaine');
-  if (villeParam && villes.includes(villeParam)) {
-    etat.ville = villeParam;
-    villeSelect.value = villeParam;
-  }
-  if (domaineParam) {
-    const chipCorrespondant = Array.from(chips).find(c => c.dataset.domaine === domaineParam);
-    if (chipCorrespondant) {
-      etat.domaine = domaineParam;
-      chips.forEach(c => c.classList.toggle('is-active', c === chipCorrespondant));
-    }
   }
 
   rendreEcoles();
@@ -1496,323 +1291,4 @@ if ('serviceWorker' in navigator) {
       console.error('Échec de l\'enregistrement du service worker', err);
     });
   });
-}
-
-/* ---------- Rubrique Concours ---------- */
-(function () {
-  const grid = document.getElementById('concoursGrid');
-  if (!grid || !window.CONCOURS_DATA) return;
-
-  grid.innerHTML = window.CONCOURS_DATA.map(c => `
-    <article class="concours-card">
-      <h3>${c.nom}</h3>
-      <p class="concours-organisme">${c.organisme}</p>
-      <p class="concours-desc">${c.description}</p>
-      <dl class="concours-details">
-        <dt>Niveau requis</dt><dd>${c.niveauRequis}</dd>
-        <dt>Âge</dt><dd>${c.age}</dd>
-        <dt>Épreuves</dt><dd><ul>${c.epreuves.map(e => `<li>${e}</li>`).join('')}</ul></dd>
-        <dt>Pièces à fournir</dt><dd><ul>${c.pieces.map(p => `<li>${p}</li>`).join('')}</ul></dd>
-        <dt>Dates</dt><dd>${c.datesIndicatives}</dd>
-      </dl>
-      <div class="concours-footer">
-        <a class="btn-secondary" href="${c.lienOfficiel}" target="_blank" rel="noopener">Site officiel ${Icons.svg('arrow-right', { class: 'icon-inline' })}</a>
-        <p class="concours-source">Source : <a href="${c.lienSource}" target="_blank" rel="noopener">${c.source}</a></p>
-      </div>
-    </article>
-  `).join('');
-})();
-
-/* ---------- Mon historique de tests ---------- */
-(function () {
-  const btn = document.getElementById('authHistoriqueBtn');
-  const modale = document.getElementById('historiqueModal');
-  const closeBtn = document.getElementById('historiqueModalClose');
-  const backdrop = modale ? modale.querySelector('.ecole-modal-backdrop') : null;
-  const liste = document.getElementById('historiqueListe');
-  if (!btn || !modale || !liste) return;
-
-  const PARCOURS_LABELS = { apres_diplome: "Après un diplôme", apprendre_metier: "Apprendre un métier" };
-  const TYPE_LABELS = { rapide: "Test standard", avance: "Test avancé" };
-
-  function formaterDate(iso) {
-    try {
-      return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
-    } catch (e) {
-      return iso;
-    }
-  }
-
-  async function ouvrirHistorique() {
-    modale.classList.add('is-open');
-    modale.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
-    liste.innerHTML = '<p class="note">Chargement de ton historique…</p>';
-
-    if (!window.ParcourioAuth || !window.ParcourioAuth.getSession()) {
-      liste.innerHTML = '<p class="note">Connecte-toi pour voir ton historique de tests.</p>';
-      return;
-    }
-
-    const resultats = await window.ParcourioAuth.recupererHistorique(20);
-    if (!resultats.length) {
-      liste.innerHTML = '<p class="note">Aucun test enregistré pour l\'instant — reviens ici après avoir passé le test d\'orientation.</p>';
-      return;
-    }
-
-    liste.innerHTML = '<div class="historique-liste">' + resultats.map(r => {
-      const res = r.resultat || {};
-      return `
-        <div class="historique-item">
-          <div class="historique-item-entete">
-            <span class="historique-item-titre">${res.titre || 'Résultat'}</span>
-            <span class="historique-item-pct">${res.pourcentage != null ? res.pourcentage + '%' : ''}</span>
-          </div>
-          <p class="historique-item-meta">${PARCOURS_LABELS[r.parcours] || r.parcours} · ${TYPE_LABELS[r.type_test] || r.type_test} · ${formaterDate(r.created_at)}${res.ville ? ` · ${res.ville}` : ''}</p>
-        </div>`;
-    }).join('') + '</div>';
-  }
-
-  function fermerHistorique() {
-    modale.classList.remove('is-open');
-    modale.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
-  }
-
-  btn.addEventListener('click', () => {
-    const dropdown = document.getElementById('authAccountDropdown');
-    if (dropdown) dropdown.hidden = true;
-    ouvrirHistorique();
-  });
-  if (closeBtn) closeBtn.addEventListener('click', fermerHistorique);
-  if (backdrop) backdrop.addEventListener('click', fermerHistorique);
-})();
-
-/* ---------- Avis étudiants (fiche école) ---------- */
-function etoiles(note) {
-  const pleines = Math.round(note);
-  let html = '<span class="avis-etoiles" aria-hidden="true">';
-  for (let i = 1; i <= 5; i++) {
-    html += Icons.svg('star', { filled: i <= pleines, class: 'icon-inline' });
-  }
-  return html + '</span>';
-}
-
-function formaterDateAvis(iso) {
-  try {
-    return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
-  } catch (e) {
-    return '';
-  }
-}
-
-async function chargerAvisEcole(ecoleId) {
-  const section = document.getElementById('avisSection');
-  if (!section || !window.ParcourioAvis) return;
-
-  const { avis, moyenne, total } = await window.ParcourioAvis.getAvisEcole(ecoleId);
-  // La fiche a pu changer (ou se fermer) pendant le chargement réseau :
-  // on n'écrit que si on est toujours sur la même école.
-  const contenuActuel = document.getElementById('ecoleModalContent');
-  if (!contenuActuel || contenuActuel.dataset.ecoleId !== ecoleId) return;
-
-  const resumeHTML = total
-    ? `<div class="avis-resume">${etoiles(moyenne)}<span class="avis-resume-chiffre">${moyenne.toFixed(1)}/5</span><span class="note">(${total} avis)</span></div>`
-    : `<p class="note">Aucun avis publié pour l'instant — sois le·la premier·ère à en laisser un.</p>`;
-
-  const listeHTML = avis.length
-    ? `<div class="avis-liste">${avis.map(a => `
-        <div class="avis-item" data-avis-id="${a.id}">
-          <div class="avis-item-entete">${etoiles(a.note)}<span class="note">${formaterDateAvis(a.created_at)}</span></div>
-          ${a.commentaire ? `<p class="avis-item-texte">${echapperTexte(a.commentaire)}</p>` : ''}
-          <button type="button" class="avis-signaler-btn" data-avis-id="${a.id}">Signaler</button>
-        </div>
-      `).join('')}</div>`
-    : '';
-
-  const session = window.ParcourioAuth ? window.ParcourioAuth.getSession() : null;
-  let formHTML;
-  if (!session) {
-    formHTML = `<p class="note">Connecte-toi pour laisser ton propre avis sur cette école.</p>`;
-  } else {
-    const monAvis = await window.ParcourioAvis.monAvisPour(ecoleId);
-    const statutNote = monAvis
-      ? (monAvis.statut === 'approuve'
-          ? "Ton avis est publié. Tu peux le modifier à tout moment."
-          : "Ton avis est enregistré et en attente de vérification.")
-      : "Ton avis est vérifié avant publication et n'apparaît pas immédiatement.";
-    const options = [5, 4, 3, 2, 1].map(n => {
-      const labels = { 5: 'Excellent', 4: 'Bien', 3: 'Correct', 2: 'Décevant', 1: 'Mauvais' };
-      const selected = monAvis && Number(monAvis.note) === n ? ' selected' : '';
-      return `<option value="${n}"${selected}>${n} — ${labels[n]}</option>`;
-    }).join('');
-    formHTML = `
-      <form class="avis-form" id="avisForm">
-        <label class="auth-form-label" for="avisNote">Ta note</label>
-        <select class="auth-form-input" id="avisNote" name="note" required>
-          <option value="">Sélectionner…</option>
-          ${options}
-        </select>
-        <label class="auth-form-label" for="avisTexte">Ton commentaire (optionnel)</label>
-        <textarea class="auth-form-input avis-textarea" id="avisTexte" name="texte" rows="3" maxlength="600" placeholder="Ton expérience dans cette école…">${monAvis && monAvis.commentaire ? echapperTexte(monAvis.commentaire) : ''}</textarea>
-        <button type="submit" class="btn-secondary avis-form-submit">${monAvis ? 'Mettre à jour mon avis' : 'Publier mon avis'}</button>
-        <p class="note avis-form-note">${statutNote}</p>
-        <p class="auth-modal-erreur" id="avisFormErreur" hidden></p>
-      </form>`;
-  }
-
-  section.innerHTML = resumeHTML + listeHTML + formHTML;
-
-  section.querySelectorAll('.avis-signaler-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      if (!window.ParcourioAuth || !window.ParcourioAuth.getSession()) {
-        if (window.ParcourioAuth) window.ParcourioAuth.ouvrirModale({ messageContexte: "Connecte-toi pour signaler un avis." });
-        return;
-      }
-      btn.disabled = true;
-      btn.textContent = 'Signalé';
-      await window.ParcourioAvis.signalerAvis(btn.dataset.avisId, 'Signalé depuis la fiche école');
-      if (window.ParcourioAuth.notifier) window.ParcourioAuth.notifier('Merci, cet avis a été signalé pour vérification.');
-    });
-  });
-
-  const form = document.getElementById('avisForm');
-  if (form) {
-    form.addEventListener('submit', async (evt) => {
-      evt.preventDefault();
-      const noteInput = form.querySelector('#avisNote');
-      const texteInput = form.querySelector('#avisTexte');
-      const erreurEl = form.querySelector('#avisFormErreur');
-      const submitBtn = form.querySelector('.avis-form-submit');
-      const texteOriginalBtn = submitBtn.textContent;
-      erreurEl.hidden = true;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Envoi…';
-      const resultat = await window.ParcourioAvis.laisserAvis(ecoleId, noteInput.value, texteInput.value);
-      if (resultat.erreur) {
-        erreurEl.textContent = resultat.erreur;
-        erreurEl.hidden = false;
-        submitBtn.disabled = false;
-        submitBtn.textContent = texteOriginalBtn;
-        return;
-      }
-      if (window.ParcourioAuth && window.ParcourioAuth.notifier) {
-        window.ParcourioAuth.notifier('Merci ! Ton avis a été enregistré et sera publié après vérification.');
-      }
-      form.innerHTML = '<p class="note">Merci, ton avis a bien été enregistré et sera publié après vérification.</p>';
-    });
-  }
-}
-
-/* ---------- Rapport Premium (export PDF) ---------- */
-function genererRapportPDF(d) {
-  if (!window.jspdf || !window.jspdf.jsPDF) {
-    alert("Le générateur de PDF n'a pas pu se charger. Vérifie ta connexion et réessaie.");
-    return;
-  }
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-  const marge = 48;
-  const largeurPage = doc.internal.pageSize.getWidth();
-  const largeurUtile = largeurPage - marge * 2;
-  let y = 56;
-
-  function sautDePageSiBesoin(hauteurNecessaire) {
-    const hauteurPage = doc.internal.pageSize.getHeight();
-    if (y + hauteurNecessaire > hauteurPage - marge) {
-      doc.addPage();
-      y = 56;
-    }
-  }
-
-  function titreSection(texte) {
-    sautDePageSiBesoin(28);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.setTextColor(3, 11, 30);
-    doc.text(texte, marge, y);
-    y += 8;
-    doc.setDrawColor(253, 212, 0);
-    doc.setLineWidth(1.5);
-    doc.line(marge, y, marge + 40, y);
-    y += 18;
-  }
-
-  function paragraphe(texte, options) {
-    options = options || {};
-    doc.setFont('helvetica', options.bold ? 'bold' : 'normal');
-    doc.setFontSize(options.size || 10.5);
-    doc.setTextColor(40, 40, 50);
-    const lignes = doc.splitTextToSize(texte, largeurUtile);
-    sautDePageSiBesoin(lignes.length * 14 + 6);
-    doc.text(lignes, marge, y);
-    y += lignes.length * 14 + (options.espaceApres != null ? options.espaceApres : 12);
-  }
-
-  // En-tête
-  doc.setFillColor(3, 11, 30);
-  doc.rect(0, 0, largeurPage, 90, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(20);
-  doc.setTextColor(253, 212, 0);
-  doc.text('PARCOURIO', marge, 42);
-  doc.setFontSize(11);
-  doc.setTextColor(255, 255, 255);
-  doc.setFont('helvetica', 'normal');
-  doc.text("Rapport d'orientation — Test avancé", marge, 62);
-  doc.setFontSize(9);
-  doc.text(new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }), marge, 78);
-  y = 122;
-
-  // Profil
-  titreSection(d.titre || 'Ton profil');
-  paragraphe(d.correspondance || '', { bold: true, size: 11 });
-  if (d.ville) paragraphe(`Ville renseignée : ${d.ville}`, { size: 9.5, espaceApres: 10 });
-  if (d.description) paragraphe(d.description);
-  if (d.conseil) paragraphe(`Pourquoi c'est la bonne décision : ${d.conseil}`);
-
-  if (d.metiers && d.metiers.length) {
-    titreSection('Exemples de métiers');
-    paragraphe(d.metiers.join(' · '));
-  }
-
-  if (d.marche) {
-    titreSection("Marché de l'emploi au Sénégal");
-    paragraphe(d.marche);
-  }
-
-  if (d.debouches) {
-    titreSection("Débouchés & perspectives d'évolution");
-    paragraphe(d.debouches);
-  }
-
-  if (d.ecolesRecommandees && d.ecolesRecommandees.length) {
-    titreSection(d.titreEcoles || 'Établissements recommandés');
-    d.ecolesRecommandees.forEach((e) => {
-      sautDePageSiBesoin(20);
-      paragraphe(`${e.nom}${e.ville ? ` (${e.ville})` : ''} — ${e.compatibilite}% compatible`, { bold: true, espaceApres: 4 });
-      if (e.raisonsCompatibilite && e.raisonsCompatibilite.length) {
-        e.raisonsCompatibilite.forEach((r) => {
-          // Les raisons peuvent contenir des balises d'icône SVG dans l'affichage web : on ne garde que le texte pour le PDF.
-          const texteSeul = String(r).replace(/<[^>]*>/g, '').trim();
-          if (texteSeul) paragraphe(`•  ${texteSeul}`, { size: 9.5, espaceApres: 2 });
-        });
-      }
-      y += 6;
-    });
-  }
-
-  // Pied de page sur chaque page
-  const nbPages = doc.internal.getNumberOfPages();
-  for (let i = 1; i <= nbPages; i++) {
-    doc.setPage(i);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8);
-    doc.setTextColor(140, 140, 150);
-    doc.text('Généré par Parcourio — parcourio.com — ce rapport est indicatif et ne remplace pas un conseil personnalisé.', marge, doc.internal.pageSize.getHeight() - 24);
-    doc.text(String(i) + ' / ' + nbPages, largeurPage - marge - 24, doc.internal.pageSize.getHeight() - 24);
-  }
-
-  const nomFichier = 'parcourio-rapport-' + (d.titre || 'orientation').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '.pdf';
-  doc.save(nomFichier);
 }

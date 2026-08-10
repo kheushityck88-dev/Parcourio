@@ -35,7 +35,7 @@
 <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
 <link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#030B1E" />
+<meta name="theme-color" content="#FFFFFF" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Parcourio" />
@@ -44,7 +44,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
 
 <script type="application/ld+json">
 {
@@ -77,8 +76,6 @@
 </head>
 <body>
 
-<a class="skip-link" href="#main-content">Aller au contenu principal</a>
-
 <header class="header">
   <div class="logo-lockup">
     <span class="logo-badge"><img src="assets/img/logo-icon.png" alt="Parcourio" class="logo-mark" width="242" height="295" /></span>
@@ -91,35 +88,15 @@
     <a href="#concept"><span class="nav-index">01</span>Concept</a>
     <a href="#test"><span class="nav-index">02</span>Orientation</a>
     <a href="#ecoles"><span class="nav-index">03</span>Écoles</a>
-    <a href="#concours"><span class="nav-index">04</span>Concours</a>
-    <a href="#contact"><span class="nav-index">05</span>Contact</a>
+    <a href="#contact"><span class="nav-index">04</span>Contact</a>
   </nav>
-  <div class="auth-widget" id="authWidget">
-    <button type="button" class="btn-secondary auth-header-btn" id="authHeaderBtn">Se connecter</button>
-    <div class="auth-account" id="authAccount" hidden>
-      <button type="button" class="auth-account-trigger" id="authAccountTrigger" aria-haspopup="true" aria-expanded="false">
-        <span class="auth-avatar" id="authAvatar">?</span>
-        <span class="auth-account-email" id="authAccountEmail"></span>
-        <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-      </button>
-      <div class="auth-account-dropdown" id="authAccountDropdown" hidden>
-        <p class="auth-account-dropdown-email" id="authDropdownEmail"></p>
-        <p class="auth-account-dropdown-statut">Compte gratuit</p>
-        <button type="button" class="auth-account-dropdown-item" id="authCompleterBtn" hidden>Ajouter mon prénom / nom</button>
-        <button type="button" class="auth-account-dropdown-item" id="authHistoriqueBtn">Mon historique de tests</button>
-        <button type="button" class="auth-account-dropdown-item" id="authSignOutBtn">Se déconnecter</button>
-      </div>
-    </div>
-  </div>
   <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mainNav">
     <span></span><span></span><span></span>
   </button>
 </header>
 
-<main id="main-content">
 <section class="hero">
   <div class="hero-content">
-    <p class="auth-welcome" id="authWelcome" hidden></p>
     <p class="eyebrow">Orientation & formation · Sénégal</p>
     <h1>Trouve ta <span>route</span> vers la formation qui te ressemble.</h1>
     <p class="hero-lede">Parcourio lit ton profil, ton niveau et ta ville comme des coordonnées, et trace un parcours clair jusqu'à l'école qui te correspond.</p>
@@ -127,11 +104,11 @@
       <a href="#test" class="btn-primary" data-preselect-parcours="apres_diplome">Après un diplôme</a>
       <a href="#test" class="btn-secondary" data-preselect-parcours="apprendre_metier">Apprendre un métier</a>
     </div>
-    <p class="hero-free-note"><span class="hero-free-dot"></span>Test standard 100% gratuit — sans inscription</p>
+    <p class="hero-free-note"><span class="hero-free-dot"></span>100% gratuit — aucune inscription requise</p>
     <div class="hero-stats">
-      <div class="hero-stat"><b id="heroStatEcoles">272</b><span>Écoles référencées</span></div>
+      <div class="hero-stat"><b id="heroStatEcoles">270</b><span>Écoles référencées</span></div>
       <div class="hero-stat"><b id="heroStatRegions">14</b><span>Régions couvertes</span></div>
-      <div class="hero-stat"><b>2</b><span>Parcours d'orientation</span></div>
+      <div class="hero-stat"><b id="heroStatParcours">2</b><span>Parcours d'orientation</span></div>
     </div>
   </div>
   <div class="hero-visual">
@@ -192,7 +169,7 @@
     <span class="waypoint-line"></span>
   </div>
   <div class="waypoint-body">
-    <p class="eyebrow">Point de départ</p>
+    <p class="eyebrow">Direction à prendre</p>
     <h2>Ton orientation, en deux parcours</h2>
     <p class="section-intro">
       Choisis ta situation : chaque parcours pose des questions différentes, dans un ordre différent, pour une recommandation vraiment adaptée à toi.
@@ -240,7 +217,7 @@
     <p class="eyebrow">Étapes sur la carte</p>
     <h2>Écoles & centres de formation</h2>
     <p class="section-intro" id="ecolesSectionIntro">
-<span id="ecolesSectionIntroCount">272</span> écoles et centres de formation référencés au Sénégal, publics et privés, dans les <span id="ecolesSectionIntroRegions">14</span> régions du pays. Cherche par nom, sigle ou filière, filtre par région, ville, domaine ou statut, mets tes établissements préférés en favoris <svg class="icon icon-star icon-inline" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>, puis ouvre une fiche pour voir tous les détails.
+<span id="ecolesSectionIntroCount">270</span> écoles et centres de formation référencés au Sénégal, publics et privés, dans les <span id="ecolesSectionIntroRegions">14</span> régions du pays. Cherche par nom, sigle ou filière, filtre par région, ville, domaine ou statut, mets tes établissements préférés en favoris <svg class="icon icon-star icon-inline" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>, puis ouvre une fiche pour voir tous les détails.
     </p>
 
     <div class="directory-controls">
@@ -282,6 +259,7 @@
       <button type="button" class="type-chip" data-type="privé"><svg class="icon icon-school" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 21v-3a2 2 0 0 0-4 0v3" /><path d="M18 4.933V21" /><path d="m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6" /><path d="m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11" /><path d="M6 4.933V21" /><circle cx="12" cy="9" r="2" /></svg> Privée</button>
     </div>
 
+
     <div class="directory-domaines directory-niveaux" role="group" aria-label="Filtrer par niveau d'accès">
       <button type="button" class="niveau-chip is-active" data-niveau="">Tous niveaux</button>
       <button type="button" class="niveau-chip" data-niveau="BFEM">BFEM</button>
@@ -322,142 +300,7 @@
   </div>
 </div>
 
-<div class="ecole-modal" id="authModal" aria-hidden="true">
-  <div class="ecole-modal-backdrop"></div>
-  <div class="ecole-modal-panel auth-modal-panel" role="dialog" aria-modal="true" aria-label="Compte Parcourio">
-    <button type="button" class="ecole-modal-close" id="authModalClose" aria-label="Fermer"><svg class="icon icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
-    <h3 id="authModalTitre">Se connecter</h3>
-    <p class="auth-modal-soustitre" id="authModalSousTitre">Accède au test avancé et sauvegarde tes résultats.</p>
-    <p class="auth-modal-erreur" id="authModalErreur" hidden></p>
-    <form id="authForm" class="auth-form">
-      <div id="authPrenomWrap" hidden>
-        <label class="auth-form-label" for="authPrenom">Prénom</label>
-        <input class="auth-form-input" type="text" id="authPrenom" name="prenom" autocomplete="given-name" />
-      </div>
-      <div id="authNomWrap" hidden>
-        <label class="auth-form-label" for="authNom">Nom</label>
-        <input class="auth-form-input" type="text" id="authNom" name="nom" autocomplete="family-name" />
-      </div>
-      <div id="authTelephoneWrap" hidden>
-        <label class="auth-form-label" for="authTelephone">Téléphone</label>
-        <input class="auth-form-input" type="tel" id="authTelephone" name="telephone" autocomplete="tel" placeholder="77 123 45 67" />
-      </div>
-      <div id="authRegionWrap" hidden>
-        <label class="auth-form-label" for="authRegion">Région</label>
-        <select class="auth-form-input" id="authRegion" name="region">
-          <option value="">Sélectionner…</option>
-          <option>Dakar</option>
-          <option>Thiès</option>
-          <option>Diourbel</option>
-          <option>Fatick</option>
-          <option>Kaolack</option>
-          <option>Kaffrine</option>
-          <option>Kédougou</option>
-          <option>Kolda</option>
-          <option>Louga</option>
-          <option>Matam</option>
-          <option>Saint-Louis</option>
-          <option>Sédhiou</option>
-          <option>Tambacounda</option>
-          <option>Ziguinchor</option>
-        </select>
-      </div>
-      <label class="auth-form-label" for="authEmail">Email</label>
-      <input class="auth-form-input" type="email" id="authEmail" name="email" required autocomplete="email" />
-      <label class="auth-form-label" for="authMotDePasse">Mot de passe</label>
-      <input class="auth-form-input" type="password" id="authMotDePasse" name="motDePasse" required minlength="6" autocomplete="current-password" />
-      <button type="submit" class="btn-primary auth-form-submit" id="authSubmit">Se connecter</button>
-    </form>
-    <p class="auth-modal-bascule" id="authBasculeInscription">Pas encore de compte ? <a href="#" id="authVersInscription">Créer un compte gratuit</a></p>
-    <p class="auth-modal-bascule" id="authBasculeConnexion" hidden>Déjà un compte ? <a href="#" id="authVersConnexion">Se connecter</a></p>
-  </div>
-</div>
-
-<div class="ecole-modal" id="profilModal" aria-hidden="true">
-  <div class="ecole-modal-backdrop"></div>
-  <div class="ecole-modal-panel auth-modal-panel" role="dialog" aria-modal="true" aria-label="Compléter ton profil">
-    <h3>Encore une chose 👋</h3>
-    <p class="auth-modal-soustitre">Ton compte a été créé avant qu'on ajoute ton prénom et ton nom. Complète-les pour une expérience plus personnalisée.</p>
-    <p class="auth-modal-erreur" id="profilModalErreur" hidden></p>
-    <form id="profilForm" class="auth-form">
-      <label class="auth-form-label" for="profilPrenom">Prénom</label>
-      <input class="auth-form-input" type="text" id="profilPrenom" name="prenom" autocomplete="given-name" required />
-      <label class="auth-form-label" for="profilNom">Nom</label>
-      <input class="auth-form-input" type="text" id="profilNom" name="nom" autocomplete="family-name" required />
-      <label class="auth-form-label" for="profilTelephone">Téléphone</label>
-      <input class="auth-form-input" type="tel" id="profilTelephone" name="telephone" autocomplete="tel" placeholder="77 123 45 67" />
-      <label class="auth-form-label" for="profilRegion">Région</label>
-      <select class="auth-form-input" id="profilRegion" name="region">
-        <option value="">Sélectionner…</option>
-        <option>Dakar</option>
-        <option>Thiès</option>
-        <option>Diourbel</option>
-        <option>Fatick</option>
-        <option>Kaolack</option>
-        <option>Kaffrine</option>
-        <option>Kédougou</option>
-        <option>Kolda</option>
-        <option>Louga</option>
-        <option>Matam</option>
-        <option>Saint-Louis</option>
-        <option>Sédhiou</option>
-        <option>Tambacounda</option>
-        <option>Ziguinchor</option>
-      </select>
-      <button type="submit" class="btn-primary auth-form-submit" id="profilSubmit">Enregistrer</button>
-    </form>
-    <p class="auth-modal-bascule"><a href="#" id="profilPlusTard">Plus tard</a></p>
-  </div>
-</div>
-
-<div class="ecole-modal" id="abonnementModal" aria-hidden="true">
-  <div class="ecole-modal-backdrop"></div>
-  <div class="ecole-modal-panel auth-modal-panel" role="dialog" aria-modal="true" aria-label="Débloquer le test avancé">
-    <button type="button" class="ecole-modal-close" id="abonnementModalClose" aria-label="Fermer"><svg class="icon icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
-    <h3>Débloquer le test avancé</h3>
-    <p class="auth-modal-soustitre">Plus d'établissements recommandés, et bientôt une précision affinée sur ton profil.</p>
-    <p class="auth-modal-erreur" id="abonnementModalErreur" hidden></p>
-    <div class="abonnement-options">
-      <button type="button" class="abonnement-option" id="abonnementEssaiBtn">
-        <span class="abonnement-option-titre">Essai gratuit</span>
-        <span class="abonnement-option-detail">7 jours, sans engagement</span>
-      </button>
-      <button type="button" class="abonnement-option abonnement-option-principale" id="abonnementPayerBtn">
-        <span class="abonnement-option-titre">S'abonner</span>
-        <span class="abonnement-option-detail">1 990 FCFA / mois, via Wave</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="ecole-modal" id="historiqueModal" aria-hidden="true">
-  <div class="ecole-modal-backdrop"></div>
-  <div class="ecole-modal-panel auth-modal-panel historique-modal-panel" role="dialog" aria-modal="true" aria-label="Mon historique de tests">
-    <button type="button" class="ecole-modal-close" id="historiqueModalClose" aria-label="Fermer"><svg class="icon icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
-    <h3>Mon historique de tests</h3>
-    <p class="auth-modal-soustitre">Tes résultats précédents, du plus récent au plus ancien.</p>
-    <div id="historiqueListe"></div>
-  </div>
-</div>
-
-<div class="auth-toast" id="authToast" hidden role="status" aria-live="polite"></div>
-
-<section id="concours" class="section alt waypoint">
-  <div class="waypoint-marker">
-    <span class="waypoint-num">04</span>
-    <span class="waypoint-line"></span>
-  </div>
-  <div class="waypoint-body">
-    <p class="eyebrow">Dates & démarches</p>
-    <h2>Concours & procédures d'admission</h2>
-    <p class="section-intro">
-      Les principaux concours et procédures publiques d'admission au Sénégal, avec conditions, épreuves et pièces à fournir. Les dates d'épreuves changent chaque année : celles indiquées ici sont un repère de la session la plus récente — vérifie toujours la date exacte sur le site officiel avant de constituer ton dossier.
-    </p>
-    <div class="concours-grid" id="concoursGrid"></div>
-  </div>
-</section>
-
-<section id="contact" class="section waypoint destination">
+<section id="contact" class="section alt waypoint destination">
   <div class="waypoint-marker">
     <span class="waypoint-num"><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg></span>
     <span class="waypoint-line short"></span>
@@ -468,71 +311,48 @@
     <p class="section-intro">
       Une question, une suggestion ou un partenariat ? Écris-nous.
     </p>
-    <form class="contact-form" id="contactForm" action="https://formspree.io/f/mykqqenw" method="POST">
-      <label>Nom
-        <input type="text" name="nom" placeholder="Ton nom" required />
-      </label>
-      <label>Email
-        <input type="email" name="email" placeholder="ton@email.com" required />
-      </label>
-      <label>Message
-        <textarea name="message" placeholder="Ton message" required></textarea>
-      </label>
-      <input type="hidden" name="_subject" value="Nouveau message — Parcourio" />
-      <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <button type="submit">Envoyer</button>
-      <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
-    </form>
+    <div class="contact-layout">
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mykqqenw" method="POST">
+        <label>Nom
+          <input type="text" name="nom" placeholder="Ton nom" required />
+        </label>
+        <label>Email
+          <input type="email" name="email" placeholder="ton@email.com" required />
+        </label>
+        <label>Message
+          <textarea name="message" placeholder="Ton message" required></textarea>
+        </label>
+        <input type="hidden" name="_subject" value="Nouveau message — Parcourio" />
+        <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button type="submit">Envoyer</button>
+        <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+      </form>
+      <aside class="contact-panel">
+        <span class="contact-panel-compass" aria-hidden="true"><svg class="icon icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /></svg></span>
+        <p class="contact-panel-eyebrow">Bon à savoir</p>
+        <ul class="contact-panel-list">
+          <li><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg> Réponse sous 48h, souvent plus vite</li>
+          <li><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg> 100% gratuit, aucune donnée revendue</li>
+          <li><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg> Pensé pour les élèves et étudiants du Sénégal</li>
+        </ul>
+        <a class="contact-panel-email" href="mailto:contact0parcourio@gmail.com"><svg class="icon icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg> contact0parcourio@gmail.com</a>
+      </aside>
+    </div>
   </div>
 </section>
 
-<button type="button" id="assistantOuvrirBtn" class="assistant-bouton" aria-label="Ouvrir l'assistant d'orientation" aria-expanded="false"><svg class="icon icon-message-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg></button>
-
-<div class="assistant-panneau" id="assistantPanneau" role="dialog" aria-label="Assistant d'orientation Parcourio">
-  <div class="assistant-panneau-entete">
-    <span>Assistant d'orientation</span>
-    <button type="button" id="assistantFermerBtn" aria-label="Fermer l'assistant"><svg class="icon icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
-  </div>
-  <div class="assistant-messages" id="assistantMessages"></div>
-  <form class="assistant-form" id="assistantForm">
-    <input type="text" id="assistantInput" placeholder="Pose ta question…" maxlength="500" autocomplete="off" />
-    <button type="submit" aria-label="Envoyer"><svg class="icon icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></button>
-  </form>
-</div>
-
 <button type="button" id="backToTop" class="back-to-top" aria-label="Retour en haut de la page"><svg class="icon icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg></button>
-</main>
 
 <footer class="footer">
   <span class="logo-badge footer-badge"><img src="assets/img/logo-icon.png" alt="Parcourio" class="footer-mark" width="242" height="295" /></span>
   <p>© 2026 Parcourio — Plateforme d'orientation et de formation au Sénégal</p>
-  <p class="footer-links">
-    <a href="ecoles/index.html">Écoles par ville</a> ·
-    <a href="metiers/index.html">Métiers & débouchés</a> ·
-    <a href="mentions-legales.html">Mentions légales & confidentialité</a>
-  </p>
+  <p class="footer-links"><a href="mentions-legales.html">Mentions légales & confidentialité</a></p>
 </footer>
 
-<script>
-  // Si le site est ouvert en double-cliquant sur index.html (protocole
-  // file://), le fetch() normal des données d'écoles est bloqué par le
-  // navigateur (restriction de sécurité, pas un bug du site). Dans ce
-  // cas précis, on charge le fichier de secours en <script> classique
-  // (comme avant) pour que les chiffres s'affichent quand même en test
-  // local. Sur le vrai site en ligne (https://), ce bloc ne fait rien :
-  // le fetch() rapide et non bloquant reste utilisé normalement.
-  if (window.location.protocol === 'file:') {
-    document.write('<script src="assets/data/ecoles-data.js"><\/script>');
-  }
-</script>
 <script src="assets/js/icons.js"></script>
 <script src="assets/data/orientation-data.js"></script>
-<script src="assets/data/concours-data.js"></script>
 <script src="assets/js/orientation-engine.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/js/auth.js"></script>
-<script src="assets/js/avis.js"></script>
-<script src="assets/js/assistant-ia.js"></script>
+<script src="assets/data/ecoles-data.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

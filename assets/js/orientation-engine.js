@@ -214,7 +214,7 @@
     });
     html += `<button type="submit">${echapper(boutonLabel)}</button>`;
     formEl.innerHTML = html;
-    rendreProgression(formEl, questions, formId, opts.onRetour);
+    if (!opts.sansProgression) rendreProgression(formEl, questions, formId, opts.onRetour);
 
     /* Dépendances d'affichage (ex : n'afficher "objectif" que si
        niveau === "Études supérieures") */
