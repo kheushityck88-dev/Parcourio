@@ -39,6 +39,8 @@
       metiers: ["Développeur·se logiciel / web", "Data analyst ou data scientist", "Administrateur systèmes & réseaux", "Ingénieur·e en intelligence artificielle", "Cybersécurité"],
       filieresTypes: ["Licence / Master Informatique", "Génie logiciel", "Data science", "Réseaux & télécoms", "Cybersécurité"],
       motsClefsSecteurs: ["Informatique", "Informatique de gestion", "Data science", "Intelligence artificielle", "Télécommunications", "Réseaux et télécommunications", "Cybersécurité", "Big data", "Informatique décisionnelle"],
+      marche: "Le secteur tech est en pleine expansion à Dakar (hubs comme CTIC Dakar, Dakar Innovation Center) : développeurs web/mobile, data analysts, spécialistes cybersécurité et chefs de projet digital sont les profils les plus recherchés, y compris par de grandes entreprises (Orange/Sonatel) et des banques en pleine transformation numérique. — Sources : Senego, Africarrieres, Socium (2026).",
+      debouches: "Après quelques années d'expérience, évolution possible vers lead développeur·se, chef·fe de projet technique, ou une spécialisation recherchée (IA, cybersécurité, cloud). Le télétravail pour des clients internationaux (freelance, sociétés étrangères) est une option de plus en plus accessible aux profils tech sénégalais confirmés.",
       conseil: {
         "Collège": "Commence par explorer la logique et le code à travers des mini-jeux ou des initiations gratuites (Scratch, sites d'apprentissage). Le but est de tester si le raisonnement logique te plaît vraiment.",
         "Lycée": "Approfondis la programmation, suis un club tech ou participe à un hackathon si l'occasion se présente. Renforce en parallèle tes bases en mathématiques, qui restent le socle de l'informatique.",
@@ -56,6 +58,8 @@
       metiers: ["Ingénieur·e génie civil / BTP", "Technicien·ne ou ingénieur·e en génie électrique", "Ingénieur·e génie mécanique", "Responsable QHSE", "Ingénieur·e agronome ou environnement"],
       filieresTypes: ["Génie civil", "Génie électrique / mécanique", "Génie industriel", "QHSE", "Agronomie / Environnement"],
       motsClefsSecteurs: ["Génie civil", "Génie mécanique", "Génie électrique", "Froid industriel", "QHSE", "Agriculture", "Environnement", "Architecture", "Urbanisme", "Bâtiment et travaux publics", "Navigation maritime", "Mécanique navale"],
+      marche: "Le BTP et l'énergie recrutent fortement, portés par les grands projets d'infrastructures et la montée en puissance de l'exploitation gazière et pétrolière offshore (Grand Tortue, Sangomar) : ingénieurs forage, spécialistes HSE et techniciens de maintenance industrielle sont particulièrement demandés. — Sources : Senego, Socium, Africarrieres (2026).",
+      debouches: "Débouchés dans les bureaux d'études, entreprises de BTP, industries agroalimentaires ou énergétiques. Avec l'expérience, évolution vers chef·fe de projet, responsable technique, ou création de ton propre bureau d'études / entreprise de travaux.",
       conseil: {
         "Collège": "Observe comment sont construits les bâtiments, machines ou installations autour de toi. Les matières scientifiques (maths, physique, technologie) sont ta base à consolider.",
         "Lycée": "Renforce fortement les maths et la physique, et si possible pratique un peu de bricolage, de robotique ou de dessin technique.",
@@ -73,6 +77,8 @@
       metiers: ["Designer graphique / UI-UX", "Styliste / créateur·rice de mode", "Photographe / vidéaste", "Illustrateur·rice / artiste plasticien·ne", "Décorateur·rice / architecte d'intérieur"],
       filieresTypes: ["Design graphique", "Mode & stylisme", "Arts plastiques", "Audiovisuel / Photographie", "Architecture d'intérieur"],
       motsClefsSecteurs: ["Design", "Mode", "Photographie", "Arts plastiques", "Marketing du luxe", "mode", "stylisme", "modélisme", "couture", "audiovisuel", "graphisme", "arts", "cinéma", "Design UX/UI", "Design graphique", "Infographie", "Webdesign"],
+      marche: "Le graphisme et le design UI/UX sont demandés en agence, en startup et par les entreprises qui digitalisent leurs supports. Les salaires vont d'environ 250 000 FCFA/mois pour un·e graphiste débutant·e à plus de 1 000 000 FCFA pour un·e product designer confirmé·e, avec des missions freelance à l'international nettement mieux payées pour les profils expérimentés. — Sources : Emploisenegal, Kolonell (2026).",
+      debouches: "Tu peux exercer en agence, en freelance, ou intégrer le studio créatif d'une entreprise. Avec un book solide, l'évolution passe souvent par la direction artistique, l'ouverture de ton propre atelier ou studio, ou des collaborations avec des marques à l'international.",
       conseil: {
         "Collège": "Multiplie les expériences créatives (dessin, montage vidéo simple, bricolage artistique) pour découvrir le medium qui te correspond le mieux.",
         "Lycée": "Commence un portfolio, même modeste, et cherche des concours ou ateliers créatifs pour te confronter à d'autres regards.",
@@ -90,6 +96,8 @@
       metiers: ["Chargé·e de communication / community manager", "Journaliste / rédacteur·rice", "Chargé·e de marketing digital", "Interprète / traducteur·rice", "Chargé·e de relations publiques"],
       filieresTypes: ["Communication", "Marketing digital", "Journalisme", "Langues appliquées / Interprétariat"],
       motsClefsSecteurs: ["Communication", "Langues", "Interprétariat", "Marketing", "Journalisme", "Marketing-communication", "Marketing digital", "Publicité", "Production multimédia", "culture"],
+      marche: "Les agences de communication, médias et entreprises recrutent en continu des profils communication digitale, community management et création de contenu, souvent proposés d'abord sous forme de stages. — Source : Emploisenegal (2026).",
+      debouches: "Débouchés en agence de communication, dans les médias, les ONG ou en interne dans une entreprise. Avec l'expérience, évolution possible vers la direction de la communication, le journalisme spécialisé, ou la création de ta propre agence.",
       conseil: {
         "Collège": "Entraîne-toi à écrire et à t'exprimer à l'oral (exposés, débats, réseaux sociaux de façon encadrée). Note ce qui capte l'attention des autres.",
         "Lycée": "Renforce les langues et l'écriture, essaie un blog, une radio scolaire ou un club de débat.",
@@ -107,6 +115,8 @@
       metiers: ["Médecin généraliste ou spécialiste", "Infirmier·ère", "Pharmacien·ne", "Sage-femme", "Technicien·ne de laboratoire médical"],
       filieresTypes: ["Médecine", "Soins infirmiers", "Pharmacie", "Chirurgie dentaire", "Biologie médicale"],
       motsClefsSecteurs: ["Médecine", "Infirmier", "Pharmacie", "Chirurgie dentaire", "Odontologie", "Biologie médicale", "Délégué médical", "Sage-femme", "Santé", "Sciences infirmières", "Santé publique", "Médecine vétérinaire", "Santé animale", "Productions animales", "Agriculture", "Agronomie", "Élevage", "Agroalimentaire", "Pêche", "Foresterie"],
+      marche: "L'État a annoncé le recrutement de 2 500 agents de santé en 2026 pour répondre à un déficit de personnel reconnu par le gouvernement, notamment hors de Dakar. Le secteur reste structurellement en tension sur plusieurs spécialités. — Sources : L'Économiste Sénégal, SeneNews (mars 2026).",
+      debouches: "Le secteur recrute en continu dans les structures publiques et privées. Perspectives de spécialisation (internat, spécialité médicale) ou d'ouverture de ton propre cabinet / officine après quelques années d'exercice.",
       conseil: {
         "Collège": "Renforce les sciences (SVT, physique-chimie) qui sont indispensables pour les filières de santé, et observe les métiers médicaux autour de toi.",
         "Lycée": "Vise une série scientifique solide, et si possible fais du bénévolat ou une immersion dans un centre de santé.",
@@ -124,6 +134,8 @@
       metiers: ["Enseignant·e", "Éducateur·rice spécialisé·e", "Psychologue", "Travailleur·se social·e", "Chargé·e de projet ONG / développement communautaire"],
       filieresTypes: ["Sciences de l'éducation", "Psychologie", "Travail social", "Lettres & sciences humaines"],
       motsClefsSecteurs: ["Lettres", "Environnement", "Formation des enseignants", "Sciences sociales", "Sciences politiques", "Relations internationales", "Géopolitique", "Développement durable", "Études arabo-islamiques"],
+      marche: "L'État a annoncé le recrutement de 4 350 enseignants en 2026 (français, anglais, arabe, daaras), confirmant une demande soutenue dans l'enseignement public. — Source : L'Économiste Sénégal (mars 2026).",
+      debouches: "Débouchés dans l'enseignement public ou privé, les ONG, les institutions internationales ou le conseil en développement. Avec l'expérience, évolution vers la direction d'établissement, la formation de formateurs, ou des postes à responsabilité dans des organisations internationales.",
       conseil: {
         "Collège": "Explore les matières littéraires et humaines, et essaie d'aider ou d'expliquer des choses à d'autres élèves : c'est un bon indicateur.",
         "Lycée": "Fais du bénévolat, du soutien scolaire ou une activité associative pour confirmer ton goût pour l'accompagnement humain.",
@@ -141,6 +153,8 @@
       metiers: ["Chargé·e de marketing / commercial·e", "Comptable / auditeur·rice", "Chef·fe de projet / entrepreneur·e", "Gestionnaire en hôtellerie", "Chargé·e de clientèle bancaire"],
       filieresTypes: ["Gestion / Management", "Marketing", "Comptabilité & finance", "Commerce international", "Hôtellerie"],
       motsClefsSecteurs: ["Gestion", "Marketing", "Commerce", "Commerce international", "Gestion commerciale", "Gestion des entreprises", "Comptabilité", "Finance", "Banque", "Assurance", "Audit", "Gestion hôtelière", "Hôtellerie", "Hôtellerie de luxe", "Ingénierie technico-commerciale", "Management", "Tourisme", "Hôtellerie-tourisme", "Restauration", "Transport-logistique", "Entrepreneuriat", "Microfinance", "Économie", "gestion", "management"],
+      marche: "Les banques, fintechs (Orange Money, Wave) et grandes entreprises recrutent activement des profils gestion, finance et commerce ; le secteur bancaire et pétrolier concentre certaines des rémunérations les plus élevées du marché formel. — Sources : Senego, Africarrieres (2026).",
+      debouches: "Les entreprises privées, banques et institutions financières recrutent massivement ces profils. Évolution fréquente vers responsable d'équipe, directeur·rice commercial·e ou financier·e, ou création de ta propre entreprise.",
       conseil: {
         "Collège": "Amuse-toi à organiser de petits projets (événement de classe, vente, budget de poche) pour tester ton goût pour la gestion.",
         "Lycée": "Renforce les maths appliquées et l'économie, et lance-toi dans un mini-projet entrepreneurial si l'occasion se présente.",
@@ -158,6 +172,8 @@
       metiers: ["Juriste / avocat·e", "Magistrat·e", "Cadre de l'administration publique", "Responsable ressources humaines", "Huissier / notaire"],
       filieresTypes: ["Droit", "Droit des affaires", "Administration publique", "Ressources humaines"],
       motsClefsSecteurs: ["Droit", "Droit des affaires", "Administration publique", "Administration des entreprises", "Fonction publique", "Ressources humaines", "Sécurité", "Sciences criminelles", "Fiscalité"],
+      marche: "Environ 230 offres d'emploi juridique et administratif sont recensées en continu (cabinets d'avocats, banques, assurances, entreprises), en plus des concours réguliers de la fonction publique (magistrature via le CFJ, corps administratifs). — Sources : Africarrieres, Emploisenegal, CFJ (2026).",
+      debouches: "Débouchés en cabinet d'avocats, dans l'administration publique (sur concours), en entreprise (juriste) ou en organisation internationale. Avec l'expérience, évolution vers l'associariat en cabinet, la magistrature, ou des postes de direction juridique.",
       conseil: {
         "Collège": "Développe ta capacité à argumenter et à comprendre des règles (débats, actualité, instruction civique).",
         "Lycée": "Renforce les matières littéraires et l'histoire-géographie, essaie un club de débat ou un modèle de Nations Unies si possible.",
@@ -195,6 +211,8 @@
       metiers: ["Électricien·ne", "Maçon·ne / Chef·fe de chantier", "Soudeur·se", "Technicien·ne froid-climatisation", "Mécanicien·ne auto"],
       motsClefsSecteurs: ["Électricité", "Génie civil", "Froid-climatisation", "Plomberie", "Mécanique auto", "Bâtiment et travaux publics", "Génie mécanique", "Machinisme agricole"],
       motsClefsNom: ["cfp", "cfpt", "don bosco", "centre de formation professionnelle", "lycée technique"],
+      marche: "Le BTP recrute via des programmes d'apprentissage dédiés (ex. 200 apprentis en Certificat de Qualification Professionnelle BTP en 2026) et des initiatives comme « Chaque Jeune, Un Métier », qui vise à former 15 000 jeunes sur 2025-2026 sur des filières techniques et l'artisanat. — Sources : Direction de l'Apprentissage et de l'Insertion Professionnelle, SenegalNews (2026).",
+      debouches: "Après quelques années de pratique, évolution fréquente vers chef·fe d'équipe, chef·fe de chantier, ou création de ta propre entreprise artisanale (électricité, plomberie, climatisation) — un parcours courant au Sénégal une fois le métier maîtrisé.",
       conseil: "Vise un centre de formation professionnelle (CFP, CFPT) ou un centre Don Bosco reconnu. Une formation qualifiante de quelques mois à deux ans suffit souvent à démarrer, avec un CAP ou un BEP à la clé — la pratique et les stages comptent plus que le diplôme théorique."
     },
     numerique_pratique: {
@@ -205,6 +223,8 @@
       metiers: ["Technicien·ne maintenance informatique", "Développeur·se web junior", "Community manager", "Opérateur·rice de saisie", "Technicien·ne réseaux"],
       motsClefsSecteurs: ["Informatique", "Réseaux et télécommunications", "Développement web", "Marketing digital", "Informatique de gestion"],
       motsClefsNom: ["simplon", "sonatel academy", "informatique"],
+      marche: "La maintenance informatique et le support technique restent des compétences recherchées par les entreprises et administrations qui digitalisent leurs outils, avec un volume d'offres constant sur les plateformes d'emploi. — Source : Emploisenegal (2026).",
+      debouches: "Avec l'expérience, évolution possible vers technicien·ne senior, administrateur·rice systèmes, ou poursuite de formation vers le développement ou la gestion de projets IT.",
       conseil: "Cherche une école du code gratuite ou peu coûteuse (Simplon, Sonatel Academy) ou un institut proposant des certifications courtes en maintenance ou en réseaux. Construis vite un petit book de réalisations concrètes : c'est souvent plus décisif qu'un diplôme dans ce secteur."
     },
     hotellerie_restauration: {
@@ -215,6 +235,8 @@
       metiers: ["Cuisinier·ère", "Serveur·se / Réceptionniste", "Guide touristique", "Pâtissier·ère", "Barman / Barmaid"],
       motsClefsSecteurs: ["Hôtellerie", "Restauration", "Tourisme", "Gastronomie", "Hôtellerie-tourisme", "Gestion hôtelière"],
       motsClefsNom: ["enfht", "vatel", "marmitons", "hotel"],
+      marche: "Secteur historiquement fort en emplois (jusqu'à 446 000 emplois directs et indirects estimés selon les études, tourisme informel inclus), porté par les grandes chaînes hôtelières de Dakar (Radisson Blu, Pullman, Terrou-Bi) et le développement du tourisme d'affaires et culturel. — Sources : SenegalInsights/EGCAT, Africarrieres (2026).",
+      debouches: "Le secteur permet une progression rapide : de commis à chef·fe de rang ou chef·fe de cuisine en quelques années, avec des opportunités à l'international (croisières, hôtellerie de luxe) pour les profils les plus qualifiés.",
       conseil: "L'ENFHT (École Nationale de Formation Hôtelière et Touristique) est la référence historique et accessible dès le BFEM. Les instituts privés (Vatel, Les Marmitons) offrent des formations plus courtes et professionnalisantes si tu veux aller vite."
     },
     mode_artisanat: {
@@ -225,6 +247,8 @@
       metiers: ["Couturier·ère / Styliste", "Modéliste", "Coiffeur·se / Esthéticien·ne", "Artisan·e d'art", "Bijoutier·ère"],
       motsClefsSecteurs: ["mode", "stylisme", "modélisme", "couture", "Design", "Infographie"],
       motsClefsNom: ["iccm", "emdn", "couture", "mode"],
+      marche: "La couture sur-mesure reste un pilier économique important (marché estimé à 80-130 milliards FCFA/an, très majoritairement informel), porté par la demande constante pour les cérémonies (mariages, baptêmes) et une clientèle diaspora croissante. Le programme public « Chaque Jeune, Un Métier » forme spécifiquement à la couture et à l'artisanat (15 000 jeunes visés en 2025-2026). — Sources : Kolonell, SenegalNews (2026).",
+      debouches: "Avec un savoir-faire reconnu, beaucoup de professionnel·les ouvrent leur propre atelier ou boutique après quelques années. D'autres rejoignent des maisons de couture établies comme chef·fe d'atelier.",
       conseil: "L'ICCM (Institut de Coupe, Couture et de Mode) est accessible dès le BFEM et reste la référence publique. Complète par des stages chez un·e professionnel·le reconnu·e : dans ce secteur, un book de réalisations vaut souvent plus qu'un diplôme."
     },
     audiovisuel_creation: {
@@ -235,6 +259,8 @@
       metiers: ["Monteur·se vidéo", "Photographe", "Opérateur·rice prise de son", "Infographiste", "Créateur·rice de contenu"],
       motsClefsSecteurs: ["audiovisuel", "Design UX/UI", "Webdesign", "Photographie", "cinéma", "Production multimédia", "Infographie"],
       motsClefsNom: ["kourtrajmé", "yennenga", "cifap", "hollywood university", "sup'imax"],
+      marche: "Le ministère de la Culture a lancé début 2026 un plan stratégique 2026-2030 pour l'industrie du cinéma, de l'audiovisuel et de la création numérique, avec l'objectif affiché de multiplier par quatre les revenus du secteur en structurant mieux la filière (réalisation, montage, production de contenus pour les marques et réseaux sociaux). — Source : AllAfrica (février 2026).",
+      debouches: "Débouchés en agence, en média, ou en activité indépendante (freelance) pour les réseaux sociaux et les marques. Avec l'expérience, évolution vers la réalisation, la direction artistique, ou la création de ton propre studio.",
       conseil: "Les écoles de cinéma gratuites (Kourtrajmé, Centre Yennenga) sont ouvertes sans condition de diplôme, sur motivation et projet. Sinon, des instituts comme SUP'IMAX ou Hollywood University proposent des formations professionnalisantes plus courtes."
     },
     sante_aide_personne: {
@@ -245,6 +271,8 @@
       metiers: ["Aide-soignant·e", "Auxiliaire de puériculture", "Assistant·e dentaire", "Agent·e de santé communautaire", "Aide à domicile"],
       motsClefsSecteurs: ["Infirmier", "Santé", "Sciences infirmières", "Biologie médicale"],
       motsClefsNom: ["élite santé", "esup santé", "ised"],
+      marche: "Le secteur profite du même effort national que la santé en général (2 500 agents recrutés par l'État en 2026), avec une porte d'entrée accessible : le diplôme d'État d'aide-soignant se prépare en 1 an, avec des passerelles vers d'autres métiers paramédicaux après quelques années d'expérience. — Sources : L'Économiste Sénégal, Samabac (2026).",
+      debouches: "Insertion rapide dans les structures de santé publiques et privées, avec possibilité d'évoluer vers des formations complémentaires (infirmier·ère d'État) après quelques années d'expérience de terrain.",
       conseil: "Les instituts privés de santé (Institut Élite Santé, ESUP Santé…) proposent des licences professionnelles en soins infirmiers accessibles après le BAC ; certains centres proposent aussi des formations d'auxiliaire plus courtes, accessibles dès le BFEM."
     },
     commerce_vente_gestion: {
@@ -255,6 +283,8 @@
       metiers: ["Vendeur·se / Commercial·e", "Caissier·ère / Agent·e de comptoir", "Secrétaire / Assistant·e administratif", "Agent·e de saisie comptable", "Auto-entrepreneur·se"],
       motsClefsSecteurs: ["Commerce", "Gestion commerciale", "Comptabilité", "Gestion des entreprises", "Marketing"],
       motsClefsNom: ["cfpt", "estg", "g2cfor"],
+      marche: "Plus de 80% des emplois au Sénégal relèvent du secteur informel, ce qui concerne directement le commerce et la vente : une réalité qui limite l'accès à la protection sociale, mais qui offre aussi une porte d'entrée rapide sur le marché du travail, avec des offres de vente et relation client publiées en continu sur les plateformes d'emploi. — Source : Africarrieres (2026).",
+      debouches: "Évolution fréquente vers responsable de rayon ou de boutique, ou lancement de ta propre activité commerciale une fois un premier capital et une clientèle constitués.",
       conseil: "Une formation courte en gestion commerciale ou en comptabilité (souvent en licence professionnelle accessible après le BAC) suffit pour démarrer. Si ton objectif est de créer ta propre activité, cherche en priorité les modules d'entrepreneuriat."
     },
     agriculture_environnement: {
@@ -265,6 +295,8 @@
       metiers: ["Technicien·ne agricole", "Éleveur·se / Agent·e d'élevage", "Agent·e forestier", "Technicien·ne agroalimentaire", "Éco-guide"],
       motsClefsSecteurs: ["Agriculture", "Environnement", "Productions animales", "Gestion forestière"],
       motsClefsNom: ["isfar", "eismv", "csfp", "bounkiling"],
+      marche: "Le secteur bénéficie d'une modernisation progressive (transformation agroalimentaire) et de programmes publics d'insertion pour les jeunes en milieu rural (PUDC, ANPEJ). Les technicien·nes en agriculture, horticulture et eaux et forêts restent recherché·es par les projets de développement rural. — Sources : Africarrieres, AFD (2026).",
+      debouches: "Le secteur bénéficie d'un accompagnement croissant à l'entrepreneuriat agricole (financements, bailleurs) : beaucoup de technicien·nes évoluent vers la gestion de leur propre exploitation ou vers des postes de conseiller·ère technique.",
       conseil: "Des centres publics comme l'ISFAR ou les centres sectoriels de formation professionnelle (CSFP, souvent en régions) proposent des formations pratiques en alternance, avec un accompagnement à l'insertion ou à la création d'activité agricole."
     },
     transport_securite: {
@@ -275,6 +307,8 @@
       metiers: ["Chauffeur·se professionnel·le", "Agent·e logistique", "Agent·e de sécurité", "Marin / Agent·e maritime", "Magasinier·ère"],
       motsClefsSecteurs: ["Transport-logistique", "Navigation maritime", "Sécurité", "Mécanique navale"],
       motsClefsNom: ["enfm", "transport"],
+      marche: "Le secteur logistique recrute notamment autour de grands événements (les Jeux Olympiques de la Jeunesse Dakar 2026 génèrent des besoins ponctuels en manutention et coordination logistique), en plus de la demande continue en chauffeurs et agents de transport. — Source : Emploisenegal (2026).",
+      debouches: "Avec l'ancienneté, évolution possible vers responsable logistique, chef·fe d'équipe sécurité, ou obtention de qualifications supplémentaires ouvrant vers des postes mieux positionnés (transport international, sécurité rapprochée).",
       conseil: "L'ENFM (École Nationale de Formation Maritime) forme aux métiers de la mer sur concours ; pour la logistique et le transport terrestre, privilégie les formations courtes et les certifications reconnues par les entreprises du secteur."
     }
   };
@@ -388,26 +422,6 @@
       { value: "changer_filiere", label: "Changer complètement de filière (réorientation)" },
       { value: "competences", label: "Développer de nouvelles compétences, sans changer de métier" }
     ]
-  };
-
-  /* Banque des "projets après [diplôme]" : regroupe, sous une seule
-     clé plate, TOUTES les valeurs "objectif" possibles utilisées dans
-     OBJECTIFS_PAR_DIPLOME (tous niveaux confondus). Chaque entrée porte
-     un libellé lisible pour l'affichage du résultat, ainsi qu'un
-     "biaisMemeDomaine" (0 à 3) qui indique à quel point ce choix
-     renforce le domaine actuel de la personne (utilisé dans
-     script.js/afficherResultatsApresDiplome pour donner plus de poids
-     au domaine déjà en cours quand la personne veut clairement y
-     rester ou s'y spécialiser, et aucun bonus quand elle veut changer
-     de filière). */
-  const BANQUE_PROJET_APRES = {
-    poursuivre: { label: "Choisir ma première orientation après le BAC", biaisMemeDomaine: 0 },
-    competences: { label: "Découvrir ou développer mes compétences", biaisMemeDomaine: 1 },
-    niveau_superieur: { label: "Poursuivre vers un niveau supérieur", biaisMemeDomaine: 2 },
-    specialisation: { label: "Me spécialiser dans mon domaine actuel", biaisMemeDomaine: 3 },
-    changer_filiere: { label: "Changer de filière / me réorienter", biaisMemeDomaine: 0 },
-    insertion: { label: "Entrer directement sur le marché du travail", biaisMemeDomaine: 1 },
-    carriere_academique: { label: "Poursuivre une carrière académique / la recherche", biaisMemeDomaine: 2 }
   };
 
   /* Le "niveau d'études visé" proposé après le test change selon le
@@ -853,7 +867,6 @@
     PARCOURS,
     DIPLOMES,
     OBJECTIFS_PAR_DIPLOME,
-    BANQUE_PROJET_APRES,
     VILLES_SENEGAL,
     REGIONS_SENEGAL,
     construireQuestionnaireApresDiplome,
