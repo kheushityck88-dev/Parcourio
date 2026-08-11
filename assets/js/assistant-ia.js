@@ -19,8 +19,8 @@
   if (!boutonOuvrir || !panneau || !form || !input || !zoneMessages) return;
 
   let historique = [];
-  let dejaOuvert = false;
   let modeAvanceSignale = false;
+  let dernierEtatAffiche = null; // 'connecte' | 'deconnecte' | null (rien affiché encore)
 
   function ajouterMessage(role, texte) {
     const bulle = document.createElement('div');
@@ -44,26 +44,61 @@
     if (bulle) bulle.remove();
   }
 
+  /* Resynchronise l'état du panneau (champ actif/désactivé, message) sur
+     la vraie session en cours. Appelée à chaque ouverture ET à chaque
+     changement de connexion/déconnexion, pour ne jamais rester bloqué
+     sur un état obsolète tant que la page n'est pas rechargée. */
+  function syncEtatConnexion(options) {
+    const forcerAffichage = options && options.forcer;
+    const session = window.ParcourioAuth ? window.ParcourioAuth.getSession() : null;
+    const etat = session ? 'connecte' : 'deconnecte';
+    const soumettreBtn = form.querySelector('button[type="submit"]');
+
+    if (etat === dernierEtatAffiche && !forcerAffichage) {
+      // Rien n'a changé depuis la dernière fois : on ne spamme pas de
+      // nouveau message, mais on garde quand même l'état des champs à jour.
+      input.disabled = etat === 'deconnecte';
+      soumettreBtn.disabled = etat === 'deconnecte';
+      return;
+    }
+
+    if (etat === 'deconnecte') {
+      ajouterMessage('assistant', "Connecte-toi (gratuitement) pour discuter avec moi de ton orientation — ça m'évite d'être noyé par des robots et me permet de vraiment m'appuyer sur ton résultat de test !");
+      input.disabled = true;
+      soumettreBtn.disabled = true;
+      modeAvanceSignale = false;
+      const entete = document.querySelector('.assistant-panneau-entete span');
+      if (entete) entete.textContent = "Assistant d'orientation";
+    } else {
+      ajouterMessage('assistant', dernierEtatAffiche === 'deconnecte'
+        ? "Te revoilà connecté·e ! Pose-moi une question sur ton orientation."
+        : "Salut ! Je suis l'assistant Parcourio. Pose-moi une question sur ton orientation — ton profil, tes métiers possibles, tes options d'écoles…");
+      input.disabled = false;
+      soumettreBtn.disabled = false;
+      historique = []; // on repart d'une conversation propre avec la nouvelle session
+    }
+    dernierEtatAffiche = etat;
+  }
+
   function ouvrirPanneau() {
     panneau.classList.add('is-open');
     boutonOuvrir.setAttribute('aria-expanded', 'true');
-    if (!dejaOuvert) {
-      dejaOuvert = true;
-      const session = window.ParcourioAuth ? window.ParcourioAuth.getSession() : null;
-      if (!session) {
-        ajouterMessage('assistant', "Connecte-toi (gratuitement) pour discuter avec moi de ton orientation — ça m'évite d'être noyé par des robots et me permet de vraiment m'appuyer sur ton résultat de test !");
-        input.disabled = true;
-        form.querySelector('button[type="submit"]').disabled = true;
-      } else {
-        ajouterMessage('assistant', "Salut ! Je suis l'assistant Parcourio. Pose-moi une question sur ton orientation — ton profil, tes métiers possibles, tes options d'écoles…");
-      }
-    }
-    input.focus();
+    syncEtatConnexion();
+    if (!input.disabled) input.focus();
   }
 
   function fermerPanneau() {
     panneau.classList.remove('is-open');
     boutonOuvrir.setAttribute('aria-expanded', 'false');
+  }
+
+  // Réagit immédiatement à une connexion/déconnexion, même si le
+  // panneau est déjà ouvert au moment où ça arrive.
+  if (window.ParcourioAuth && window.ParcourioAuth.surChangement) {
+    window.ParcourioAuth.surChangement(() => {
+      if (panneau.classList.contains('is-open')) syncEtatConnexion();
+      else dernierEtatAffiche = null; // sera resynchronisé à la prochaine ouverture
+    });
   }
 
   boutonOuvrir.addEventListener('click', () => {
@@ -79,6 +114,7 @@
 
     const session = window.ParcourioAuth ? window.ParcourioAuth.getSession() : null;
     if (!session) {
+      syncEtatConnexion({ forcer: true });
       if (window.ParcourioAuth) window.ParcourioAuth.ouvrirModale({ messageContexte: "Connecte-toi pour discuter avec l'assistant." });
       return;
     }
