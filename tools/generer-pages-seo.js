@@ -62,7 +62,7 @@ const DOMAINE_LABELS = { technologie: 'Technologie', creatif: 'Créatif & design
 
 /* ---------- Gabarit HTML commun (header/footer identiques au site) ---------- */
 
-function gabarit({ titre, description, urlCanonique, contenu, breadcrumbJSON }) {
+function gabarit({ titre, description, urlCanonique, contenu, breadcrumbJSON, breadcrumbHTML }) {
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -99,13 +99,13 @@ function gabarit({ titre, description, urlCanonique, contenu, breadcrumbJSON }) 
 <a class="skip-link" href="#main-content">Aller au contenu principal</a>
 
 <header class="header">
-  <div class="logo-lockup">
+  <a class="logo-lockup" href="../index.html" aria-label="Retour à l'accueil Parcourio">
     <span class="logo-badge"><img src="../assets/img/logo-icon.png" alt="Parcourio" class="logo-mark" width="242" height="295" /></span>
     <span class="logo-text">
       <span class="logo-name">PARCOURIO<span class="beta-badge">Bêta</span></span>
       <span class="logo-slogan">Trouvez la bonne école, construisez votre avenir</span>
     </span>
-  </div>
+  </a>
   <nav>
     <a href="../index.html#concept">Concept</a>
     <a href="../index.html#test">Orientation</a>
@@ -118,6 +118,7 @@ function gabarit({ titre, description, urlCanonique, contenu, breadcrumbJSON }) 
 <main id="main-content">
 <section class="section seo-page">
   <div class="waypoint-body seo-page-body">
+${breadcrumbHTML}
 ${contenu}
   </div>
 </section>
@@ -187,7 +188,10 @@ ${blocsDomaines}
     description: `${ecolesVille.length} établissements d'enseignement supérieur et de formation à ${ville}, Sénégal : filières, niveaux d'admission, avis étudiants.`,
     urlCanonique,
     contenu,
-    breadcrumbJSON
+    breadcrumbJSON,
+    breadcrumbHTML: `    <nav class="seo-breadcrumb" aria-label="Fil d'Ariane">
+      <a href="../index.html">← Accueil</a><span class="separateur">/</span><a href="index.html">Écoles par ville</a><span class="separateur">/</span><span>${echapperHTML(ville)}</span>
+    </nav>`
   });
 
   fs.writeFileSync(path.join(dossierEcoles, `${slug}.html`), html, 'utf8');
@@ -215,7 +219,10 @@ fs.writeFileSync(path.join(dossierEcoles, 'index.html'), gabarit({
       { "@type": "ListItem", "position": 1, "name": "Accueil", "item": `${SITE_URL}/` },
       { "@type": "ListItem", "position": 2, "name": "Écoles par ville", "item": `${SITE_URL}/ecoles/index.html` }
     ]
-  }
+  },
+  breadcrumbHTML: `    <nav class="seo-breadcrumb" aria-label="Fil d'Ariane">
+      <a href="../index.html">← Accueil</a><span class="separateur">/</span><span>Écoles par ville</span>
+    </nav>`
 }), 'utf8');
 
 /* ---------- Pages métiers/profils ---------- */
@@ -265,7 +272,10 @@ tousLesProfils.forEach((p) => {
         { "@type": "ListItem", "position": 2, "name": "Métiers", "item": `${SITE_URL}/metiers/index.html` },
         { "@type": "ListItem", "position": 3, "name": p.nom, "item": urlCanonique }
       ]
-    }
+    },
+    breadcrumbHTML: `    <nav class="seo-breadcrumb" aria-label="Fil d'Ariane">
+      <a href="../index.html">← Accueil</a><span class="separateur">/</span><a href="index.html">Métiers</a><span class="separateur">/</span><span>${echapperHTML(p.nom)}</span>
+    </nav>`
   });
 
   fs.writeFileSync(path.join(dossierMetiers, `${slug}.html`), html, 'utf8');
@@ -289,7 +299,10 @@ ${listeMetiersHTML}
       { "@type": "ListItem", "position": 1, "name": "Accueil", "item": `${SITE_URL}/` },
       { "@type": "ListItem", "position": 2, "name": "Métiers", "item": `${SITE_URL}/metiers/index.html` }
     ]
-  }
+  },
+  breadcrumbHTML: `    <nav class="seo-breadcrumb" aria-label="Fil d'Ariane">
+      <a href="../index.html">← Accueil</a><span class="separateur">/</span><span>Métiers</span>
+    </nav>`
 }), 'utf8');
 
 /* ---------- Mise à jour du sitemap.xml ---------- */

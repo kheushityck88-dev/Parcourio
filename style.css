@@ -83,6 +83,37 @@ a { color: inherit; }
   gap: 12px;
 }
 
+a.logo-lockup {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Fil d'Ariane visible sur les pages SEO (métiers/villes) */
+.seo-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--ink-400, #8a94a8);
+  margin: 0 0 18px;
+}
+
+.seo-breadcrumb a {
+  color: var(--ink-400, #8a94a8);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.seo-breadcrumb a:hover {
+  color: var(--blue-400, #4d7fff);
+}
+
+.seo-breadcrumb .separateur {
+  opacity: 0.6;
+}
+
 .logo-badge {
   display: flex;
   align-items: center;
@@ -454,7 +485,7 @@ a { color: inherit; }
 
 .hero-pin {
   position: absolute;
-  z-index: 2;
+  z-index: 4;
   font-family: var(--font-mono);
   font-size: 0.68rem;
   color: var(--ink-100);
@@ -503,10 +534,13 @@ a { color: inherit; }
     padding: 4px 9px;
   }
 
-  /* Sur mobile, le P déborde toujours dans le coin bas-gauche de la photo :
-     on écarte juste les deux pins qui tombaient dans cette zone. */
-  .hero-pin.p5 { top: 46%; left: 10%; }
-  .hero-pin.p7.more { bottom: 6%; right: 6%; }
+  /* Sur mobile, le badge "P" (hero-compass) se déplace en bas à droite
+     (voir règle .hero-compass plus bas dans le fichier) : on écarte les
+     pins qui tombent dans cette zone plutôt que de compter uniquement
+     sur le z-index. */
+  .hero-pin.p5 { top: 40%; left: 8%; }
+  .hero-pin.p6 { top: 54%; right: 10%; }
+  .hero-pin.p7.more { top: 66%; right: 8%; bottom: auto; }
 }
 
 @media (max-width: 560px) {
