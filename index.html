@@ -468,21 +468,33 @@
     <p class="section-intro">
       Une question, une suggestion ou un partenariat ? Écris-nous.
     </p>
-    <form class="contact-form" id="contactForm" action="https://formspree.io/f/mykqqenw" method="POST">
-      <label>Nom
-        <input type="text" name="nom" placeholder="Ton nom" required />
-      </label>
-      <label>Email
-        <input type="email" name="email" placeholder="ton@email.com" required />
-      </label>
-      <label>Message
-        <textarea name="message" placeholder="Ton message" required></textarea>
-      </label>
-      <input type="hidden" name="_subject" value="Nouveau message — Parcourio" />
-      <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <button type="submit">Envoyer</button>
-      <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
-    </form>
+    <div class="contact-layout">
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mykqqenw" method="POST">
+        <label>Nom
+          <input type="text" name="nom" placeholder="Ton nom" required />
+        </label>
+        <label>Email
+          <input type="email" name="email" placeholder="ton@email.com" required />
+        </label>
+        <label>Message
+          <textarea name="message" placeholder="Ton message" required></textarea>
+        </label>
+        <input type="hidden" name="_subject" value="Nouveau message — Parcourio" />
+        <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button type="submit">Envoyer</button>
+        <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+      </form>
+      <aside class="contact-panel">
+        <span class="contact-panel-compass" aria-hidden="true"><svg class="icon icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /></svg></span>
+        <p class="contact-panel-eyebrow">Bon à savoir</p>
+        <ul class="contact-panel-list">
+          <li><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg> Réponse sous 48h, souvent plus vite</li>
+          <li><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg> 100% gratuit, aucune donnée revendue</li>
+          <li><svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5" /></svg> Pensé pour les élèves et étudiants du Sénégal</li>
+        </ul>
+        <a class="contact-panel-email" href="mailto:contact0parcourio@gmail.com"><svg class="icon icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg> contact0parcourio@gmail.com</a>
+      </aside>
+    </div>
   </div>
 </section>
 

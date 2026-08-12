@@ -1060,6 +1060,15 @@ a { color: inherit; }
   outline-offset: 1px;
 }
 
+.test-form select:hover,
+.test-form input:hover,
+.test-avance-form select:hover,
+.test-avance-form input:hover,
+.contact-form input:hover,
+.contact-form textarea:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
 .test-form button[type="submit"],
 .test-avance-form button[type="submit"],
 .contact-form button[type="submit"] {
@@ -1154,6 +1163,110 @@ a { color: inherit; }
   color: #ff8080;
   font-family: var(--font-display);
   font-size: 1rem;
+}
+
+/* ---------- Contact : formulaire + panneau d'infos ---------- */
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 520px) minmax(240px, 320px);
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+}
+
+.contact-panel {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, var(--navy-700, #0e254f) 0%, var(--navy-800) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 26px;
+  margin-top: 2px;
+}
+
+.contact-panel-compass {
+  position: absolute;
+  top: -22px;
+  right: -22px;
+  width: 96px;
+  height: 96px;
+  color: rgba(255, 255, 255, 0.06);
+}
+
+.contact-panel-compass .icon {
+  width: 100%;
+  height: 100%;
+}
+
+.contact-panel-eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  color: var(--gold-400);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.contact-panel-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.contact-panel-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--ink-300);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.contact-panel-list li .icon {
+  flex-shrink: 0;
+  width: 1.1em;
+  height: 1.1em;
+  margin-top: 0.15em;
+  color: var(--teal-400);
+}
+
+.contact-panel-email {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink-100);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  transition: 0.2s;
+  position: relative;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.contact-panel-email:hover {
+  border-color: var(--blue-400);
+  background: rgba(74, 130, 255, 0.12);
+  color: var(--ink-100);
+}
+
+.contact-panel-email .icon {
+  flex-shrink: 0;
+  color: var(--blue-400);
 }
 
 .form-status.is-error a {
