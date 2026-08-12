@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Modération des avis — Parcourio</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --bg: #0b1220;
+    --panel: #131c2e;
+    --border: #24304a;
+    --text: #e7ecf5;
+    --muted: #9aa7bd;
+    --accent: #4d7fff;
+    --danger: #e35d5d;
+    --success: #3fbf7f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+  }
+  .conteneur { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  p.sous-titre { color: var(--muted); margin-top: 0; margin-bottom: 24px; font-size: 14px; }
+
+  .panneau {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  /* --- Connexion --- */
+  #ecranConnexion label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  #ecranConnexion input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #0d1524;
+    color: var(--text);
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  #ecranConnexion button, .bouton {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  #ecranConnexion button:disabled { opacity: 0.6; cursor: not-allowed; }
+  .erreur { color: var(--danger); font-size: 13px; margin-top: 10px; min-height: 18px; }
+
+  /* --- Liste des avis --- */
+  #enTeteAdmin { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  #enTeteAdmin span { color: var(--muted); font-size: 13px; }
+  .bouton-lien { background: none; border: none; color: var(--muted); text-decoration: underline; cursor: pointer; font-size: 13px; padding: 0; }
+
+  .carte-avis {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    background: #0d1524;
+  }
+  .carte-avis .ligne-haut { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .carte-avis .ecole { font-weight: 600; font-size: 14px; }
+  .carte-avis .note { color: #f5c451; font-size: 13px; white-space: nowrap; }
+  .carte-avis .meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .carte-avis .commentaire { margin: 10px 0; font-size: 14px; line-height: 1.5; }
+  .carte-avis .badge-signalement {
+    display: inline-block;
+    background: rgba(227, 93, 93, 0.15);
+    color: var(--danger);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 11px;
+    margin-left: 8px;
+  }
+  .carte-avis .actions { display: flex; gap: 8px; margin-top: 10px; }
+  .btn-approuver { background: var(--success); }
+  .btn-rejeter { background: var(--danger); }
+  .carte-avis .actions button {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .carte-avis .actions button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  #vide, #chargement { color: var(--muted); text-align: center; padding: 30px 0; font-size: 14px; }
+  #erreurGlobale { color: var(--danger); font-size: 14px; margin-bottom: 14px; display: none; }
+</style>
+</head>
+<body>
+<div class="conteneur">
+  <h1>Modération des avis</h1>
+  <p class="sous-titre">Réservé aux administrateurs Parcourio — connecte-toi avec ton compte habituel.</p>
+
+  <div id="ecranConnexion" class="panneau">
+    <label for="champEmail">E-mail</label>
+    <input type="email" id="champEmail" autocomplete="email">
+    <label for="champMdp">Mot de passe</label>
+    <input type="password" id="champMdp" autocomplete="current-password">
+    <button id="boutonConnexion">Se connecter</button>
+    <div class="erreur" id="erreurConnexion"></div>
+  </div>
+
+  <div id="ecranAdmin" class="panneau" style="display:none;">
+    <div id="enTeteAdmin">
+      <span id="texteCompte"></span>
+      <button class="bouton-lien" id="boutonDeconnexion">Se déconnecter</button>
+    </div>
+    <div id="erreurGlobale"></div>
+    <div id="chargement">Chargement des avis en attente…</div>
+    <div id="vide" style="display:none;">Aucun avis en attente 🎉</div>
+    <div id="listeAvis"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Mêmes identifiants que le reste du site (voir assets/js/auth.js)
+  const SUPABASE_URL = "https://ggzhczswvyseqkbrosow.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_32syTUkJs0S_Xx4UvFcjLQ_hYhZAjQV";
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const elEcranConnexion = document.getElementById("ecranConnexion");
+  const elEcranAdmin = document.getElementById("ecranAdmin");
+  const elChampEmail = document.getElementById("champEmail");
+  const elChampMdp = document.getElementById("champMdp");
+  const elBoutonConnexion = document.getElementById("boutonConnexion");
+  const elErreurConnexion = document.getElementById("erreurConnexion");
+  const elTexteCompte = document.getElementById("texteCompte");
+  const elBoutonDeconnexion = document.getElementById("boutonDeconnexion");
+  const elChargement = document.getElementById("chargement");
+  const elVide = document.getElementById("vide");
+  const elListeAvis = document.getElementById("listeAvis");
+  const elErreurGlobale = document.getElementById("erreurGlobale");
+
+  let ecolesParId = {}; // rempli via ecoles.json, pour afficher un nom d'école lisible
+
+  function formaterDate(iso) {
+    try {
+      return new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
+    } catch (e) { return iso; }
+  }
+
+  function nomEcole(ecoleId) {
+    return (ecolesParId[ecoleId] && ecolesParId[ecoleId].nom) || ecoleId;
+  }
+
+  async function chargerEcoles() {
+    try {
+      const reponse = await fetch("assets/data/ecoles.json");
+      const donnees = await reponse.json();
+      donnees.forEach((e) => { if (e.id) ecolesParId[e.id] = e; });
+    } catch (e) {
+      console.error("Impossible de charger ecoles.json (les noms d'écoles resteront sous forme d'identifiant) :", e);
+    }
+  }
+
+  async function appelerFonction(action, extra) {
+    const { data: sessionData } = await client.auth.getSession();
+    const jwt = sessionData.session ? sessionData.session.access_token : null;
+    if (!jwt) throw new Error("Session expirée, reconnecte-toi.");
+
+    const reponse = await fetch(SUPABASE_URL + "/functions/v1/moderer-avis", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+      body: JSON.stringify(Object.assign({ action: action }, extra || {})),
+    });
+
+    const donnees = await reponse.json().catch(() => ({}));
+    if (!reponse.ok) throw new Error(donnees.error || "Erreur inconnue (" + reponse.status + ").");
+    return donnees;
+  }
+
+  function creerCarteAvis(avis) {
+    const carte = document.createElement("div");
+    carte.className = "carte-avis";
+
+    const auteurTexte = avis.auteur
+      ? [avis.auteur.prenom, avis.auteur.nom].filter(Boolean).join(" ") || avis.auteur.email
+      : "Personne inconnue";
+
+    carte.innerHTML =
+      '<div class="ligne-haut">' +
+        '<span class="ecole">' + escapeHtml(nomEcole(avis.ecoleId)) + '</span>' +
+        '<span class="note">' + "★".repeat(avis.note) + "☆".repeat(5 - avis.note) + '</span>' +
+      '</div>' +
+      '<div class="meta">' +
+        escapeHtml(auteurTexte) + " · " + formaterDate(avis.creeLe) +
+        (avis.signalements > 0 ? '<span class="badge-signalement">' + avis.signalements + " signalement" + (avis.signalements > 1 ? "s" : "") + '</span>' : "") +
+      '</div>' +
+      '<div class="commentaire">' + escapeHtml(avis.commentaire || "(pas de commentaire)") + '</div>' +
+      '<div class="actions">' +
+        '<button class="btn-approuver" data-action="approuver">Approuver</button>' +
+        '<button class="btn-rejeter" data-action="rejeter">Rejeter</button>' +
+      '</div>';
+
+    carte.querySelectorAll("button[data-action]").forEach((bouton) => {
+      bouton.addEventListener("click", async () => {
+        carte.querySelectorAll("button").forEach((b) => (b.disabled = true));
+        try {
+          await appelerFonction(bouton.dataset.action, { avisId: avis.id });
+          carte.remove();
+          if (!elListeAvis.children.length) elVide.style.display = "block";
+        } catch (e) {
+          elErreurGlobale.textContent = e.message;
+          elErreurGlobale.style.display = "block";
+          carte.querySelectorAll("button").forEach((b) => (b.disabled = false));
+        }
+      });
+    });
+
+    return carte;
+  }
+
+  function escapeHtml(texte) {
+    const div = document.createElement("div");
+    div.textContent = texte == null ? "" : String(texte);
+    return div.innerHTML;
+  }
+
+  async function chargerAvis() {
+    elChargement.style.display = "block";
+    elVide.style.display = "none";
+    elErreurGlobale.style.display = "none";
+    elListeAvis.innerHTML = "";
+
+    try {
+      await chargerEcoles();
+      const donnees = await appelerFonction("lister");
+      elChargement.style.display = "none";
+      if (!donnees.avis || !donnees.avis.length) {
+        elVide.style.display = "block";
+        return;
+      }
+      // Les avis signalés remontent en premier pour prioriser la relecture.
+      donnees.avis.sort((a, b) => b.signalements - a.signalements);
+      donnees.avis.forEach((avis) => elListeAvis.appendChild(creerCarteAvis(avis)));
+    } catch (e) {
+      elChargement.style.display = "none";
+      elErreurGlobale.textContent = e.message;
+      elErreurGlobale.style.display = "block";
+    }
+  }
+
+  async function afficherEcranAdmin(session) {
+    elEcranConnexion.style.display = "none";
+    elEcranAdmin.style.display = "block";
+    elTexteCompte.textContent = "Connecté(e) en tant que " + session.user.email;
+    await chargerAvis();
+  }
+
+  elBoutonConnexion.addEventListener("click", async () => {
+    elErreurConnexion.textContent = "";
+    elBoutonConnexion.disabled = true;
+    try {
+      const { data, error } = await client.auth.signInWithPassword({
+        email: elChampEmail.value.trim(),
+        password: elChampMdp.value,
+      });
+      if (error) throw error;
+      await afficherEcranAdmin(data.session);
+    } catch (e) {
+      elErreurConnexion.textContent = "Connexion impossible : " + (e.message || "vérifie tes identifiants.");
+    } finally {
+      elBoutonConnexion.disabled = false;
+    }
+  });
+
+  elChampMdp.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") elBoutonConnexion.click();
+  });
+
+  elBoutonDeconnexion.addEventListener("click", async () => {
+    await client.auth.signOut();
+    elEcranAdmin.style.display = "none";
+    elEcranConnexion.style.display = "block";
+    elChampMdp.value = "";
+  });
+
+  // Si déjà connecté (session persistée), passe directement à l'écran admin.
+  // Si le compte n'est pas admin, la fonction moderer-avis renverra une
+  // erreur 403 au premier appel — affichée dans elErreurGlobale.
+  client.auth.getSession().then(({ data }) => {
+    if (data.session) afficherEcranAdmin(data.session);
+  });
+})();
+</script>
+</body>
+</html>
