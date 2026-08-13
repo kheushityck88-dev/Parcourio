@@ -534,13 +534,19 @@ a.logo-lockup {
     padding: 4px 9px;
   }
 
-  /* Sur mobile, le badge "P" (hero-compass) se déplace en bas à droite
-     (voir règle .hero-compass plus bas dans le fichier) : on écarte les
-     pins qui tombent dans cette zone plutôt que de compter uniquement
-     sur le z-index. */
-  .hero-pin.p5 { top: 40%; left: 8%; }
-  .hero-pin.p6 { top: 54%; right: 10%; }
-  .hero-pin.p7.more { top: 66%; right: 8%; bottom: auto; }
+  /* Sur mobile, on réespace tous les badges (pas seulement ceux qui
+     tombaient sur le badge "P" en bas à droite) : à cette taille, les
+     badges sont assez grands par rapport à la photo pour se chevaucher
+     entre eux si on garde les positions du bureau. On alterne gauche/
+     droite avec un écart vertical généreux entre badges d'un même
+     côté. */
+  .hero-pin.p1 { top: 4%; left: 6%; }
+  .hero-pin.p2 { top: 16%; right: 6%; }
+  .hero-pin.p3 { top: 30%; left: 6%; }
+  .hero-pin.p4 { top: 44%; right: 6%; }
+  .hero-pin.p5 { top: 58%; left: 6%; }
+  .hero-pin.p6 { top: 72%; right: 6%; }
+  .hero-pin.p7.more { top: auto; bottom: 3%; left: 22%; right: auto; }
 }
 
 @media (max-width: 560px) {
