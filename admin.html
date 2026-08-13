@@ -184,7 +184,8 @@
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + jwt,
+        Authorization: "Bearer " + SUPABASE_ANON_KEY,
+        "x-parcourio-user-token": jwt,
       },
       body: JSON.stringify(Object.assign({ action: action }, extra || {})),
     });
