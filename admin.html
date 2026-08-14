@@ -180,18 +180,14 @@
     const jwt = sessionData.session ? sessionData.session.access_token : null;
     if (!jwt) throw new Error("Session expirée, reconnecte-toi.");
 
-    // Le jeton voyage dans l'URL, pas dans un en-tête : ça évite que le
-    // navigateur envoie une requête de préflight (OPTIONS) avant la vraie
-    // requête. Supabase a un bug connu où cette requête de préflight se
-    // prend un 404 quand la vérification JWT est active sur la fonction —
-    // en évitant complètement le préflight, on esquive ce bug.
-    const reponse = await fetch(
-      SUPABASE_URL + "/functions/v1/moderer-avis?token=" + encodeURIComponent(jwt),
-      {
-        method: "POST",
-        body: JSON.stringify(Object.assign({ action: action }, extra || {})),
-      }
-    );
+    const reponse = await fetch(SUPABASE_URL + "/functions/v1/moderer-avis", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+      body: JSON.stringify(Object.assign({ action: action }, extra || {})),
+    });
 
     const donnees = await reponse.json().catch(() => ({}));
     if (!reponse.ok) throw new Error(donnees.error || "Erreur inconnue (" + reponse.status + ").");
