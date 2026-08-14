@@ -540,13 +540,20 @@ a.logo-lockup {
      entre eux si on garde les positions du bureau. On alterne gauche/
      droite avec un écart vertical généreux entre badges d'un même
      côté. */
-  .hero-pin.p1 { top: 4%; left: 6%; }
-  .hero-pin.p2 { top: 16%; right: 6%; }
-  .hero-pin.p5 { top: 17%; left: 6%; }
-  .hero-pin.p3 { top: 30%; left: 6%; }
-  .hero-pin.p4 { top: 44%; right: 6%; }
-  .hero-pin.p6 { top: 72%; right: 6%; }
-  .hero-pin.p7.more { top: auto; bottom: 3%; left: 22%; right: auto; }
+  .hero-pin.p2 { top: 4%; right: 6%; }   /* Thiès */
+  .hero-pin.p6 { top: 28%; right: 6%; }  /* Mbour */
+  .hero-pin.p1 { top: 52%; right: 6%; left: auto; }  /* Dakar */
+  .hero-pin.p4 { top: 76%; right: 6%; }  /* Kaolack, au-dessus du P */
+  .hero-pin.p3 { top: 15%; left: 6%; }   /* Saint-Louis */
+  .hero-pin.p5 { top: 32%; left: 6%; }   /* Ziguinchor */
+  .hero-pin.p7.more {
+    top: auto;
+    bottom: 3%;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    animation: none; /* la flottaison utilise "transform", ce qui écraserait le centrage */
+  }
 }
 
 @media (max-width: 560px) {
