@@ -19,25 +19,54 @@
 --
 -- Ce que CETTE table enregistre (pas suivi ailleurs) :
 --   - test_commence      : la personne a lancé un test (avant résultat)
+--   - test_termine       : la personne a terminé un test, connectée ou
+--                           non (resultats_tests n'enregistre QUE les
+--                           personnes connectées — voir auth.js)
 --   - consultation_ecole : ouverture de la fiche détaillée d'une école
 --   - clic_ecole         : clic vers le site officiel d'une école
 --   - consultation_formation : vue d'une page métier (ex. metiers/*.html)
 --   - consultation_ville     : vue d'une page ville (ex. ecoles/*.html)
+--   - visite_page        : vue de la page d'accueil (mesure de trafic
+--                           générale, sans action précise)
 -- =====================================================================
 
 create table if not exists evenements (
   id              uuid primary key default gen_random_uuid(),
   type            text not null check (type in (
                     'test_commence',
+                    'test_termine',
                     'consultation_ecole',
                     'clic_ecole',
                     'consultation_formation',
-                    'consultation_ville'
+                    'consultation_ville',
+                    'visite_page'
                   )),
   utilisateur_id  uuid references utilisateurs(id) on delete set null, -- null = visiteur non connecté
   donnees         jsonb default '{}'::jsonb,   -- ex: {"ecoleId":"...", "nom":"...", "ville":"..."}
   created_at      timestamptz default now()
 );
+
+-- Si la table existait déjà avec l'ancienne liste de types (avant l'ajout
+-- de test_termine et visite_page), on élargit la contrainte sans tout
+-- recréer — ce bloc est sans effet si la table vient d'être créée
+-- ci-dessus avec la liste déjà à jour.
+do $$
+begin
+  if exists (
+    select 1 from information_schema.tables where table_name = 'evenements'
+  ) then
+    alter table evenements drop constraint if exists evenements_type_check;
+    alter table evenements add constraint evenements_type_check check (type in (
+      'test_commence',
+      'test_termine',
+      'consultation_ecole',
+      'clic_ecole',
+      'consultation_formation',
+      'consultation_ville',
+      'visite_page'
+    ));
+  end if;
+end $$;
 
 create index if not exists idx_evenements_type on evenements (type);
 create index if not exists idx_evenements_created on evenements (created_at);
