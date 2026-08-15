@@ -1710,12 +1710,29 @@ a.logo-lockup {
 
 @media (max-width: 560px) {
   .quiz-scale {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "pole-gauche pole-droite"
+      "track track";
+    align-items: start;
+    column-gap: 10px;
+    row-gap: 12px;
+  }
+  .quiz-scale > .quiz-scale-pole:first-of-type {
+    grid-area: pole-gauche;
+    text-align: left;
+  }
+  .quiz-scale > .quiz-scale-pole:last-of-type {
+    grid-area: pole-droite;
+    text-align: right;
   }
   .quiz-scale-pole {
     max-width: none;
+  }
+  .quiz-scale-track {
+    grid-area: track;
+    padding: 0 2px;
   }
 }
 
