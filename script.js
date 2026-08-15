@@ -158,6 +158,9 @@ function construireEtLancerFormulaire() {
   }
   etatParcours.questions = questions;
   formDynamique.dataset.formId = formId;
+  if (window.ParcourioAnalytics) {
+    window.ParcourioAnalytics.track('test_commence', { parcours: formId });
+  }
   Moteur.rendreFormulaire(formDynamique, questions, { formId, boutonLabel, onRetour: revenirAuChoixParcours });
   formDynamique.hidden = false;
   const barreProgression = formDynamique.previousElementSibling;
@@ -780,6 +783,10 @@ function ouvrirModaleEcole(e) {
   const contenu = document.getElementById('ecoleModalContent');
   if (!modale || !contenu) return;
 
+  if (window.ParcourioAnalytics) {
+    window.ParcourioAnalytics.track('consultation_ecole', { ecoleId: e.id || null, nom: e.nom || null, ville: e.ville || null });
+  }
+
   const lignesInfo = [];
   if (e.adresse) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.adresse}</p>`);
   if (!e.adresse && e.ville) lignesInfo.push(`<p class="ecole-modal-line">${Icons.svg('map-pin', { class: 'icon-inline' })} ${e.ville}${e.region && e.region !== e.ville ? ` — région de ${e.region}` : ''}</p>`);
@@ -845,7 +852,7 @@ function ouvrirModaleEcole(e) {
       <button type="button" class="ecole-modal-favori${e.id && estFavori(e.id) ? ' is-favori' : ''}" id="ecoleModalFavoriBtn" data-id="${e.id || ''}" aria-pressed="${e.id && estFavori(e.id) ? 'true' : 'false'}">
         <span class="ecole-modal-favori-icon">${Icons.svg('star', { filled: e.id && estFavori(e.id) })}</span> ${e.id && estFavori(e.id) ? 'Dans mes favoris' : 'Ajouter aux favoris'}
       </button>
-      ${e.siteOfficiel ? `<a class="btn-primary" href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter le site officiel</a>` : '<span class="ecole-modal-nosite">Site officiel non référencé pour le moment</span>'}
+      ${e.siteOfficiel ? `<a class="btn-primary" id="ecoleModalSiteBtn" href="${e.siteOfficiel}" target="_blank" rel="noopener">Visiter le site officiel</a>` : '<span class="ecole-modal-nosite">Site officiel non référencé pour le moment</span>'}
     </div>
   `;
 
@@ -855,6 +862,13 @@ function ouvrirModaleEcole(e) {
       if (autre) ouvrirModaleEcole(autre);
     });
   });
+
+  const siteBtn = document.getElementById('ecoleModalSiteBtn');
+  if (siteBtn && window.ParcourioAnalytics) {
+    siteBtn.addEventListener('click', () => {
+      window.ParcourioAnalytics.track('clic_ecole', { ecoleId: e.id || null, nom: e.nom || null, url: e.siteOfficiel || null });
+    });
+  }
 
   const favoriBtn = document.getElementById('ecoleModalFavoriBtn');
   if (favoriBtn && e.id) {

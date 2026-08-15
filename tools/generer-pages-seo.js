@@ -62,7 +62,7 @@ const DOMAINE_LABELS = { technologie: 'Technologie', creatif: 'Créatif & design
 
 /* ---------- Gabarit HTML commun (header/footer identiques au site) ---------- */
 
-function gabarit({ titre, description, urlCanonique, contenu, breadcrumbJSON, breadcrumbHTML }) {
+function gabarit({ titre, description, urlCanonique, contenu, breadcrumbJSON, breadcrumbHTML, analyticsType, analyticsDonnees }) {
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -130,6 +130,8 @@ ${contenu}
   <p class="footer-links"><a href="../mentions-legales.html">Mentions légales & confidentialité</a></p>
 </footer>
 
+${analyticsType ? `<script src="../assets/js/analytics.js"></script>
+<script>if (window.ParcourioAnalytics) window.ParcourioAnalytics.track(${JSON.stringify(analyticsType)}, ${JSON.stringify(analyticsDonnees || {})});</script>` : ''}
 </body>
 </html>
 `;
@@ -191,7 +193,9 @@ ${blocsDomaines}
     breadcrumbJSON,
     breadcrumbHTML: `    <nav class="seo-breadcrumb" aria-label="Fil d'Ariane">
       <a href="../index.html">← Accueil</a><span class="separateur">/</span><a href="index.html">Écoles par ville</a><span class="separateur">/</span><span>${echapperHTML(ville)}</span>
-    </nav>`
+    </nav>`,
+    analyticsType: 'consultation_ville',
+    analyticsDonnees: { ville, nbEcoles: ecolesVille.length }
   });
 
   fs.writeFileSync(path.join(dossierEcoles, `${slug}.html`), html, 'utf8');
@@ -275,7 +279,9 @@ tousLesProfils.forEach((p) => {
     },
     breadcrumbHTML: `    <nav class="seo-breadcrumb" aria-label="Fil d'Ariane">
       <a href="../index.html">← Accueil</a><span class="separateur">/</span><a href="index.html">Métiers</a><span class="separateur">/</span><span>${echapperHTML(p.nom)}</span>
-    </nav>`
+    </nav>`,
+    analyticsType: 'consultation_formation',
+    analyticsDonnees: { profilId: p.id, nom: p.nom }
   });
 
   fs.writeFileSync(path.join(dossierMetiers, `${slug}.html`), html, 'utf8');

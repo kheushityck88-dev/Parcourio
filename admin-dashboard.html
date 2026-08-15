@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard — Parcourio</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --navy-950: #030b1e;
+    --navy-900: #001142;
+    --navy-800: #071b3f;
+    --navy-700: #0e254f;
+    --blue-500: #175eff;
+    --blue-400: #4a82ff;
+    --blue-200: #a9c3ff;
+    --line: rgba(255, 255, 255, 0.08);
+    --text: #e7ecf5;
+    --muted: #9aa7bd;
+    --success: #3fbf7f;
+    --warn: #f5c451;
+    --danger: #e35d5d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--navy-950);
+    color: var(--text);
+    padding: 24px;
+  }
+  .conteneur { max-width: 1180px; margin: 0 auto; }
+
+  .entete { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+  .entete h1 { font-size: 22px; margin: 0 0 4px; }
+  .entete p { color: var(--muted); margin: 0; font-size: 14px; }
+  .entete-droite { display: flex; align-items: center; gap: 14px; }
+  .entete-droite span { color: var(--muted); font-size: 13px; }
+  .lien-discret { color: var(--muted); text-decoration: underline; font-size: 13px; }
+
+  .panneau {
+    background: var(--navy-800);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  /* --- Connexion --- */
+  #ecranConnexion { max-width: 420px; }
+  #ecranConnexion label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; margin-top: 12px; }
+  #ecranConnexion input {
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--navy-900); color: var(--text); font-size: 14px;
+  }
+  .bouton {
+    background: var(--blue-500); color: white; border: none; border-radius: 8px;
+    padding: 10px 16px; font-size: 14px; cursor: pointer; font-weight: 600; margin-top: 16px;
+  }
+  .bouton:disabled { opacity: 0.6; cursor: not-allowed; }
+  .erreur { color: var(--danger); font-size: 13px; margin-top: 10px; min-height: 18px; }
+  #chargementGlobal, #videGlobal { color: var(--muted); text-align: center; padding: 60px 0; }
+
+  /* --- Grille de cartes --- */
+  .grille-cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 22px; }
+  .carte-stat { padding: 16px 18px; }
+  .carte-stat .label { color: var(--muted); font-size: 12.5px; margin-bottom: 6px; }
+  .carte-stat .valeur { font-size: 26px; font-weight: 700; line-height: 1.1; }
+  .carte-stat .sous-valeur { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+  .carte-stat .sous-valeur.positif { color: var(--success); }
+
+  section.bloc { margin-bottom: 24px; }
+  section.bloc h2 { font-size: 15px; margin: 0 0 12px; color: var(--blue-200); }
+
+  .grille-deux { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
+  @media (max-width: 860px) { .grille-deux { grid-template-columns: 1fr; } }
+
+  /* --- Graphique évolution (barres) --- */
+  #graphEvolution { width: 100%; height: 140px; }
+  #graphEvolution rect { fill: var(--blue-500); }
+  #graphEvolution text { fill: var(--muted); font-size: 9px; }
+
+  /* --- Listes top écoles/formations --- */
+  .liste-top { list-style: none; margin: 0; padding: 0; }
+  .liste-top li { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .liste-top li:last-child { border-bottom: none; }
+  .liste-top .rang { color: var(--muted); width: 18px; flex-shrink: 0; }
+  .liste-top .nom { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .liste-top .barre-fond { flex-basis: 90px; height: 6px; background: var(--navy-700); border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .liste-top .barre-remplie { height: 100%; background: var(--blue-400); }
+  .liste-top .nombre { color: var(--muted); width: 26px; text-align: right; flex-shrink: 0; }
+  .liste-vide { color: var(--muted); font-size: 13px; padding: 10px 0; }
+
+  /* --- Activité récente --- */
+  .activite-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; align-items: baseline; }
+  .activite-item:last-child { border-bottom: none; }
+  .activite-badge { flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; }
+  .activite-texte { flex: 1; }
+  .activite-heure { color: var(--muted); font-size: 11.5px; white-space: nowrap; }
+
+  /* --- Bloc premium --- */
+  .premium-ligne { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+  .premium-note { color: var(--muted); font-size: 12.5px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .pastille { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .pastille.actif { background: rgba(63,191,127,0.15); color: var(--success); }
+  .pastille.inactif { background: rgba(154,167,189,0.15); color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="conteneur">
+  <div class="entete">
+    <div>
+      <h1>Dashboard Parcourio</h1>
+      <p>Statistiques réelles, réservées aux administrateurs.</p>
+    </div>
+    <div class="entete-droite" id="zoneCompte" style="display:none;">
+      <span id="texteCompte"></span>
+      <a href="admin.html" class="lien-discret">Modération des avis →</a>
+      <a href="#" class="lien-discret" id="boutonDeconnexion">Se déconnecter</a>
+    </div>
+  </div>
+
+  <div id="ecranConnexion" class="panneau">
+    <label for="champEmail">E-mail</label>
+    <input type="email" id="champEmail" autocomplete="email">
+    <label for="champMdp">Mot de passe</label>
+    <input type="password" id="champMdp" autocomplete="current-password">
+    <button id="boutonConnexion" class="bouton">Se connecter</button>
+    <div class="erreur" id="erreurConnexion"></div>
+  </div>
+
+  <div id="ecranDashboard" style="display:none;">
+    <div id="chargementGlobal">Chargement des statistiques…</div>
+    <div id="erreurGlobale" class="erreur" style="display:none;"></div>
+    <div id="contenuDashboard" style="display:none;"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  const SUPABASE_URL = "https://ggzhczswvyseqkbrosow.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_32syTUkJs0S_Xx4UvFcjLQ_hYhZAjQV";
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const el = (id) => document.getElementById(id);
+  const elEcranConnexion = el("ecranConnexion");
+  const elEcranDashboard = el("ecranDashboard");
+  const elZoneCompte = el("zoneCompte");
+  const elTexteCompte = el("texteCompte");
+  const elErreurConnexion = el("erreurConnexion");
+  const elChargement = el("chargementGlobal");
+  const elErreurGlobale = el("erreurGlobale");
+  const elContenu = el("contenuDashboard");
+
+  function escapeHtml(texte) {
+    const div = document.createElement("div");
+    div.textContent = texte == null ? "" : String(texte);
+    return div.innerHTML;
+  }
+
+  function formaterDateHeure(iso) {
+    try {
+      return new Date(iso).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+    } catch (e) { return iso; }
+  }
+
+  async function appelerFonction(nom) {
+    const { data: sessionData } = await client.auth.getSession();
+    const jwt = sessionData.session ? sessionData.session.access_token : null;
+    if (!jwt) throw new Error("Session expirée, reconnecte-toi.");
+
+    const reponse = await fetch(SUPABASE_URL + "/functions/v1/" + nom, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + jwt },
+      body: JSON.stringify({}),
+    });
+    const donnees = await reponse.json().catch(() => ({}));
+    if (!reponse.ok) throw new Error(donnees.error || "Erreur inconnue (" + reponse.status + ").");
+    return donnees;
+  }
+
+  // --- Rendu : cartes principales ---
+  function carteStat(label, valeur, sousValeur, positif) {
+    return (
+      '<div class="panneau carte-stat">' +
+        '<div class="label">' + escapeHtml(label) + '</div>' +
+        '<div class="valeur">' + escapeHtml(valeur) + '</div>' +
+        (sousValeur ? '<div class="sous-valeur' + (positif ? ' positif' : '') + '">' + escapeHtml(sousValeur) + '</div>' : '') +
+      '</div>'
+    );
+  }
+
+  // --- Rendu : graphique en barres (évolution utilisateurs 30j) ---
+  function graphiqueEvolution(evolution) {
+    const largeur = 760, hauteur = 130, marge = 4;
+    const max = Math.max(1, ...evolution.map((j) => j.nouveaux));
+    const largeurBarre = (largeur / evolution.length) - 2;
+
+    let barres = "";
+    evolution.forEach((j, i) => {
+      const h = Math.round((j.nouveaux / max) * (hauteur - 20));
+      const x = i * (largeur / evolution.length);
+      const y = hauteur - h - 14;
+      barres += '<rect x="' + x + '" y="' + y + '" width="' + largeurBarre + '" height="' + Math.max(h, j.nouveaux > 0 ? 2 : 0) + '" rx="1.5">' +
+        '<title>' + j.jour + ' : ' + j.nouveaux + ' nouveau(x)</title></rect>';
+    });
+
+    // Une graduation de date tous les ~5 jours pour ne pas surcharger.
+    let labels = "";
+    evolution.forEach((j, i) => {
+      if (i % 5 !== 0) return;
+      const x = i * (largeur / evolution.length);
+      const jourLabel = j.jour.slice(8, 10) + "/" + j.jour.slice(5, 7);
+      labels += '<text x="' + x + '" y="' + (hauteur - 2) + '">' + jourLabel + '</text>';
+    });
+
+    return '<svg id="graphEvolution" viewBox="0 0 ' + largeur + ' ' + hauteur + '" preserveAspectRatio="none">' + barres + labels + '</svg>';
+  }
+
+  // --- Rendu : liste top écoles/formations avec mini barres ---
+  function listeTop(items, videTexte) {
+    if (!items || !items.length) return '<p class="liste-vide">' + escapeHtml(videTexte) + '</p>';
+    const max = Math.max(...items.map((i) => i.consultations));
+    return '<ul class="liste-top">' + items.map((item, i) =>
+      '<li>' +
+        '<span class="rang">' + (i + 1) + '</span>' +
+        '<span class="nom">' + escapeHtml(item.nom) + '</span>' +
+        '<span class="barre-fond"><span class="barre-remplie" style="width:' + Math.round((item.consultations / max) * 100) + '%"></span></span>' +
+        '<span class="nombre">' + item.consultations + '</span>' +
+      '</li>'
+    ).join('') + '</ul>';
+  }
+
+  // --- Rendu : activité récente ---
+  const COULEURS_TYPE = {
+    inscription: "#3fbf7f",
+    test_commence: "#4a82ff",
+    consultation_ecole: "#f5c451",
+    clic_ecole: "#f5c451",
+    consultation_formation: "#a9c3ff",
+    consultation_ville: "#a9c3ff",
+  };
+
+  function texteActivite(item) {
+    const d = item.donnees || {};
+    switch (item.type) {
+      case "inscription":
+        return "Nouvelle inscription : " + escapeHtml(d.prenom || d.email || "quelqu'un");
+      case "test_commence":
+        return "Test démarré (" + escapeHtml(d.parcours === "apprendre_metier" ? "apprendre un métier" : "après un diplôme") + ")";
+      case "consultation_ecole":
+        return "Fiche consultée : " + escapeHtml(d.nom || "une école");
+      case "clic_ecole":
+        return "Clic vers le site de : " + escapeHtml(d.nom || "une école");
+      case "consultation_formation":
+        return "Page métier vue : " + escapeHtml(d.nom || "");
+      case "consultation_ville":
+        return "Page ville vue : " + escapeHtml(d.ville || "");
+      default:
+        return escapeHtml(item.type);
+    }
+  }
+
+  function listeActivite(items) {
+    if (!items || !items.length) return '<p class="liste-vide">Aucune activité pour l\'instant.</p>';
+    return items.map((item) =>
+      '<div class="activite-item">' +
+        '<span class="activite-badge" style="background:' + (COULEURS_TYPE[item.type] || "#9aa7bd") + '"></span>' +
+        '<span class="activite-texte">' + texteActivite(item) + '</span>' +
+        '<span class="activite-heure">' + formaterDateHeure(item.creeLe) + '</span>' +
+      '</div>'
+    ).join('');
+  }
+
+  // --- Assemblage complet du dashboard ---
+  function construireDashboard(d) {
+    const u = d.utilisateurs, t = d.tests, c = d.contenus, p = d.premium;
+
+    let html = '<div class="grille-cartes">';
+    html += carteStat("Utilisateurs totaux", u.total, null);
+    html += carteStat("Nouveaux (7 derniers jours)", u.nouveaux7j, u.nouveaux7j > 0 ? "+" + u.nouveaux7j + " cette semaine" : null, u.nouveaux7j > 0);
+    html += carteStat("Nouveaux (30 derniers jours)", u.nouveaux30j, null);
+    html += carteStat("Tests commencés (7j)", t.commences7j, t.commencesTotal + " au total");
+    html += carteStat("Tests terminés (7j)", t.termines7j, t.terminesTotal + " au total");
+    html += carteStat(
+      "Taux de complétion",
+      t.tauxCompletion === null ? "—" : t.tauxCompletion + "%",
+      t.tauxCompletion === null ? "Pas encore assez de données" : "sur les tests commencés"
+    );
+    html += '</div>';
+
+    html += '<section class="bloc"><h2>Évolution des inscriptions (30 derniers jours)</h2><div class="panneau">' +
+      graphiqueEvolution(u.evolution30j) + '</div></section>';
+
+    html += '<div class="grille-deux">';
+    html += '<section class="bloc"><h2>Écoles les plus consultées (30 derniers jours)</h2><div class="panneau">' +
+      listeTop(c.topEcoles, "Aucune consultation d'école enregistrée pour l'instant.") + '</div></section>';
+    html += '<section class="bloc"><h2>Formations les plus consultées (30 derniers jours)</h2><div class="panneau">' +
+      listeTop(c.topFormations, "Aucune consultation de page métier enregistrée pour l'instant.") + '</div></section>';
+    html += '</div>';
+
+    html += '<div class="grille-deux">';
+    html += '<section class="bloc"><h2>Activité récente</h2><div class="panneau">' + listeActivite(d.activiteRecente) + '</div></section>';
+
+    html += '<section class="bloc"><h2>Premium / Revenus</h2><div class="panneau">' +
+      '<div class="premium-ligne"><span>Abonnements actifs</span><strong>' + p.abonnementsActifs + '</strong></div>' +
+      '<div class="premium-ligne"><span>Paiement Wave</span><span class="pastille ' + (p.paiementActif ? 'actif">Activé' : 'inactif">Pas encore activé') + '</span></div>' +
+      '<div class="premium-ligne"><span>Revenus</span><span class="pastille inactif">Aucune donnée</span></div>' +
+      '<p class="premium-note">Le montant des paiements n\'est pas encore suivi tant que l\'API Wave n\'est pas branchée — ce chiffre restera "Aucune donnée" plutôt qu\'un faux 0 FCFA jusque-là.</p>' +
+      '</div></section>';
+    html += '</div>';
+
+    html += '<p class="premium-note" style="margin-top:8px;">Clics vers le site officiel d\'une école (30j) : <strong>' + c.clicsEcole30j + '</strong></p>';
+
+    elContenu.innerHTML = html;
+  }
+
+  async function chargerDashboard() {
+    elChargement.style.display = "block";
+    elErreurGlobale.style.display = "none";
+    elContenu.style.display = "none";
+    try {
+      const donnees = await appelerFonction("admin-stats");
+      construireDashboard(donnees);
+      elChargement.style.display = "none";
+      elContenu.style.display = "block";
+    } catch (e) {
+      elChargement.style.display = "none";
+      elErreurGlobale.textContent = e.message;
+      elErreurGlobale.style.display = "block";
+    }
+  }
+
+  async function afficherDashboard(session) {
+    elEcranConnexion.style.display = "none";
+    elEcranDashboard.style.display = "block";
+    elZoneCompte.style.display = "flex";
+    elTexteCompte.textContent = "Connecté(e) en tant que " + session.user.email;
+    await chargerDashboard();
+  }
+
+  el("boutonConnexion").addEventListener("click", async () => {
+    elErreurConnexion.textContent = "";
+    el("boutonConnexion").disabled = true;
+    try {
+      const { data, error } = await client.auth.signInWithPassword({
+        email: el("champEmail").value.trim(),
+        password: el("champMdp").value,
+      });
+      if (error) throw error;
+      await afficherDashboard(data.session);
+    } catch (e) {
+      elErreurConnexion.textContent = "Connexion impossible : " + (e.message || "vérifie tes identifiants.");
+    } finally {
+      el("boutonConnexion").disabled = false;
+    }
+  });
+
+  el("champMdp").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") el("boutonConnexion").click();
+  });
+
+  el("boutonDeconnexion").addEventListener("click", async (e) => {
+    e.preventDefault();
+    await client.auth.signOut();
+    elEcranDashboard.style.display = "none";
+    elZoneCompte.style.display = "none";
+    elEcranConnexion.style.display = "block";
+    el("champMdp").value = "";
+  });
+
+  client.auth.getSession().then(({ data }) => {
+    if (data.session) afficherDashboard(data.session);
+  });
+})();
+</script>
+</body>
+</html>
