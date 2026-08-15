@@ -102,14 +102,16 @@ Deno.serve(async (req) => {
     if (errTCTotal) throw errTCTotal;
 
     const { count: testsTermines7j, error: errTT7 } = await admin
-      .from("resultats_tests")
+      .from("evenements")
       .select("*", { count: "exact", head: true })
+      .eq("type", "test_termine")
       .gte("created_at", joursEnArriere(7));
     if (errTT7) throw errTT7;
 
     const { count: testsTerminesTotal, error: errTTTotal } = await admin
-      .from("resultats_tests")
-      .select("*", { count: "exact", head: true });
+      .from("evenements")
+      .select("*", { count: "exact", head: true })
+      .eq("type", "test_termine");
     if (errTTTotal) throw errTTTotal;
 
     const tauxCompletion = testsCommencesTotal > 0
@@ -163,10 +165,25 @@ Deno.serve(async (req) => {
       .gte("created_at", joursEnArriere(30));
     if (errClics) throw errClics;
 
+    // --- 4bis. Visites de la page d'accueil (7j / total) ---
+    const { count: visites7j, error: errVis7 } = await admin
+      .from("evenements")
+      .select("*", { count: "exact", head: true })
+      .eq("type", "visite_page")
+      .gte("created_at", joursEnArriere(7));
+    if (errVis7) throw errVis7;
+
+    const { count: visitesTotal, error: errVisTotal } = await admin
+      .from("evenements")
+      .select("*", { count: "exact", head: true })
+      .eq("type", "visite_page");
+    if (errVisTotal) throw errVisTotal;
+
     // --- 5. Activité récente (20 derniers événements + inscriptions) ---
     const { data: evenementsRecents, error: errRecents } = await admin
       .from("evenements")
       .select("type, donnees, created_at")
+      .neq("type", "visite_page")
       .order("created_at", { ascending: false })
       .limit(15);
     if (errRecents) throw errRecents;
@@ -221,6 +238,10 @@ Deno.serve(async (req) => {
           termines7j: testsTermines7j || 0,
           terminesTotal: testsTerminesTotal || 0,
           tauxCompletion, // peut être null si aucune donnée
+        },
+        visites: {
+          visites7j: visites7j || 0,
+          visitesTotal: visitesTotal || 0,
         },
         contenus: {
           topEcoles,

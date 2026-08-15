@@ -310,6 +310,10 @@ async function afficherResultatsApresDiplome(ecoles) {
   const diplomeLabel = (DIPLOMES.find(d => d.value === etatParcours.diplome) || {}).label || '';
   const enteteExtra = diplomeLabel ? `<p><strong>Diplôme actuel :</strong> ${diplomeLabel}</p>` : '';
 
+  if (window.ParcourioAnalytics) {
+    window.ParcourioAnalytics.track('test_termine', { parcours: 'apres_diplome', profilId: profilPrincipal.id, titre: profilPrincipal.nom });
+  }
+
   if (window.ParcourioAuth) {
     window.ParcourioAuth.enregistrerResultat({
       parcours: 'apres_diplome',
@@ -381,6 +385,10 @@ async function afficherResultatsMetier(ecoles) {
   const limiteTotale = accesAvance ? 20 : (ABONNEMENT_ACTIF ? 12 : 4);
   const limiteVisible = accesAvance ? 20 : 4;
   const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcolesMetier(ecoles, metierPrincipal, contexte, limiteTotale);
+
+  if (window.ParcourioAnalytics) {
+    window.ParcourioAnalytics.track('test_termine', { parcours: 'apprendre_metier', profilId: metierPrincipal.id, titre: metierPrincipal.nom });
+  }
 
   if (window.ParcourioAuth) {
     window.ParcourioAuth.enregistrerResultat({

@@ -276,9 +276,10 @@
 
   // --- Assemblage complet du dashboard ---
   function construireDashboard(d) {
-    const u = d.utilisateurs, t = d.tests, c = d.contenus, p = d.premium;
+    const u = d.utilisateurs, t = d.tests, c = d.contenus, p = d.premium, v = d.visites;
 
     let html = '<div class="grille-cartes">';
+    html += carteStat("Visites (7 derniers jours)", v.visites7j, v.visitesTotal + " au total");
     html += carteStat("Utilisateurs totaux", u.total, null);
     html += carteStat("Nouveaux (7 derniers jours)", u.nouveaux7j, u.nouveaux7j > 0 ? "+" + u.nouveaux7j + " cette semaine" : null, u.nouveaux7j > 0);
     html += carteStat("Nouveaux (30 derniers jours)", u.nouveaux30j, null);
