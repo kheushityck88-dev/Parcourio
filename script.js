@@ -64,7 +64,7 @@ navSections.forEach(section => navObserver.observe(section));
      construireQuestionnaireMetier(), qui recommande des métiers et des
      centres de formation professionnelle plutôt que des filières
      longues. */
-const { PROFILS, METIERS, PARCOURS, DIPLOMES, OBJECTIFS_PAR_DIPLOME, BANQUE_PROJET_APRES,
+const { PROFILS, METIERS, PARCOURS, DIPLOMES, OBJECTIFS_PAR_DIPLOME,
         construireQuestionnaireApresDiplome, construireQuestionnaireMetier } = window.OrientationData;
 const Moteur = window.OrientationEngine;
 
@@ -270,7 +270,10 @@ async function afficherResultatsApresDiplome(ecoles) {
 
   // Bonus "je veux rester/me spécialiser dans mon domaine actuel"
   const domaineActuel = reponses.domaine_filiere_actuelle;
-  const objectifInfo = etatParcours.objectif ? BANQUE_PROJET_APRES[etatParcours.objectif] : null;
+  const objectifsDuDiplome = OBJECTIFS_PAR_DIPLOME[etatParcours.diplome] || [];
+  const objectifInfo = etatParcours.objectif
+    ? (objectifsDuDiplome.find(o => o.value === etatParcours.objectif) || null)
+    : null;
   if (domaineActuel && domaineActuel !== 'autre_domaine' && objectifInfo && objectifInfo.biaisMemeDomaine) {
     Object.values(PROFILS).filter(p => p.macro === domaineActuel).forEach(p => {
       pourcentages[p.id] = Math.max(0, Math.min(100, pourcentages[p.id] + objectifInfo.biaisMemeDomaine * 4));
