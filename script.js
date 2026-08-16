@@ -642,6 +642,32 @@ function afficherCarteResultat(d) {
 
 formDynamique.addEventListener('submit', async function (e) {
   e.preventDefault();
+
+  /* Le navigateur peut bloquer l'envoi en silence si une question
+     obligatoire n'est pas remplie (les cases/radios sont stylées de
+     façon invisible pour l'accessibilité, donc le message natif du
+     navigateur ne s'affiche pas correctement) — d'où l'impression
+     que le bouton "Voir mon orientation" ne fait rien. On vérifie
+     donc nous-mêmes, avec un message clair et un défilement vers la
+     question concernée. */
+  if (!formDynamique.checkValidity()) {
+    const premierChampInvalide = formDynamique.querySelector(':invalid');
+    if (premierChampInvalide) {
+      const question = premierChampInvalide.closest('.quiz-q') || premierChampInvalide.closest('.form-field') || premierChampInvalide;
+      question.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      question.classList.add('quiz-question--manquante');
+      setTimeout(() => question.classList.remove('quiz-question--manquante'), 2600);
+    }
+    let messageErreur = formDynamique.querySelector('.quiz-erreur-validation');
+    if (!messageErreur) {
+      messageErreur = document.createElement('p');
+      messageErreur.className = 'quiz-erreur-validation';
+      formDynamique.appendChild(messageErreur);
+    }
+    messageErreur.textContent = "Il manque une réponse plus haut — la question concernée est surlignée.";
+    return;
+  }
+
   const submitBtn = formDynamique.querySelector('button[type="submit"]');
   const texteOriginal = submitBtn.textContent;
   submitBtn.disabled = true;

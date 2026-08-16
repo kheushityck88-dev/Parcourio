@@ -1451,6 +1451,32 @@ a.logo-lockup {
   background: var(--navy-950);
 }
 
+/* Question mise en évidence quand elle bloque l'envoi du formulaire
+   (voir le gestionnaire "submit" dans script.js). */
+.quiz-q--manquante,
+.quiz-question--manquante {
+  border-color: var(--gold-400, #fdd400);
+  box-shadow: 0 0 0 3px rgba(253, 212, 0, 0.18);
+  animation: quiz-secousse 0.4s ease;
+}
+
+@keyframes quiz-secousse {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.quiz-erreur-validation {
+  color: var(--gold-400, #fdd400);
+  background: rgba(253, 212, 0, 0.08);
+  border: 1px solid rgba(253, 212, 0, 0.25);
+  border-radius: var(--radius, 10px);
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  text-align: center;
+}
+
 .test-form,
 .test-avance-form {
   counter-reset: quiz-question;
