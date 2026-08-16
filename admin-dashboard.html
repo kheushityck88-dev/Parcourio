@@ -58,6 +58,30 @@
     display: flex; align-items: center; justify-content: center;
     font-family: var(--font-display); font-weight: 700; font-size: 16px; color: white;
     box-shadow: 0 8px 20px rgba(23,94,255,0.35);
+    position: relative;
+  }
+  .entete-logo::before, .entete-logo::after {
+    content: ""; position: absolute; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.10); pointer-events: none;
+  }
+  .entete-logo::before { inset: -8px; }
+  .entete-logo::after { inset: -16px; border-color: rgba(255,255,255,0.05); }
+
+  .pastille-direct {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; color: var(--teal-400); font-family: var(--font-mono);
+    padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(45,217,185,0.25);
+    background: rgba(45,217,185,0.06);
+  }
+  .pastille-direct .point {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--teal-400);
+    box-shadow: 0 0 0 rgba(45,217,185,0.5);
+    animation: pulser 2s ease-in-out infinite;
+  }
+  @keyframes pulser {
+    0% { box-shadow: 0 0 0 0 rgba(45,217,185,0.5); }
+    70% { box-shadow: 0 0 0 6px rgba(45,217,185,0); }
+    100% { box-shadow: 0 0 0 0 rgba(45,217,185,0); }
   }
   .entete h1 { font-family: var(--font-display); font-size: 21px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
   .entete p.sous-titre { color: var(--muted); margin: 2px 0 0; font-size: 13.5px; }
@@ -175,6 +199,7 @@
       </div>
     </div>
     <div class="entete-droite" id="zoneCompte" style="display:none;">
+      <span class="pastille-direct" id="pastilleDirect" style="cursor:pointer;" title="Cliquer pour actualiser"><span class="point"></span><span id="texteDirect">En direct</span></span>
       <span class="compte" id="texteCompte"></span>
       <a href="admin.html" class="lien-discret">Modération des avis</a>
       <a href="#" class="lien-discret" id="boutonDeconnexion">Se déconnecter</a>
@@ -397,6 +422,9 @@
       construireDashboard(donnees);
       elChargement.style.display = "none";
       elContenu.style.display = "block";
+      const heure = new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+      const elDirect = el("texteDirect");
+      if (elDirect) elDirect.textContent = "Actualisé à " + heure;
     } catch (e) {
       elChargement.style.display = "none";
       elErreurGlobale.textContent = e.message;
@@ -441,6 +469,14 @@
     elEcranConnexion.style.display = "block";
     el("champMdp").value = "";
   });
+
+  const elPastilleDirect = el("pastilleDirect");
+  if (elPastilleDirect) {
+    elPastilleDirect.addEventListener("click", () => {
+      el("texteDirect").textContent = "Actualisation…";
+      chargerDashboard();
+    });
+  }
 
   client.auth.getSession().then(({ data }) => {
     if (data.session) afficherDashboard(data.session);
