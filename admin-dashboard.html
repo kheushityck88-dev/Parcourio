@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Dashboard — Parcourio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
@@ -15,112 +18,172 @@
     --blue-500: #175eff;
     --blue-400: #4a82ff;
     --blue-200: #a9c3ff;
+    --gold-400: #fdd400;
+    --gold-300: #ffe266;
+    --teal-400: #2dd9b9;
+    --violet-400: #a78bfa;
     --line: rgba(255, 255, 255, 0.08);
-    --text: #e7ecf5;
-    --muted: #9aa7bd;
-    --success: #3fbf7f;
-    --warn: #f5c451;
-    --danger: #e35d5d;
+    --text: #eef1f8;
+    --muted: #8a97b3;
+    --success: #2dd9b9;
+    --danger: #ff6b6b;
+    --font-display: 'Space Grotesk', 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--navy-950);
+    font-family: var(--font-body);
+    background:
+      radial-gradient(circle at 12% 8%, rgba(23,94,255,0.16), transparent 42%),
+      radial-gradient(circle at 90% 0%, rgba(167,139,250,0.10), transparent 40%),
+      var(--navy-950);
+    background-attachment: fixed;
     color: var(--text);
-    padding: 24px;
+    padding: 32px 24px 60px;
+    -webkit-font-smoothing: antialiased;
   }
-  .conteneur { max-width: 1180px; margin: 0 auto; }
+  .conteneur { max-width: 1220px; margin: 0 auto; }
 
-  .entete { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
-  .entete h1 { font-size: 22px; margin: 0 0 4px; }
-  .entete p { color: var(--muted); margin: 0; font-size: 14px; }
-  .entete-droite { display: flex; align-items: center; gap: 14px; }
-  .entete-droite span { color: var(--muted); font-size: 13px; }
-  .lien-discret { color: var(--muted); text-decoration: underline; font-size: 13px; }
+  .entete {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 28px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--line);
+  }
+  .entete-titre { display: flex; align-items: center; gap: 12px; }
+  .entete-logo {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(155deg, var(--blue-500), var(--violet-400));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700; font-size: 16px; color: white;
+    box-shadow: 0 8px 20px rgba(23,94,255,0.35);
+  }
+  .entete h1 { font-family: var(--font-display); font-size: 21px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  .entete p.sous-titre { color: var(--muted); margin: 2px 0 0; font-size: 13.5px; }
+  .entete-droite { display: flex; align-items: center; gap: 16px; }
+  .entete-droite .compte { color: var(--muted); font-size: 13px; font-family: var(--font-mono); }
+  .lien-discret { color: var(--blue-200); text-decoration: none; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); transition: border-color .15s, color .15s; }
+  .lien-discret:hover { border-color: var(--blue-400); color: white; }
 
   .panneau {
-    background: var(--navy-800);
+    background: linear-gradient(155deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
     border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 18px 20px;
+    border-radius: 16px;
+    padding: 20px 22px;
+    backdrop-filter: blur(14px);
   }
 
-  /* --- Connexion --- */
-  #ecranConnexion { max-width: 420px; }
-  #ecranConnexion label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; margin-top: 12px; }
+  #ecranConnexion { max-width: 400px; margin: 60px auto 0; }
+  #ecranConnexion h2 { font-family: var(--font-display); font-size: 18px; margin: 0 0 4px; }
+  #ecranConnexion p.sous { color: var(--muted); font-size: 13.5px; margin: 0 0 18px; }
+  #ecranConnexion label { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 5px; margin-top: 14px; font-weight: 500; }
   #ecranConnexion input {
-    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line);
-    background: var(--navy-900); color: var(--text); font-size: 14px;
+    width: 100%; padding: 11px 13px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--navy-900); color: var(--text); font-size: 14px; font-family: var(--font-body);
+    transition: border-color .15s;
   }
+  #ecranConnexion input:focus { outline: none; border-color: var(--blue-400); }
   .bouton {
-    background: var(--blue-500); color: white; border: none; border-radius: 8px;
-    padding: 10px 16px; font-size: 14px; cursor: pointer; font-weight: 600; margin-top: 16px;
+    background: linear-gradient(135deg, var(--blue-500), #2f6dff);
+    color: white; border: none; border-radius: 10px;
+    padding: 11px 18px; font-size: 14px; cursor: pointer; font-weight: 600; margin-top: 18px;
+    width: 100%; font-family: var(--font-body);
+    box-shadow: 0 8px 22px rgba(23,94,255,0.3);
+    transition: transform .15s, box-shadow .15s;
   }
-  .bouton:disabled { opacity: 0.6; cursor: not-allowed; }
-  .erreur { color: var(--danger); font-size: 13px; margin-top: 10px; min-height: 18px; }
-  #chargementGlobal, #videGlobal { color: var(--muted); text-align: center; padding: 60px 0; }
+  .bouton:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(23,94,255,0.4); }
+  .bouton:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+  .erreur { color: var(--danger); font-size: 13px; margin-top: 12px; min-height: 18px; }
+  #chargementGlobal { color: var(--muted); text-align: center; padding: 80px 0; font-size: 14px; }
+  #chargementGlobal::before {
+    content: ""; display: block; width: 28px; height: 28px; margin: 0 auto 14px;
+    border: 2.5px solid var(--line); border-top-color: var(--blue-400); border-radius: 50%;
+    animation: tourner 0.8s linear infinite;
+  }
+  @keyframes tourner { to { transform: rotate(360deg); } }
 
-  /* --- Grille de cartes --- */
-  .grille-cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 22px; }
-  .carte-stat { padding: 16px 18px; }
-  .carte-stat .label { color: var(--muted); font-size: 12.5px; margin-bottom: 6px; }
-  .carte-stat .valeur { font-size: 26px; font-weight: 700; line-height: 1.1; }
-  .carte-stat .sous-valeur { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
-  .carte-stat .sous-valeur.positif { color: var(--success); }
+  .grille-cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 14px; margin-bottom: 26px; }
+  .carte-stat {
+    padding: 18px 20px; position: relative; overflow: hidden;
+    transition: transform .15s, border-color .15s;
+  }
+  .carte-stat:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.16); }
+  .carte-stat::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2.5px;
+    background: var(--accent, var(--blue-400));
+  }
+  .carte-stat .label { color: var(--muted); font-size: 12px; margin-bottom: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; }
+  .carte-stat .valeur { font-family: var(--font-display); font-size: 28px; font-weight: 700; line-height: 1.1; }
+  .carte-stat .sous-valeur { color: var(--muted); font-size: 12px; margin-top: 6px; font-family: var(--font-mono); }
+  .carte-stat .sous-valeur.positif { color: var(--teal-400); }
 
-  section.bloc { margin-bottom: 24px; }
-  section.bloc h2 { font-size: 15px; margin: 0 0 12px; color: var(--blue-200); }
+  section.bloc { margin-bottom: 26px; }
+  section.bloc h2 {
+    font-family: var(--font-display); font-size: 14.5px; font-weight: 600;
+    margin: 0 0 12px; color: var(--text); display: flex; align-items: center; gap: 8px;
+  }
+  section.bloc h2::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent, var(--blue-400)); }
 
   .grille-deux { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
   @media (max-width: 860px) { .grille-deux { grid-template-columns: 1fr; } }
 
-  /* --- Graphique évolution (barres) --- */
-  #graphEvolution { width: 100%; height: 140px; }
-  #graphEvolution rect { fill: var(--blue-500); }
-  #graphEvolution text { fill: var(--muted); font-size: 9px; }
+  #graphEvolution { width: 100%; height: 150px; }
+  #graphEvolution rect { fill: var(--blue-400); transition: fill .15s; }
+  #graphEvolution rect:hover { fill: var(--gold-400); }
+  #graphEvolution text { fill: var(--muted); font-size: 9px; font-family: var(--font-mono); }
 
-  /* --- Listes top écoles/formations --- */
   .liste-top { list-style: none; margin: 0; padding: 0; }
-  .liste-top li { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .liste-top li { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
   .liste-top li:last-child { border-bottom: none; }
-  .liste-top .rang { color: var(--muted); width: 18px; flex-shrink: 0; }
+  .liste-top .rang {
+    color: var(--navy-950); width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+    background: var(--accent, var(--blue-400)); display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; font-family: var(--font-mono);
+  }
   .liste-top .nom { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .liste-top .barre-fond { flex-basis: 90px; height: 6px; background: var(--navy-700); border-radius: 4px; overflow: hidden; flex-shrink: 0; }
-  .liste-top .barre-remplie { height: 100%; background: var(--blue-400); }
-  .liste-top .nombre { color: var(--muted); width: 26px; text-align: right; flex-shrink: 0; }
-  .liste-vide { color: var(--muted); font-size: 13px; padding: 10px 0; }
+  .liste-top .barre-fond { flex-basis: 84px; height: 5px; background: var(--navy-700); border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .liste-top .barre-remplie { height: 100%; border-radius: 4px; }
+  .liste-top .nombre { color: var(--muted); width: 24px; text-align: right; flex-shrink: 0; font-family: var(--font-mono); font-size: 12px; }
+  .liste-vide { color: var(--muted); font-size: 13px; padding: 16px 0; text-align: center; }
 
-  /* --- Activité récente --- */
-  .activite-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; align-items: baseline; }
+  .activite-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13px; align-items: baseline; }
   .activite-item:last-child { border-bottom: none; }
-  .activite-badge { flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; }
+  .activite-badge { flex-shrink: 0; width: 7px; height: 7px; border-radius: 50%; margin-top: 4px; }
   .activite-texte { flex: 1; }
-  .activite-heure { color: var(--muted); font-size: 11.5px; white-space: nowrap; }
+  .activite-heure { color: var(--muted); font-size: 11px; white-space: nowrap; font-family: var(--font-mono); }
 
-  /* --- Bloc premium --- */
-  .premium-ligne { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
-  .premium-note { color: var(--muted); font-size: 12.5px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
-  .pastille { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
-  .pastille.actif { background: rgba(63,191,127,0.15); color: var(--success); }
-  .pastille.inactif { background: rgba(154,167,189,0.15); color: var(--muted); }
+  .premium-ligne { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; font-size: 14px; border-bottom: 1px solid var(--line); }
+  .premium-ligne:last-of-type { border-bottom: none; }
+  .premium-ligne strong { font-family: var(--font-mono); font-weight: 600; }
+  .premium-note { color: var(--muted); font-size: 12px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); line-height: 1.5; }
+  .pastille { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .pastille.actif { background: rgba(45,217,185,0.15); color: var(--teal-400); }
+  .pastille.inactif { background: rgba(138,151,179,0.15); color: var(--muted); }
+
+  .pied-note { color: var(--muted); font-size: 12px; text-align: center; margin-top: 30px; font-family: var(--font-mono); }
 </style>
 </head>
 <body>
 <div class="conteneur">
   <div class="entete">
-    <div>
-      <h1>Dashboard Parcourio</h1>
-      <p>Statistiques réelles, réservées aux administrateurs.</p>
+    <div class="entete-titre">
+      <div class="entete-logo">P</div>
+      <div>
+        <h1>Dashboard Parcourio</h1>
+        <p class="sous-titre">Statistiques réelles, réservées aux administrateurs</p>
+      </div>
     </div>
     <div class="entete-droite" id="zoneCompte" style="display:none;">
-      <span id="texteCompte"></span>
-      <a href="admin.html" class="lien-discret">Modération des avis →</a>
+      <span class="compte" id="texteCompte"></span>
+      <a href="admin.html" class="lien-discret">Modération des avis</a>
       <a href="#" class="lien-discret" id="boutonDeconnexion">Se déconnecter</a>
     </div>
   </div>
 
   <div id="ecranConnexion" class="panneau">
+    <h2>Connexion administrateur</h2>
+    <p class="sous">Connecte-toi avec ton compte Parcourio habituel.</p>
     <label for="champEmail">E-mail</label>
     <input type="email" id="champEmail" autocomplete="email">
     <label for="champMdp">Mot de passe</label>
@@ -134,6 +197,8 @@
     <div id="erreurGlobale" class="erreur" style="display:none;"></div>
     <div id="contenuDashboard" style="display:none;"></div>
   </div>
+
+  <p class="pied-note" id="piedNote" style="display:none;"></p>
 </div>
 
 <script>
@@ -144,6 +209,8 @@
   const SUPABASE_ANON_KEY = "sb_publishable_32syTUkJs0S_Xx4UvFcjLQ_hYhZAjQV";
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+  const COULEUR_BLEU = "#4a82ff", COULEUR_OR = "#fdd400", COULEUR_TEAL = "#2dd9b9", COULEUR_VIOLET = "#a78bfa";
+
   const el = (id) => document.getElementById(id);
   const elEcranConnexion = el("ecranConnexion");
   const elEcranDashboard = el("ecranDashboard");
@@ -153,6 +220,7 @@
   const elChargement = el("chargementGlobal");
   const elErreurGlobale = el("erreurGlobale");
   const elContenu = el("contenuDashboard");
+  const elPiedNote = el("piedNote");
 
   function escapeHtml(texte) {
     const div = document.createElement("div");
@@ -181,10 +249,9 @@
     return donnees;
   }
 
-  // --- Rendu : cartes principales ---
-  function carteStat(label, valeur, sousValeur, positif) {
+  function carteStat(label, valeur, sousValeur, couleur, positif) {
     return (
-      '<div class="panneau carte-stat">' +
+      '<div class="panneau carte-stat" style="--accent:' + (couleur || COULEUR_BLEU) + '">' +
         '<div class="label">' + escapeHtml(label) + '</div>' +
         '<div class="valeur">' + escapeHtml(valeur) + '</div>' +
         (sousValeur ? '<div class="sous-valeur' + (positif ? ' positif' : '') + '">' + escapeHtml(sousValeur) + '</div>' : '') +
@@ -192,72 +259,74 @@
     );
   }
 
-  // --- Rendu : graphique en barres (évolution utilisateurs 30j) ---
   function graphiqueEvolution(evolution) {
-    const largeur = 760, hauteur = 130, marge = 4;
+    const largeur = 900, hauteur = 140;
     const max = Math.max(1, ...evolution.map((j) => j.nouveaux));
-    const largeurBarre = (largeur / evolution.length) - 2;
+    const largeurBarre = (largeur / evolution.length) - 3;
+
+    let defs = '<defs><linearGradient id="degradeBarre" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0%" stop-color="' + COULEUR_BLEU + '"/><stop offset="100%" stop-color="#175eff"/></linearGradient></defs>';
 
     let barres = "";
     evolution.forEach((j, i) => {
-      const h = Math.round((j.nouveaux / max) * (hauteur - 20));
+      const h = Math.round((j.nouveaux / max) * (hauteur - 26));
       const x = i * (largeur / evolution.length);
-      const y = hauteur - h - 14;
-      barres += '<rect x="' + x + '" y="' + y + '" width="' + largeurBarre + '" height="' + Math.max(h, j.nouveaux > 0 ? 2 : 0) + '" rx="1.5">' +
+      const y = hauteur - h - 20;
+      barres += '<rect x="' + x + '" y="' + y + '" width="' + largeurBarre + '" height="' + Math.max(h, j.nouveaux > 0 ? 3 : 0) + '" rx="2" fill="url(#degradeBarre)">' +
         '<title>' + j.jour + ' : ' + j.nouveaux + ' nouveau(x)</title></rect>';
     });
 
-    // Une graduation de date tous les ~5 jours pour ne pas surcharger.
     let labels = "";
     evolution.forEach((j, i) => {
       if (i % 5 !== 0) return;
       const x = i * (largeur / evolution.length);
       const jourLabel = j.jour.slice(8, 10) + "/" + j.jour.slice(5, 7);
-      labels += '<text x="' + x + '" y="' + (hauteur - 2) + '">' + jourLabel + '</text>';
+      labels += '<text x="' + x + '" y="' + (hauteur - 4) + '">' + jourLabel + '</text>';
     });
 
-    return '<svg id="graphEvolution" viewBox="0 0 ' + largeur + ' ' + hauteur + '" preserveAspectRatio="none">' + barres + labels + '</svg>';
+    return '<svg id="graphEvolution" viewBox="0 0 ' + largeur + ' ' + hauteur + '" preserveAspectRatio="none">' + defs + barres + labels + '</svg>';
   }
 
-  // --- Rendu : liste top écoles/formations avec mini barres ---
-  function listeTop(items, videTexte) {
+  function listeTop(items, videTexte, couleur) {
     if (!items || !items.length) return '<p class="liste-vide">' + escapeHtml(videTexte) + '</p>';
     const max = Math.max(...items.map((i) => i.consultations));
     return '<ul class="liste-top">' + items.map((item, i) =>
       '<li>' +
-        '<span class="rang">' + (i + 1) + '</span>' +
+        '<span class="rang" style="background:' + couleur + '">' + (i + 1) + '</span>' +
         '<span class="nom">' + escapeHtml(item.nom) + '</span>' +
-        '<span class="barre-fond"><span class="barre-remplie" style="width:' + Math.round((item.consultations / max) * 100) + '%"></span></span>' +
+        '<span class="barre-fond"><span class="barre-remplie" style="width:' + Math.round((item.consultations / max) * 100) + '%;background:' + couleur + '"></span></span>' +
         '<span class="nombre">' + item.consultations + '</span>' +
       '</li>'
     ).join('') + '</ul>';
   }
 
-  // --- Rendu : activité récente ---
   const COULEURS_TYPE = {
-    inscription: "#3fbf7f",
-    test_commence: "#4a82ff",
-    consultation_ecole: "#f5c451",
-    clic_ecole: "#f5c451",
-    consultation_formation: "#a9c3ff",
-    consultation_ville: "#a9c3ff",
+    inscription: COULEUR_TEAL,
+    test_commence: COULEUR_BLEU,
+    test_termine: COULEUR_TEAL,
+    consultation_ecole: COULEUR_OR,
+    clic_ecole: COULEUR_OR,
+    consultation_formation: COULEUR_VIOLET,
+    consultation_ville: COULEUR_VIOLET,
   };
 
   function texteActivite(item) {
     const d = item.donnees || {};
     switch (item.type) {
       case "inscription":
-        return "Nouvelle inscription : " + escapeHtml(d.prenom || d.email || "quelqu'un");
+        return "Nouvelle inscription : <strong>" + escapeHtml(d.prenom || d.email || "quelqu'un") + "</strong>";
       case "test_commence":
         return "Test démarré (" + escapeHtml(d.parcours === "apprendre_metier" ? "apprendre un métier" : "après un diplôme") + ")";
+      case "test_termine":
+        return "Test terminé : <strong>" + escapeHtml(d.titre || "") + "</strong>";
       case "consultation_ecole":
-        return "Fiche consultée : " + escapeHtml(d.nom || "une école");
+        return "Fiche consultée : <strong>" + escapeHtml(d.nom || "une école") + "</strong>";
       case "clic_ecole":
-        return "Clic vers le site de : " + escapeHtml(d.nom || "une école");
+        return "Clic vers le site de : <strong>" + escapeHtml(d.nom || "une école") + "</strong>";
       case "consultation_formation":
-        return "Page métier vue : " + escapeHtml(d.nom || "");
+        return "Page métier vue : <strong>" + escapeHtml(d.nom || "") + "</strong>";
       case "consultation_ville":
-        return "Page ville vue : " + escapeHtml(d.ville || "");
+        return "Page ville vue : <strong>" + escapeHtml(d.ville || "") + "</strong>";
       default:
         return escapeHtml(item.type);
     }
@@ -267,45 +336,45 @@
     if (!items || !items.length) return '<p class="liste-vide">Aucune activité pour l\'instant.</p>';
     return items.map((item) =>
       '<div class="activite-item">' +
-        '<span class="activite-badge" style="background:' + (COULEURS_TYPE[item.type] || "#9aa7bd") + '"></span>' +
+        '<span class="activite-badge" style="background:' + (COULEURS_TYPE[item.type] || "#8a97b3") + '"></span>' +
         '<span class="activite-texte">' + texteActivite(item) + '</span>' +
         '<span class="activite-heure">' + formaterDateHeure(item.creeLe) + '</span>' +
       '</div>'
     ).join('');
   }
 
-  // --- Assemblage complet du dashboard ---
   function construireDashboard(d) {
     const u = d.utilisateurs, t = d.tests, c = d.contenus, p = d.premium, v = d.visites;
 
     let html = '<div class="grille-cartes">';
-    html += carteStat("Visites (7 derniers jours)", v.visites7j, v.visitesTotal + " au total");
-    html += carteStat("Utilisateurs totaux", u.total, null);
-    html += carteStat("Nouveaux (7 derniers jours)", u.nouveaux7j, u.nouveaux7j > 0 ? "+" + u.nouveaux7j + " cette semaine" : null, u.nouveaux7j > 0);
-    html += carteStat("Nouveaux (30 derniers jours)", u.nouveaux30j, null);
-    html += carteStat("Tests commencés (7j)", t.commences7j, t.commencesTotal + " au total");
-    html += carteStat("Tests terminés (7j)", t.termines7j, t.terminesTotal + " au total");
+    html += carteStat("Visites (7j)", v.visites7j, v.visitesTotal + " au total", COULEUR_VIOLET);
+    html += carteStat("Utilisateurs totaux", u.total, null, COULEUR_BLEU);
+    html += carteStat("Nouveaux (7j)", u.nouveaux7j, u.nouveaux7j > 0 ? "+" + u.nouveaux7j + " cette semaine" : null, COULEUR_BLEU, u.nouveaux7j > 0);
+    html += carteStat("Nouveaux (30j)", u.nouveaux30j, null, COULEUR_BLEU);
+    html += carteStat("Tests commencés (7j)", t.commences7j, t.commencesTotal + " au total", COULEUR_TEAL);
+    html += carteStat("Tests terminés (7j)", t.termines7j, t.terminesTotal + " au total", COULEUR_TEAL);
     html += carteStat(
       "Taux de complétion",
       t.tauxCompletion === null ? "—" : t.tauxCompletion + "%",
-      t.tauxCompletion === null ? "Pas encore assez de données" : "sur les tests commencés"
+      t.tauxCompletion === null ? "Pas assez de données" : "sur les tests commencés",
+      COULEUR_TEAL
     );
     html += '</div>';
 
-    html += '<section class="bloc"><h2>Évolution des inscriptions (30 derniers jours)</h2><div class="panneau">' +
+    html += '<section class="bloc" style="--accent:' + COULEUR_BLEU + '"><h2>Évolution des inscriptions (30 derniers jours)</h2><div class="panneau">' +
       graphiqueEvolution(u.evolution30j) + '</div></section>';
 
     html += '<div class="grille-deux">';
-    html += '<section class="bloc"><h2>Écoles les plus consultées (30 derniers jours)</h2><div class="panneau">' +
-      listeTop(c.topEcoles, "Aucune consultation d'école enregistrée pour l'instant.") + '</div></section>';
-    html += '<section class="bloc"><h2>Formations les plus consultées (30 derniers jours)</h2><div class="panneau">' +
-      listeTop(c.topFormations, "Aucune consultation de page métier enregistrée pour l'instant.") + '</div></section>';
+    html += '<section class="bloc" style="--accent:' + COULEUR_OR + '"><h2>Écoles les plus consultées (30j)</h2><div class="panneau">' +
+      listeTop(c.topEcoles, "Aucune consultation d'école enregistrée pour l'instant.", COULEUR_OR) + '</div></section>';
+    html += '<section class="bloc" style="--accent:' + COULEUR_VIOLET + '"><h2>Formations les plus consultées (30j)</h2><div class="panneau">' +
+      listeTop(c.topFormations, "Aucune consultation de page métier enregistrée pour l'instant.", COULEUR_VIOLET) + '</div></section>';
     html += '</div>';
 
     html += '<div class="grille-deux">';
-    html += '<section class="bloc"><h2>Activité récente</h2><div class="panneau">' + listeActivite(d.activiteRecente) + '</div></section>';
+    html += '<section class="bloc" style="--accent:' + COULEUR_TEAL + '"><h2>Activité récente</h2><div class="panneau">' + listeActivite(d.activiteRecente) + '</div></section>';
 
-    html += '<section class="bloc"><h2>Premium / Revenus</h2><div class="panneau">' +
+    html += '<section class="bloc" style="--accent:' + COULEUR_VIOLET + '"><h2>Premium / Revenus</h2><div class="panneau">' +
       '<div class="premium-ligne"><span>Abonnements actifs</span><strong>' + p.abonnementsActifs + '</strong></div>' +
       '<div class="premium-ligne"><span>Paiement Wave</span><span class="pastille ' + (p.paiementActif ? 'actif">Activé' : 'inactif">Pas encore activé') + '</span></div>' +
       '<div class="premium-ligne"><span>Revenus</span><span class="pastille inactif">Aucune donnée</span></div>' +
@@ -313,15 +382,16 @@
       '</div></section>';
     html += '</div>';
 
-    html += '<p class="premium-note" style="margin-top:8px;">Clics vers le site officiel d\'une école (30j) : <strong>' + c.clicsEcole30j + '</strong></p>';
-
     elContenu.innerHTML = html;
+    elPiedNote.textContent = "Clics vers le site officiel d'une école (30j) : " + c.clicsEcole30j;
+    elPiedNote.style.display = "block";
   }
 
   async function chargerDashboard() {
     elChargement.style.display = "block";
     elErreurGlobale.style.display = "none";
     elContenu.style.display = "none";
+    elPiedNote.style.display = "none";
     try {
       const donnees = await appelerFonction("admin-stats");
       construireDashboard(donnees);
@@ -338,7 +408,7 @@
     elEcranConnexion.style.display = "none";
     elEcranDashboard.style.display = "block";
     elZoneCompte.style.display = "flex";
-    elTexteCompte.textContent = "Connecté(e) en tant que " + session.user.email;
+    elTexteCompte.textContent = session.user.email;
     await chargerDashboard();
   }
 
