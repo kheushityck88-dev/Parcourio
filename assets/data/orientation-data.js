@@ -424,6 +424,31 @@
     ]
   };
 
+  /* Complète OBJECTIFS_PAR_DIPLOME (qui gère l'affichage des chips,
+     avec un libellé différent par diplôme) avec les effets communs de
+     chaque objectif sur le calcul du score, indexés cette fois par
+     valeur d'objectif (partagée entre plusieurs diplômes) plutôt que
+     par diplôme. Utilisé par afficherResultatsApresDiplome() dans
+     script.js pour :
+     - composer la phrase "Objectif choisi : ..." dans le conseil ;
+     - appliquer un bonus/malus (biaisMemeDomaine) aux profils du même
+       macro-domaine que la filière actuelle du diplômé (question
+       "domaine_filiere_actuelle", posée uniquement pour BTS/DUT/
+       Licence/Master/Doctorat/Autre — jamais pour un simple BAC).
+     biaisMemeDomaine : positif si l'objectif va dans le sens de rester
+     dans son domaine actuel, négatif si l'objectif est justement de le
+     quitter, 0 si la question ne s'applique pas (cas du BAC, qui n'a
+     pas encore de domaine). */
+  const BANQUE_PROJET_APRES = {
+    poursuivre:          { label: "Choisir ma première orientation après le BAC", biaisMemeDomaine: 0 },
+    competences:         { label: "Découvrir quelles filières me correspondent", biaisMemeDomaine: 1 },
+    niveau_superieur:    { label: "Poursuivre vers un niveau d'études supérieur", biaisMemeDomaine: 1 },
+    specialisation:      { label: "Me spécialiser dans mon domaine actuel", biaisMemeDomaine: 2 },
+    changer_filiere:     { label: "Changer de filière ou me réorienter", biaisMemeDomaine: -2 },
+    insertion:           { label: "Entrer directement sur le marché du travail", biaisMemeDomaine: 1 },
+    carriere_academique: { label: "Poursuivre une carrière académique ou la recherche", biaisMemeDomaine: 2 }
+  };
+
   /* Le "niveau d'études visé" proposé après le test change selon le
      diplôme déjà en poche : on ne propose pas "Master" à quelqu'un qui
      vient d'obtenir un Master, ni "BTS" à un titulaire de Doctorat. */
@@ -867,6 +892,7 @@
     PARCOURS,
     DIPLOMES,
     OBJECTIFS_PAR_DIPLOME,
+    BANQUE_PROJET_APRES,
     VILLES_SENEGAL,
     REGIONS_SENEGAL,
     construireQuestionnaireApresDiplome,
