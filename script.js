@@ -676,10 +676,32 @@ formDynamique.addEventListener('submit', async function (e) {
   submitBtn.disabled = false;
   submitBtn.textContent = texteOriginal;
 
-  if (etatParcours.parcours === 'apres_diplome') {
-    await afficherResultatsApresDiplome(ecoles);
-  } else {
-    await afficherResultatsMetier(ecoles);
+  /* Filet de sécurité : si le calcul du résultat plante pour une
+     raison quelconque (donnée manquante, faute de frappe dans le
+     code, etc.), l'utilisateur ne doit jamais se retrouver devant un
+     bouton qui "ne fait rien" sans explication. On affiche un message
+     clair, on n'efface pas ses réponses (il peut réessayer sans tout
+     ressaisir), et on logge le détail dans la console pour le
+     diagnostiquer facilement (F12 → Console). */
+  try {
+    if (etatParcours.parcours === 'apres_diplome') {
+      await afficherResultatsApresDiplome(ecoles);
+    } else {
+      await afficherResultatsMetier(ecoles);
+    }
+  } catch (err) {
+    console.error('Erreur lors du calcul du résultat d\'orientation :', err);
+    if (window.ParcourioAnalytics) {
+      window.ParcourioAnalytics.track('test_erreur', { message: String(err && err.message || err) });
+    }
+    let messageErreur = formDynamique.querySelector('.quiz-erreur-validation');
+    if (!messageErreur) {
+      messageErreur = document.createElement('p');
+      messageErreur.className = 'quiz-erreur-validation';
+      formDynamique.appendChild(messageErreur);
+    }
+    messageErreur.textContent = "Une erreur inattendue est survenue en calculant ton résultat. Réessaie — si ça persiste, actualise la page. (Détail technique dans la console du navigateur.)";
+    messageErreur.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 });
 
