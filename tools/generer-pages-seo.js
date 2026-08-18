@@ -102,7 +102,7 @@ function gabarit({ titre, description, urlCanonique, contenu, breadcrumbJSON, br
   <a class="logo-lockup" href="../index.html" aria-label="Retour à l'accueil Parcourio">
     <span class="logo-badge"><img src="../assets/img/logo-icon.png" alt="Parcourio" class="logo-mark" width="242" height="295" /></span>
     <span class="logo-text">
-      <span class="logo-name">PARCOURIO<span class="beta-badge">Bêta</span></span>
+      <span class="logo-name">PARCOURIO</span>
       <span class="logo-slogan">Trouvez la bonne école, construisez votre avenir</span>
     </span>
   </a>

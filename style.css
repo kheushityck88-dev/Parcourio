@@ -157,21 +157,6 @@ a.logo-lockup {
   color: var(--blue-400);
 }
 
-.beta-badge {
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 8px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--gold-400);
-  color: var(--navy-950);
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 .logo-slogan {
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -201,12 +186,6 @@ a.logo-lockup {
 
   .logo-name {
     font-size: 1rem;
-  }
-
-  .beta-badge {
-    margin-left: 6px;
-    padding: 1px 6px;
-    font-size: 0.55rem;
   }
 
   .logo-lockup {
