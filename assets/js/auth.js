@@ -67,7 +67,9 @@
       elProfilNom, elProfilTelephone, elProfilRegion, elProfilErreur,
       elProfilSubmit, elProfilPlusTard,
       elAbonnementModal, elAbonnementBackdrop, elAbonnementClose,
-      elAbonnementErreur, elAbonnementEssaiBtn, elAbonnementPayerBtn;
+      elAbonnementErreur, elAbonnementNote, elAbonnementChargement,
+      elAbonnementEtatOffre, elAbonnementEtatAttente, elAbonnementEtatActif,
+      elPaiementForm, elPaiementNumero, elPaiementReference, elPaiementSubmitBtn;
 
   let modeActuel = "connexion"; // ou "inscription"
   let contexteMessage = "";
@@ -125,13 +127,19 @@
     elAbonnementBackdrop = elAbonnementModal.querySelector(".ecole-modal-backdrop");
     elAbonnementClose = document.getElementById("abonnementModalClose");
     elAbonnementErreur = document.getElementById("abonnementModalErreur");
-    elAbonnementEssaiBtn = document.getElementById("abonnementEssaiBtn");
-    elAbonnementPayerBtn = document.getElementById("abonnementPayerBtn");
+    elAbonnementNote = document.getElementById("abonnementModalNote");
+    elAbonnementChargement = document.getElementById("abonnementChargement");
+    elAbonnementEtatOffre = document.getElementById("abonnementEtatOffre");
+    elAbonnementEtatAttente = document.getElementById("abonnementEtatAttente");
+    elAbonnementEtatActif = document.getElementById("abonnementEtatActif");
+    elPaiementForm = document.getElementById("paiementForm");
+    elPaiementNumero = document.getElementById("paiementNumero");
+    elPaiementReference = document.getElementById("paiementReference");
+    elPaiementSubmitBtn = document.getElementById("paiementSubmitBtn");
 
     elAbonnementBackdrop.addEventListener("click", fermerModaleAbonnement);
     elAbonnementClose.addEventListener("click", fermerModaleAbonnement);
-    elAbonnementEssaiBtn.addEventListener("click", surClicEssaiGratuit);
-    elAbonnementPayerBtn.addEventListener("click", surClicPayer);
+    elPaiementForm.addEventListener("submit", surSoumissionPaiement);
 
     elFermer.addEventListener("click", fermerModale);
     elBackdrop.addEventListener("click", fermerModale);
@@ -312,11 +320,83 @@
       ouvrirModaleProfil();
     }
   }
+  // Numéro Wave marchand de Parcourio, où les utilisateurs envoient
+  // leurs 500 FCFA avant de déclarer leur paiement ci-dessous. Le
+  // remplacer ici suffit à le mettre à jour partout (une seule source).
+  const NUMERO_WAVE_PARCOURIO = "78 256 89 99";
+
+  function afficherEtatAbonnement(etat, note) {
+    elAbonnementChargement.hidden = true;
+    elAbonnementEtatOffre.hidden = etat !== "offre";
+    elAbonnementEtatAttente.hidden = etat !== "attente";
+    elAbonnementEtatActif.hidden = etat !== "actif";
+    if (note) {
+      elAbonnementNote.textContent = note;
+      elAbonnementNote.hidden = false;
+    } else {
+      elAbonnementNote.hidden = true;
+    }
+  }
+
+  /* Regarde la déclaration de paiement la plus récente de la personne
+     connectée et en déduit l'état à afficher dans la modale :
+       - "offre"   : peut déclarer un paiement (aucune déclaration, ou
+                     la précédente a été rejetée / déjà utilisée) ;
+       - "attente" : une déclaration est en cours de vérification ;
+       - "actif"   : un paiement validé et pas encore utilisé — le
+                     test avancé est débloqué dès maintenant. */
+  async function rafraichirEtatAbonnement() {
+    elAbonnementErreur.hidden = true;
+    elAbonnementChargement.hidden = false;
+    elAbonnementEtatOffre.hidden = true;
+    elAbonnementEtatAttente.hidden = true;
+    elAbonnementEtatActif.hidden = true;
+    elAbonnementNote.hidden = true;
+
+    if (!sessionCourante || !sessionCourante.user) {
+      afficherEtatAbonnement("offre");
+      return;
+    }
+
+    try {
+      const { data, error } = await client
+        .from("test_avance_achats")
+        .select("statut, tentative_utilisee")
+        .eq("utilisateur_id", sessionCourante.user.id)
+        .order("created_at", { ascending: false })
+        .limit(1);
+      if (error) throw error;
+
+      const derniere = data && data[0];
+      if (!derniere) {
+        afficherEtatAbonnement("offre");
+      } else if (derniere.statut === "en_attente") {
+        afficherEtatAbonnement("attente");
+      } else if (derniere.statut === "valide" && !derniere.tentative_utilisee) {
+        afficherEtatAbonnement("actif");
+      } else if (derniere.statut === "valide" && derniere.tentative_utilisee) {
+        afficherEtatAbonnement("offre", "Tu as déjà utilisé ta tentative précédente — tu peux en acheter une nouvelle ci-dessous.");
+      } else if (derniere.statut === "rejete") {
+        afficherEtatAbonnement("offre", "Ton paiement précédent n'a pas pu être vérifié. Vérifie le numéro Wave et réessaie, ou contacte-nous si le souci persiste.");
+      } else {
+        afficherEtatAbonnement("offre");
+      }
+    } catch (e) {
+      console.error("Vérification du paiement du test avancé :", e);
+      elAbonnementChargement.hidden = true;
+      elAbonnementErreur.textContent = "Impossible de vérifier ton accès pour l'instant. Réessaie dans un instant.";
+      elAbonnementErreur.hidden = false;
+    }
+  }
+
   function ouvrirModaleAbonnement() {
     elAbonnementErreur.hidden = true;
+    document.getElementById("abonnementNumeroWave").textContent = NUMERO_WAVE_PARCOURIO;
+    elPaiementForm.reset();
     elAbonnementModal.classList.add("is-open");
     elAbonnementModal.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
+    rafraichirEtatAbonnement();
   }
 
   function fermerModaleAbonnement() {
@@ -325,38 +405,42 @@
     document.body.classList.remove("modal-open");
   }
 
-  async function surClicEssaiGratuit() {
+  /* Enregistre la déclaration de paiement de la personne connectée
+     (statut "en_attente" par défaut côté base de données — voir
+     schema-test-avance.sql). Un admin la valide ensuite manuellement
+     depuis admin-paiements.html après vérification dans le Business
+     Portal Wave. */
+  async function surSoumissionPaiement(e) {
+    e.preventDefault();
+    if (!sessionCourante || !sessionCourante.user) return;
+
     elAbonnementErreur.hidden = true;
-    elAbonnementEssaiBtn.disabled = true;
+    elPaiementSubmitBtn.disabled = true;
+    const texteOriginal = elPaiementSubmitBtn.textContent;
+    elPaiementSubmitBtn.textContent = "Envoi…";
+
     try {
-      const { data, error } = await client.functions.invoke("activer-essai");
-      if (error || (data && data.error)) {
-        throw new Error((data && data.error) || "Erreur lors de l'activation de l'essai.");
+      const { error } = await client.from("test_avance_achats").insert({
+        utilisateur_id: sessionCourante.user.id,
+        numero_wave_utilisateur: elPaiementNumero.value.trim(),
+        reference_wave: elPaiementReference.value.trim() || null,
+      });
+      if (error) {
+        // Contrainte "un seul paiement en_attente à la fois" — la personne
+        // a déjà une déclaration en cours, on lui montre simplement cet état.
+        if (String(error.message || "").toLowerCase().includes("duplicate") || error.code === "23505") {
+          await rafraichirEtatAbonnement();
+          return;
+        }
+        throw error;
       }
-      fermerModaleAbonnement();
-      afficherToast("Essai gratuit activé pour 7 jours ✓");
-      setTimeout(() => location.reload(), 1200);
+      await rafraichirEtatAbonnement();
     } catch (err) {
-      elAbonnementErreur.textContent = err.message || "Une erreur est survenue.";
+      elAbonnementErreur.textContent = err.message || "Une erreur est survenue. Réessaie dans un instant.";
       elAbonnementErreur.hidden = false;
     } finally {
-      elAbonnementEssaiBtn.disabled = false;
-    }
-  }
-
-  async function surClicPayer() {
-    elAbonnementErreur.hidden = true;
-    elAbonnementPayerBtn.disabled = true;
-    try {
-      const { data, error } = await client.functions.invoke("creer-paiement-wave");
-      if (error || !data || !data.wave_launch_url) {
-        throw new Error((data && data.error) || "Erreur lors de la création du paiement.");
-      }
-      window.location.href = data.wave_launch_url;
-    } catch (err) {
-      elAbonnementErreur.textContent = err.message || "Une erreur est survenue.";
-      elAbonnementErreur.hidden = false;
-      elAbonnementPayerBtn.disabled = false;
+      elPaiementSubmitBtn.disabled = false;
+      elPaiementSubmitBtn.textContent = texteOriginal;
     }
   }
 
@@ -438,19 +522,24 @@
     abonnesChangement.push(cb);
   }
 
+  /* Vrai si la personne connectée a un paiement de test avancé validé
+     et pas encore utilisé pour une tentative (voir schema-test-avance.sql
+     — le passage à "utilisé" est géré par un trigger côté base de
+     données dès qu'un résultat de type "avance" est enregistré, donc
+     cette vérification reste fiable même après coup). */
   async function verifierAccesAvance() {
     if (!sessionCourante || !sessionCourante.user) return false;
     try {
       const { data, error } = await client
-        .from("abonnements")
-        .select("statut, date_fin")
+        .from("test_avance_achats")
+        .select("statut, tentative_utilisee")
         .eq("utilisateur_id", sessionCourante.user.id)
-        .eq("statut", "actif");
+        .eq("statut", "valide")
+        .eq("tentative_utilisee", false);
       if (error || !data) return false;
-      const maintenant = new Date();
-      return data.some((a) => !a.date_fin || new Date(a.date_fin) > maintenant);
+      return data.length > 0;
     } catch (e) {
-      console.error("Vérification abonnement :", e);
+      console.error("Vérification accès test avancé :", e);
       return false;
     }
   }
