@@ -202,6 +202,8 @@
       <span class="pastille-direct" id="pastilleDirect" style="cursor:pointer;" title="Cliquer pour actualiser"><span class="point"></span><span id="texteDirect">En direct</span></span>
       <span class="compte" id="texteCompte"></span>
       <a href="admin.html" class="lien-discret">Modération des avis</a>
+      <a href="admin-paiements.html" class="lien-discret">Paiements test avancé</a>
+      <a href="index.html" class="lien-discret">Retour au site</a>
       <a href="#" class="lien-discret" id="boutonDeconnexion">Se déconnecter</a>
     </div>
   </div>
@@ -399,11 +401,13 @@
     html += '<div class="grille-deux">';
     html += '<section class="bloc" style="--accent:' + COULEUR_TEAL + '"><h2>Activité récente</h2><div class="panneau">' + listeActivite(d.activiteRecente) + '</div></section>';
 
-    html += '<section class="bloc" style="--accent:' + COULEUR_VIOLET + '"><h2>Premium / Revenus</h2><div class="panneau">' +
-      '<div class="premium-ligne"><span>Abonnements actifs</span><strong>' + p.abonnementsActifs + '</strong></div>' +
-      '<div class="premium-ligne"><span>Paiement Wave</span><span class="pastille ' + (p.paiementActif ? 'actif">Activé' : 'inactif">Pas encore activé') + '</span></div>' +
-      '<div class="premium-ligne"><span>Revenus</span><span class="pastille inactif">Aucune donnée</span></div>' +
-      '<p class="premium-note">Le montant des paiements n\'est pas encore suivi tant que l\'API Wave n\'est pas branchée — ce chiffre restera "Aucune donnée" plutôt qu\'un faux 0 FCFA jusque-là.</p>' +
+    html += '<section class="bloc" style="--accent:' + COULEUR_VIOLET + '"><h2>Test avancé (500 FCFA / tentative)</h2><div class="panneau">' +
+      '<div class="premium-ligne"><span>En attente de vérification</span><strong>' + p.testAvanceEnAttente + '</strong></div>' +
+      '<div class="premium-ligne"><span>Vendus (30j)</span><strong>' + p.testAvanceVendus30j + '</strong></div>' +
+      '<div class="premium-ligne"><span>Vendus au total</span><strong>' + p.testAvanceVendusTotal + '</strong></div>' +
+      '<div class="premium-ligne"><span>Revenu total</span><strong>' + p.revenuTotalFcfa.toLocaleString('fr-FR') + ' FCFA</strong></div>' +
+      '<div class="premium-ligne"><span>Vérification</span><span class="pastille ' + (p.verificationWaveApiActive ? 'actif">Automatique (API Wave)' : 'inactif">Manuelle') + '</span></div>' +
+      (p.testAvanceEnAttente > 0 ? '<p class="premium-note">' + p.testAvanceEnAttente + ' paiement' + (p.testAvanceEnAttente > 1 ? 's' : '') + ' à vérifier → <a href="admin-paiements.html" style="color:inherit;">admin-paiements.html</a></p>' : '') +
       '</div></section>';
     html += '</div>';
 

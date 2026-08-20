@@ -210,19 +210,27 @@ Deno.serve(async (req) => {
       .sort((a, b) => new Date(b.creeLe).getTime() - new Date(a.creeLe).getTime())
       .slice(0, 20);
 
-    // --- 6. Revenus / Premium : uniquement ce qui est réellement suivi ---
-    // Il n'y a pas de montant enregistré par abonnement (voir
-    // schema-comptes.sql) -- seule l'existence d'un abonnement actif
-    // l'est. On ne calcule donc AUCUN chiffre de revenu tant que le
-    // paiement Wave n'est pas branché : mieux vaut "aucune donnée" qu'un
-    // faux 0 FCFA qui laisserait croire que c'est mesuré.
-    const { count: abonnementsActifs, error: errAbos } = await admin
-      .from("abonnements")
+    // --- 6. Revenus / Test avancé : paiement unique à 500 FCFA, vérifié
+    // manuellement pour l'instant (voir schema-test-avance.sql et la
+    // fonction valider-paiement-avance). Le montant étant fixe et connu,
+    // on peut calculer un vrai total (contrairement à l'ancien modèle
+    // d'abonnement où seul le statut actif/inactif était suivi).
+    const { count: paiementsEnAttente, error: errPaiementsAttente } = await admin
+      .from("test_avance_achats")
       .select("*", { count: "exact", head: true })
-      .eq("statut", "actif");
-    if (errAbos) throw errAbos;
+      .eq("statut", "en_attente");
+    if (errPaiementsAttente) throw errPaiementsAttente;
 
-    const paiementWaveActif = !!Deno.env.get("WAVE_API_KEY");
+    const { data: paiementsValides, error: errPaiementsValides } = await admin
+      .from("test_avance_achats")
+      .select("montant_fcfa, valide_le")
+      .eq("statut", "valide");
+    if (errPaiementsValides) throw errPaiementsValides;
+
+    const revenuTotalFcfa = (paiementsValides || []).reduce((somme, p) => somme + (p.montant_fcfa || 0), 0);
+    const ventes30j = (paiementsValides || []).filter((p) => p.valide_le && p.valide_le >= joursEnArriere(30)).length;
+
+    const paiementWaveApiActif = !!Deno.env.get("WAVE_API_KEY");
 
     return new Response(
       JSON.stringify({
@@ -250,9 +258,11 @@ Deno.serve(async (req) => {
         },
         activiteRecente: activite,
         premium: {
-          abonnementsActifs: abonnementsActifs || 0,
-          paiementActif: paiementWaveActif,
-          // revenuTotal volontairement absent : non mesuré actuellement.
+          testAvanceEnAttente: paiementsEnAttente || 0,
+          testAvanceVendusTotal: (paiementsValides || []).length,
+          testAvanceVendus30j: ventes30j,
+          revenuTotalFcfa,
+          verificationWaveApiActive: paiementWaveApiActif, // false = vérification manuelle en place
         },
       }),
       { status: 200, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } }

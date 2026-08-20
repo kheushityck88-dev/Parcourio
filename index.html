@@ -414,18 +414,34 @@
   <div class="ecole-modal-backdrop"></div>
   <div class="ecole-modal-panel auth-modal-panel" role="dialog" aria-modal="true" aria-label="Débloquer le test avancé">
     <button type="button" class="ecole-modal-close" id="abonnementModalClose" aria-label="Fermer"><svg class="icon icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
-    <h3>Débloquer le test avancé</h3>
-    <p class="auth-modal-soustitre">Plus d'établissements recommandés, et bientôt une précision affinée sur ton profil.</p>
+    <h3>Test avancé</h3>
+    <p class="auth-modal-soustitre">Plus d'établissements recommandés, et une précision affinée sur ton profil.</p>
     <p class="auth-modal-erreur" id="abonnementModalErreur" hidden></p>
-    <div class="abonnement-options">
-      <button type="button" class="abonnement-option" id="abonnementEssaiBtn">
-        <span class="abonnement-option-titre">Essai gratuit</span>
-        <span class="abonnement-option-detail">7 jours, sans engagement</span>
-      </button>
-      <button type="button" class="abonnement-option abonnement-option-principale" id="abonnementPayerBtn">
-        <span class="abonnement-option-titre">S'abonner</span>
-        <span class="abonnement-option-detail">1 990 FCFA / mois, via Wave</span>
-      </button>
+    <p class="auth-modal-note" id="abonnementModalNote" hidden></p>
+
+    <div id="abonnementChargement" class="paiement-chargement">Vérification de ton accès…</div>
+
+    <div id="abonnementEtatOffre" hidden>
+      <div class="paiement-montant">500 FCFA <span>· 1 tentative</span></div>
+      <ol class="paiement-etapes">
+        <li>Envoie <strong>500 FCFA</strong> via Wave au <strong id="abonnementNumeroWave">78 256 89 99</strong> (Parcourio).</li>
+        <li>Indique ci-dessous ton numéro Wave, puis clique sur « J'ai payé ».</li>
+      </ol>
+      <form class="auth-form" id="paiementForm">
+        <label class="auth-form-label" for="paiementNumero">Ton numéro Wave</label>
+        <input class="auth-form-input" id="paiementNumero" type="tel" inputmode="tel" placeholder="77 123 45 67" required>
+        <label class="auth-form-label" for="paiementReference">Référence de la transaction (optionnel)</label>
+        <input class="auth-form-input" id="paiementReference" type="text" placeholder="Trouvable dans ton appli Wave">
+        <button type="submit" class="btn-primary auth-form-submit" id="paiementSubmitBtn">J'ai payé — vérifier ma transaction</button>
+      </form>
+    </div>
+
+    <div id="abonnementEtatAttente" hidden>
+      <div class="paiement-statut paiement-statut-attente"><span class="paiement-statut-point"></span>Paiement en cours de vérification. On valide généralement sous quelques heures — reviens un peu plus tard.</div>
+    </div>
+
+    <div id="abonnementEtatActif" hidden>
+      <div class="paiement-statut paiement-statut-actif"><span class="paiement-statut-point"></span>Test avancé débloqué ✓ Il te reste 1 tentative — ferme cette fenêtre et lance le test, il passera automatiquement en mode avancé.</div>
     </div>
   </div>
 </div>

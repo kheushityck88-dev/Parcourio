@@ -121,20 +121,22 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Vérification de l'abonnement CÔTÉ SERVEUR — on ne fait jamais
+    // Vérification de l'accès avancé CÔTÉ SERVEUR — on ne fait jamais
     // confiance à un éventuel indicateur envoyé par le navigateur, sinon
-    // n'importe qui pourrait se déclarer "abonné" en modifiant la requête.
+    // n'importe qui pourrait se déclarer "avancé" en modifiant la requête.
+    // Même table et même condition que verifierAccesAvance() dans auth.js
+    // (source de vérité unique pour l'accès avancé sur tout le site).
     let accesAvance = false;
     try {
-      const { data: abonnements } = await admin
-        .from("abonnements")
-        .select("statut, date_fin")
+      const { data: achats } = await admin
+        .from("test_avance_achats")
+        .select("statut, tentative_utilisee")
         .eq("utilisateur_id", userData.user.id)
-        .eq("statut", "actif");
-      const maintenant = new Date();
-      accesAvance = !!(abonnements || []).some((a) => !a.date_fin || new Date(a.date_fin) > maintenant);
+        .eq("statut", "valide")
+        .eq("tentative_utilisee", false);
+      accesAvance = !!(achats || []).length;
     } catch (e) {
-      console.error("Vérification abonnement (assistant-ia) :", e);
+      console.error("Vérification accès avancé (assistant-ia) :", e);
     }
 
     const body = await req.json();

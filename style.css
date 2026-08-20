@@ -3159,46 +3159,96 @@ select.auth-form-input option {
   color: var(--ink-300);
 }
 
-/* ---------- Modale abonnement ---------- */
-.abonnement-options {
+/* ---------- Modale test avancé (paiement Wave semi-manuel) ---------- */
+.auth-modal-note {
+  background: rgba(74, 130, 255, 0.1);
+  border: 1px solid rgba(74, 130, 255, 0.3);
+  color: var(--ink-200, var(--ink-100));
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin: 0 0 6px;
+  line-height: 1.5;
+}
+
+.paiement-chargement {
+  color: var(--ink-500);
+  font-size: 0.88rem;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.paiement-montant {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--gold-400);
+  margin-top: 10px;
+}
+
+.paiement-montant span {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--ink-500);
+  margin-left: 6px;
+}
+
+.paiement-etapes {
+  margin: 14px 0 4px;
+  padding-left: 20px;
+  color: var(--ink-300);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.paiement-etapes li + li {
+  margin-top: 6px;
+}
+
+.paiement-etapes strong {
+  color: var(--ink-100);
+}
+
+.paiement-statut {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
   margin-top: 12px;
 }
 
-.abonnement-option {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  text-align: left;
-  padding: 14px 16px;
-  border-radius: 12px;
-  border: 1.5px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--ink-100);
-  cursor: pointer;
-  transition: 0.2s;
+.paiement-statut-point {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
 }
 
-.abonnement-option:hover {
-  border-color: var(--blue-400);
-  background: rgba(255, 255, 255, 0.06);
+.paiement-statut-attente {
+  background: rgba(253, 212, 0, 0.08);
+  border: 1.5px solid rgba(253, 212, 0, 0.3);
+  color: var(--ink-200, var(--ink-100));
 }
 
-.abonnement-option-principale {
-  border-color: var(--blue-500);
-  background: rgba(74, 130, 255, 0.1);
+.paiement-statut-attente .paiement-statut-point {
+  background: var(--gold-400);
+  box-shadow: 0 0 8px var(--gold-400);
 }
 
-.abonnement-option-titre {
-  font-weight: 600;
-  font-size: 0.95rem;
+.paiement-statut-actif {
+  background: rgba(45, 217, 185, 0.08);
+  border: 1.5px solid rgba(45, 217, 185, 0.35);
+  color: var(--ink-200, var(--ink-100));
 }
 
-.abonnement-option-detail {
-  font-size: 0.82rem;
-  color: var(--ink-400);
+.paiement-statut-actif .paiement-statut-point {
+  background: var(--teal-400);
+  box-shadow: 0 0 8px var(--teal-400);
 }
 
 @media (max-width: 480px) {

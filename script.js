@@ -1,11 +1,12 @@
-/* ---------- Interrupteur abonnement / test avancé ----------
-   Wave n'est pas encore configuré (clés API pas encore ajoutées dans
-   Supabase) : tant que ABONNEMENT_ACTIF est à false, tout ce qui
-   concerne le test avancé reste invisible (upsell "🔒 débloquer",
-   bouton rapport PDF, essai gratuit, modale d'abonnement) — sans
-   supprimer le code, pour pouvoir tout réactiver d'un coup plus tard
-   en repassant simplement cette valeur à true. */
-const ABONNEMENT_ACTIF = false;
+/* ---------- Interrupteur test avancé ----------
+   Le test avancé (500 FCFA, paiement Wave vérifié manuellement par un
+   admin — voir assets/js/auth.js et admin-paiements.html) est
+   maintenant actif. TEST_AVANCE_ACTIF ne concerne que l'affichage
+   client (upsell "🔒 débloquer", bouton rapport PDF, modale de
+   paiement) — le flag peut être repassé à false pour tout masquer
+   d'un coup sans supprimer de code, par exemple en cas de souci avec
+   la vérification des paiements. */
+const TEST_AVANCE_ACTIF = true;
 
 /* ---------- Menu mobile ---------- */
 const navToggle = document.querySelector('.nav-toggle');
@@ -302,8 +303,8 @@ async function afficherResultatsApresDiplome(ecoles) {
     parcoursTexte += ` Tu montres aussi une vraie affinité pour le profil ${profilSecondaire.nom} : garde cette double casquette en tête au moment de choisir tes options ou une spécialisation complémentaire.`;
   }
 
-  const accesAvance = ABONNEMENT_ACTIF && window.ParcourioAuth ? await window.ParcourioAuth.verifierAccesAvance() : false;
-  const limiteTotale = accesAvance ? 20 : (ABONNEMENT_ACTIF ? 12 : 4);
+  const accesAvance = TEST_AVANCE_ACTIF && window.ParcourioAuth ? await window.ParcourioAuth.verifierAccesAvance() : false;
+  const limiteTotale = accesAvance ? 20 : (TEST_AVANCE_ACTIF ? 12 : 4);
   const limiteVisible = accesAvance ? 20 : 4;
   const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcoles(ecoles, profilPrincipal, contexte, limiteTotale);
 
@@ -381,8 +382,8 @@ async function afficherResultatsMetier(ecoles) {
     conseil += ` Expérience mentionnée : ${contexte.experience_metier}.`;
   }
 
-  const accesAvance = ABONNEMENT_ACTIF && window.ParcourioAuth ? await window.ParcourioAuth.verifierAccesAvance() : false;
-  const limiteTotale = accesAvance ? 20 : (ABONNEMENT_ACTIF ? 12 : 4);
+  const accesAvance = TEST_AVANCE_ACTIF && window.ParcourioAuth ? await window.ParcourioAuth.verifierAccesAvance() : false;
+  const limiteTotale = accesAvance ? 20 : (TEST_AVANCE_ACTIF ? 12 : 4);
   const limiteVisible = accesAvance ? 20 : 4;
   const { ecoles: ecolesRecommandees, fallbackUtilise } = Moteur.selectionnerEcolesMetier(ecoles, metierPrincipal, contexte, limiteTotale);
 
@@ -508,7 +509,7 @@ function afficherCarteResultat(d) {
       <div class="result-actions">
         <button type="button" class="btn-secondary" id="partagerResultat">${Icons.svg('share-2', { class: 'icon-inline' })} Partager mon résultat</button>
         <button type="button" class="btn-secondary" id="refaireLeTest">${Icons.svg('rotate-ccw', { class: 'icon-inline' })} Refaire le test</button>
-        ${ABONNEMENT_ACTIF ? (d.accesAvance
+        ${TEST_AVANCE_ACTIF ? (d.accesAvance
           ? `<button type="button" class="btn-secondary" id="telechargerRapportBtn">${Icons.svg('file-text', { class: 'icon-inline' })} Télécharger mon rapport (PDF)</button>`
           : `<button type="button" class="btn-secondary" id="rapportPremiumBtn">🔒 Rapport PDF (test avancé)</button>`) : ''}
       </div>
