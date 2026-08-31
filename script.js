@@ -1,12 +1,13 @@
 /* ---------- Interrupteur test avancé ----------
    Le test avancé (500 FCFA, paiement Wave vérifié manuellement par un
-   admin — voir assets/js/auth.js et admin-paiements.html) est
-   maintenant actif. TEST_AVANCE_ACTIF ne concerne que l'affichage
-   client (upsell "🔒 débloquer", bouton rapport PDF, modale de
-   paiement) — le flag peut être repassé à false pour tout masquer
-   d'un coup sans supprimer de code, par exemple en cas de souci avec
-   la vérification des paiements. */
-const TEST_AVANCE_ACTIF = true;
+   admin — voir assets/js/auth.js et admin-paiements.html) existe côté
+   code mais est désactivé pour l'instant : la vérification manuelle
+   des paiements est trop lourde en attendant le branchement de l'API
+   Wave. TEST_AVANCE_ACTIF ne concerne que l'affichage client (upsell
+   "🔒 débloquer", bouton rapport PDF, modale de paiement) — repasser à
+   true pour tout réactiver d'un coup sans rien redévelopper, une fois
+   l'API Wave prête. */
+const TEST_AVANCE_ACTIF = false;
 
 /* ---------- Menu mobile ---------- */
 const navToggle = document.querySelector('.nav-toggle');
